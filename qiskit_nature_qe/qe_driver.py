@@ -14,7 +14,6 @@ from qiskit_nature.second_q.hamiltonians import ElectronicEnergy
 from . import calc_matrix_elements
 from . import eri_pair_densities
 from . import wfc
-from ase.io import nwchem   # parse nwchem file by using ase.io
 
 class QE_Driver(ElectronicStructureDriver):
     def __init__(self, wfc_files: str | list, xml_file: str) -> None:
