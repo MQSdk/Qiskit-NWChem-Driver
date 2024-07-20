@@ -14,7 +14,7 @@ from qiskit_nature.second_q.hamiltonians import ElectronicEnergy
 from . import calc_matrix_elements
 from . import eri_pair_densities
 from . import wfc
-
+from ase.io import nwchem   # parse nwchem file by using ase.io
 
 class QE_Driver(ElectronicStructureDriver):
     def __init__(self, wfc_files: str | list, xml_file: str) -> None:
@@ -140,7 +140,7 @@ class QE_Driver(ElectronicStructureDriver):
         h_ij_up, h_ij_dw = self.calc_h_ij()
         # All ERIs are given in physicists' order
         eri_up, eri_dw, eri_dw_up, eri_up_dw = self.calc_eri()
-
+        
         # Transform ERIs to chemist's index order to define S1Integrals object
         # Do not use qiskit_naute function to_chemist_ordering since
         # it tries to determine the index order of the ERIs

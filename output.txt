@@ -1,0 +1,50 @@
+./
+├── LICENSE.txt
+├── README.md
+├── __pycache__
+│   └── linear_algebra.cpython-311.pyc
+├── demo_nospin.py
+├── demo_spin.py
+├── eri_pair_densities_analysis.ipynb
+├── hamiltonian.py
+├── note1.ipynb
+├── output.txt
+├── qe_files
+│   ├── H2.scf.in
+│   ├── H2_spin.scf.in
+│   ├── out_H2
+│   │   ├── H2.save
+│   │   │   ├── H_ONCV_PBE-1.2.upf
+│   │   │   ├── charge-density.hdf5
+│   │   │   ├── data-file-schema.xml
+│   │   │   └── wfc1.hdf5
+│   │   └── H2.xml
+│   ├── out_H2_spin
+│   │   ├── H2_spin.save
+│   │   │   ├── H_ONCV_PBE-1.2.upf
+│   │   │   ├── charge-density.hdf5
+│   │   │   ├── data-file-schema.xml
+│   │   │   ├── wfcdw1.hdf5
+│   │   │   └── wfcup1.hdf5
+│   │   └── H2_spin.xml
+│   └── pseudo
+│       └── H_ONCV_PBE-1.2.upf
+├── qiskit_index_ordering.py
+├── qiskit_nature_qe
+│   ├── __init__.py
+│   ├── __pycache__
+│   │   ├── __init__.cpython-311.pyc
+│   │   ├── atoms.cpython-311.pyc
+│   │   ├── calc_matrix_elements.cpython-311.pyc
+│   │   ├── eri_pair_densities.cpython-311.pyc
+│   │   ├── qe_driver.cpython-311.pyc
+│   │   └── wfc.cpython-311.pyc
+│   ├── atoms.py
+│   ├── calc_matrix_elements.py
+│   ├── eri_pair_densities.py
+│   ├── qe_driver.py
+│   └── wfc.py
+└── requirements.txt
+-  [error opening dir]
+
+10 directories, 37 files
