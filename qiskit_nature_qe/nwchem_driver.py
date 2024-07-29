@@ -14,95 +14,18 @@ from qiskit_nature.second_q.hamiltonians import ElectronicEnergy
 from . import calc_matrix_elements
 from . import eri_pair_densities
 from . import wfc
-from ase.io import nwchem   # parse nwchem file by using ase.io
+import yaml
+from yaml import SafeLoader
 
 class NWchem_Driver(ElectronicStructureDriver):
-    def __init__(self, wfc_files: str | list, xml_file: str) -> None:
-        """QuantumEspresso (QE) driver class
+    def __init__(self, nwchem_output: str) -> None:
+        """NWchem driver class
 
         Args:
-            wfc_files (str | list): QE wfc output file or list of files. If list of files, the first is for spin-up, the second for spin-down
-            xml_file (str): QE xml output file "data-file-schema.xml"
+            nwchem_output (str): NWchem output file
         """
         super().__init__()
-
-        if isinstance(wfc_files, list):
-            assert (
-                len(wfc_files) == 2
-            ), f"Did not provide two but {len(wfc_files)} wfc files: {wfc_files}!"
-            wfc_file_up = wfc_files[0]
-            wfc_file_dw = wfc_files[1]
-            self.wfc_up_obj = wfc.Wfc.from_file(wfc_file_up, xml_file)
-            self.wfc_dw_obj = wfc.Wfc.from_file(wfc_file_dw, xml_file)
-
-            err_msg = (
-                "Corresponding wfc files do not seem to belong to the same calculation!"
-            )
-            assert np.allclose(
-                self.wfc_up_obj.k_plus_G, self.wfc_dw_obj.k_plus_G
-            ), err_msg
-            assert self.wfc_up_obj.gamma_only == self.wfc_dw_obj.gamma_only, err_msg
-            # assert self.wfc_up_obj.atoms == self.wfc_dw_obj.atoms, err_msg
-            assert self.wfc_up_obj.cell_volume == self.wfc_dw_obj.cell_volume, err_msg
-            assert self.wfc_up_obj.nbnd == self.wfc_dw_obj.nbnd, err_msg
-
-            self.nspin = 2
-        else:
-            wfc_file = wfc_files
-            self.wfc_up_obj = wfc.Wfc.from_file(wfc_file, xml_file)
-            self.wfc_dw_obj = wfc.Wfc.from_file(wfc_file, xml_file)
-            self.nspin = 1
-            if self.wfc_up_obj.spin != self.nspin:
-                warn(
-                    f"In {self.__class__.__name__}.{self.__init__.__name__}:\n"
-                    + "The xml file belongs to a spin-polarized calculation but only one wfc files is provided!"
-                )
-
-        with open(xml_file, "r", encoding="utf-8") as file:
-            xml_dict = xmltodict.parse(file.read())
-
-        # Extract information from xml file
-        self.reference_energy = float(
-            xml_dict["qes:espresso"]["output"]["total_energy"]["etot"]
-        )
-        self.creator = xml_dict["qes:espresso"]["general_info"]["creator"]["@NAME"]
-        self.version = xml_dict["qes:espresso"]["general_info"]["creator"]["@VERSION"]
-        self.basis = xml_dict["qes:espresso"]["input"]["basis"]
-        self.symbols = [
-            x["@name"]
-            for x in xml_dict["qes:espresso"]["input"]["atomic_structure"][
-                "atomic_positions"
-            ]["atom"]
-        ]
-        self.atom_positions = [
-            np.fromstring(x["#text"], sep=" ", dtype=np.float32).tolist()
-            for x in xml_dict["qes:espresso"]["input"]["atomic_structure"][
-                "atomic_positions"
-            ]["atom"]
-        ]
-        self.atom_positions = [x for xs in self.atom_positions for x in xs]
-        self.charge = float(xml_dict["qes:espresso"]["input"]["bands"]["tot_charge"])
-        self.nelec = float(
-            xml_dict["qes:espresso"]["output"]["band_structure"]["nelec"]
-        )
-
-        if (
-            xml_dict["qes:espresso"]["output"]["convergence_info"]["scf_conv"][
-                "convergence_achieved"
-            ]
-            != "true"
-        ):
-            warn(
-                f"In {self.__class__.__name__}.{self.__init__.__name__}:\n"
-                + "The QuantumEspresso SCF calculation is not converged"
-            )
-
-        self.p = self.wfc_up_obj.k_plus_G  # shape (#waves, 3)
-
-        self.occupations_up = self.wfc_up_obj.occupations_up
-        self.occupations_dw = self.wfc_dw_obj.occupations_dw
-        self.c_ip_up = self.wfc_up_obj.evc
-        self.c_ip_dw = self.wfc_dw_obj.evc
+        self.nwchem_output = nwchem_output
 
     def run(self=True) -> ElectronicStructureProblem:
         return self.to_problem()
@@ -112,34 +35,115 @@ class NWchem_Driver(ElectronicStructureDriver):
         basis: ElectronicBasis = ElectronicBasis.MO,
         include_dipole: bool = False,
     ) -> ElectronicStructureProblem:
-        if basis != ElectronicBasis.MO:
-            warn(
-                f"In {self.__class__.__name__}.{self.to_problem.__name__}:\n"
-                + "Using MO basis although AO basis was specified, "
-                + "since the AO basis is the plane-wave basis and typically "
-                + "a large number of plane-waves is used which would result "
-                + "in large matrices!"
-            )
-        basis: ElectronicBasis = ElectronicBasis.MO
-        include_dipole: bool = False
+        # if basis != ElectronicBasis.MO:
+        #     warn(
+        #         f"In {self.__class__.__name__}.{self.to_problem.__name__}:\n"
+        #         + "Using MO basis although AO basis was specified, "
+        #         + "since the AO basis is the plane-wave basis and typically "
+        #         + "a large number of plane-waves is used which would result "
+        #         + "in large matrices!"
+        #     )
+        # basis: ElectronicBasis = ElectronicBasis.MO
+        # include_dipole: bool = False
 
-        qcschema = self.to_qcschema(include_dipole=include_dipole)
+        # qcschema = self.to_qcschema(include_dipole=include_dipole)
 
-        problem = qcschema_to_problem(
-            qcschema, basis=basis, include_dipole=include_dipole
-        )
+        # problem = qcschema_to_problem(
+        #     qcschema, basis=basis, include_dipole=include_dipole
+        # )
 
-        if include_dipole and problem.properties.electronic_dipole_moment is not None:
-            problem.properties.electronic_dipole_moment.reverse_dipole_sign = True
-
+        # if include_dipole and problem.properties.electronic_dipole_moment is not None:
+        #     problem.properties.electronic_dipole_moment.reverse_dipole_sign = True
+        problem = self.to_qiskit_problem_old()
         return problem
 
+
+    def get_spatial_integrals(self, one_electron,two_electron,n_orb):
+        one_electron_spatial_integrals = np.zeros((n_orb, n_orb))
+        two_electron_spatial_integrals = np.zeros((n_orb, n_orb, n_orb, n_orb))
+
+        for ind, val in enumerate(one_electron):
+            # This is because python index starts at 0
+            i = int(val[0] - 1)
+            j = int(val[1] - 1)
+            one_electron_spatial_integrals[i, j] = val[2]
+            if i != j:
+                one_electron_spatial_integrals[j, i] = val[2]
+
+        for ind, val in enumerate(two_electron):
+            i = int(val[0]-1)
+            j = int(val[1]-1)
+            k = int(val[2]-1)
+            l = int(val[3]-1)
+            two_electron_spatial_integrals[i, j, k, l] = val[4]
+            if two_electron_spatial_integrals[k, l, i, j] == 0:
+                two_electron_spatial_integrals[k, l, i, j] = val[4]
+            if two_electron_spatial_integrals[i, j, l, k] == 0:
+                two_electron_spatial_integrals[i, j, l, k] = val[4]
+            if two_electron_spatial_integrals[l, k, i, j] == 0:
+                two_electron_spatial_integrals[l, k, i, j] = val[4]
+            if two_electron_spatial_integrals[j, i, k, l] == 0:
+                two_electron_spatial_integrals[j, i, k, l] = val[4]
+            if two_electron_spatial_integrals[k, l, j, i] == 0:
+                two_electron_spatial_integrals[k, l, j, i] = val[4]
+            if two_electron_spatial_integrals[j, i, l, k] == 0:
+                two_electron_spatial_integrals[j, i, l, k] = val[4]
+            if two_electron_spatial_integrals[l, k, j, i] == 0:
+                two_electron_spatial_integrals[l, k, j, i] = val[4]
+
+        return one_electron_spatial_integrals, two_electron_spatial_integrals
+
+    def convert_to_spin_index(self, one_electron, two_electron,n_orb):
+        h1 = np.block([[one_electron, np.zeros((int(n_orb), int(n_orb)))],
+                    [np.zeros((int(n_orb), int(n_orb))), one_electron]])
+        h2 = np.zeros((2 * n_orb, 2 * n_orb, 2 * n_orb, 2 * n_orb))
+
+        for i in range(len(two_electron)):
+            for j in range(len(two_electron)):
+                for k in range(len(two_electron)):
+                    for l in range(len(two_electron)):
+
+                        h2[i,j, k + n_orb, l + n_orb] = two_electron[i, j, k, l]
+                        h2[i + n_orb, j + n_orb,k, l] = two_electron[i, j, k, l]
+
+                        if i!=k and j!=l:   # Pauli exclusion priciple
+                            h2[i,j,k,l] = two_electron[i,j,k,l]
+                            h2[i + n_orb, j + n_orb, k + n_orb, l + n_orb] = two_electron[i, j, k, l]
+        return h1, 0.5*h2
+
+    def load_from_yaml(self,file_name):
+        
+        data = yaml.load(open(file_name,"r"),SafeLoader)
+        n_electrons = data['integral_sets'][0]['n_electrons']
+        n_spatial_orbitals = data['integral_sets'][0]['n_orbitals']
+        nuclear_repulsion_energy = data['integral_sets'][0]['coulomb_repulsion']['value']
+
+        one_electron_import = data['integral_sets'][0]['hamiltonian']['one_electron_integrals']['values']
+        two_electron_import = data['integral_sets'][0]['hamiltonian']['two_electron_integrals']['values']
+
+        one_electron_spatial_integrals, two_electron_spatial_integrals = self.get_spatial_integrals(one_electron_import,two_electron_import,n_spatial_orbitals)
+        h1, h2 = self.convert_to_spin_index(one_electron_spatial_integrals,two_electron_spatial_integrals,n_spatial_orbitals)
+        reference_energy = data['integral_sets'][0]['initial_state_suggestions'][0]['state']['energy']['value']
+        symbols = [i['name'] for i in data['integral_sets'][0]['geometry']['atoms']]
+        coords = []
+        for i in data['integral_sets'][0]['geometry']['atoms']:
+            coords = coords + i['coords']
+        coords = np.array(coords)
+        # return n_electrons, n_spatial_orbitals, nuclear_repulsion_energy, h1, h2, reference_energy, symbols, coords
+        return n_electrons, n_spatial_orbitals, nuclear_repulsion_energy, h1, h2, reference_energy
     def to_qcschema(self, *, include_dipole: bool = True) -> QCSchema:
         include_dipole: bool = False
-        # Calculate matrix elements
-        h_ij_up, h_ij_dw = self.calc_h_ij()
-        # All ERIs are given in physicists' order
-        eri_up, eri_dw, eri_dw_up, eri_up_dw = self.calc_eri()
+        num_particles, n_spatial_orbitals, nucl_repulsion, h1, h2, reference_energy, symbols, coords = self.load_from_yaml(self.nwchem_output)
+        h_ij_up = h1[:n_spatial_orbitals,:n_spatial_orbitals]
+        h_ij_dw = h1[n_spatial_orbitals:, n_spatial_orbitals:]
+        eri_up = h2[:n_spatial_orbitals,:n_spatial_orbitals,:n_spatial_orbitals,:n_spatial_orbitals]
+        eri_dw = h2[n_spatial_orbitals:, n_spatial_orbitals:, n_spatial_orbitals:, n_spatial_orbitals:]
+        eri_up_dw = h2[:n_spatial_orbitals, :n_spatial_orbitals, n_spatial_orbitals:, n_spatial_orbitals:]
+        eri_dw_up = h2[n_spatial_orbitals:, n_spatial_orbitals:, :n_spatial_orbitals, :n_spatial_orbitals]
+        # # Calculate matrix elements
+        # h_ij_up, h_ij_dw = self.calc_h_ij()
+        # # All ERIs are given in physicists' order
+        # eri_up, eri_dw, eri_dw_up, eri_up_dw = self.calc_eri()
         
         # Transform ERIs to chemist's index order to define S1Integrals object
         # Do not use qiskit_naute function to_chemist_ordering since
@@ -157,9 +161,9 @@ class NWchem_Driver(ElectronicStructureDriver):
         print(f"eri up-(down-up) equal: {np.allclose(eri_dw_up, eri_up)}")
         print(f"eri (up-down)-(down-up) equal: {np.allclose(eri_up_dw, eri_dw_up)}")
 
-        nucl_repulsion = calc_matrix_elements.nuclear_repulsion_energy(
-            self.wfc_up_obj.atoms, self.wfc_up_obj.cell_volume
-        )
+        # nucl_repulsion = calc_matrix_elements.nuclear_repulsion_energy(
+        #     self.wfc_up_obj.atoms, self.wfc_up_obj.cell_volume
+        # )
 
         # ??? Is the following correct for calculating the overlap matrix?
         #     We search for the overlap matrix between two AOs, i.e. plane-waves
@@ -195,8 +199,8 @@ class NWchem_Driver(ElectronicStructureDriver):
         #     We have to further investigate different spin-polarized DFT calculation and
         #     the angular momentum of their many-body ground states to check if
         #     there is a bug in qiskit_nature or in our understand of the overlap matrix
-        overlap = np.eye(self.c_ip_up.shape[1], dtype=np.float64)
-        # overlap = None
+        # overlap = np.eye(self.c_ip_up.shape[1], dtype=np.float64)
+        overlap = None
 
         # Molecular orbitals (MOs) are the Kohn-Sham orbitals
         # Atomic orbitals (AOs) are the plane-waves
@@ -213,20 +217,26 @@ class NWchem_Driver(ElectronicStructureDriver):
         data.eri_mo_bb = S1Integrals(eri_dw)
 
         data.e_nuc = nucl_repulsion
-        data.e_ref = self.reference_energy
+        data.e_ref = reference_energy
+        
         data.overlap = overlap
 
-        data.mo_coeff = (
-            self.c_ip_up.T
-        )  # shape: (nao, nmo) = (#plane-waves, #kohn-sham orbitals)
-        data.mo_coeff_b = (
-            self.c_ip_dw.T
-        )  # shape: (nao, nmo) = (#plane-waves, #kohn-sham orbitals)
+        # haven't decide yet 
+        # data.mo_coeff = (
+        #     self.c_ip_up.T
+        # )  # shape: (nao, nmo) = (#plane-waves, #kohn-sham orbitals)
+        # data.mo_coeff_b = (
+        #     self.c_ip_dw.T
+        # )  # shape: (nao, nmo) = (#plane-waves, #kohn-sham orbitals)
 
-        data.mo_energy = self.wfc_up_obj.ks_energies
-        data.mo_energy_b = self.wfc_dw_obj.ks_energies
-        data.mo_occ = self.occupations_up
-        data.mo_occ_b = self.occupations_dw
+        
+        # data.mo_energy = self.wfc_up_obj.ks_energies
+        # data.mo_energy_b = self.wfc_dw_obj.ks_energies
+        # data.mo_occ = self.occupations_up
+        # data.mo_occ_b = self.occupations_dw
+        
+        
+        
         # data.dip_x
         # data.dip_y
         # data.dip_z
@@ -238,20 +248,26 @@ class NWchem_Driver(ElectronicStructureDriver):
         # data.dip_mo_z_b
         # data.dip_nuc
         # data.dip_ref
-        data.symbols = self.symbols
-        data.coords = self.atom_positions
-        data.multiplicity = self.nspin + 1  # Spin + 1
-        data.charge = self.charge
+        data.symbols = symbols
+        data.coords = coords
+        
+        
+        # data.multiplicity = self.nspin + 1  # Spin + 1
+        data.multiplicity = 2
+        data.charge = 0
         # data.masses
         # data.method
-        data.basis = self.basis
-        data.creator = self.creator
-        data.version = self.version
-        # data.routine
-        data.nbasis = self.p.shape[0]
-        data.nmo = self.c_ip_up.shape[0]
-        data.nalpha = int(np.sum(self.occupations_up))
-        data.nbeta = int(np.sum(self.occupations_dw))
+        # data.basis = self.basis
+        
+        # data.creator = self.creator
+        # data.version = self.version
+        # # data.routine
+        # data.nbasis = self.p.shape[0]
+        # data.nmo = self.c_ip_up.shape[0]
+        # data.nalpha = int(np.sum(self.occupations_up))
+        # data.nbeta = int(np.sum(self.occupations_dw))
+        data.nalpha = int(num_particles/2)
+        data.nbeta = int(num_particles/2)
         # data.keywords
 
         return self._to_qcschema(data, include_dipole=include_dipole)
@@ -313,27 +329,44 @@ class NWchem_Driver(ElectronicStructureDriver):
 
         return eri_up, eri_dw, eri_dw_up, eri_up_dw
 
+    
+    
+    
     def to_qiskit_problem_old(self):
-        # Calculate matrix elements
-        h_ij_up, h_ij_dw = self.calc_h_ij()
-        eri_up, eri_dw, eri_dw_up, eri_up_dw = self.calc_eri()
+        num_particles, n_spatial_orbitals, nucl_repulsion, h1, h2, reference_energy = self.load_from_yaml(self.nwchem_output)
+        # # Calculate matrix elements
+        # h_ij_up, h_ij_dw = self.calc_h_ij()     # one electron integrals
+        # eri_up, eri_dw, eri_dw_up, eri_up_dw = self.calc_eri()      # two electron integrals
 
-        nucl_repulsion = calc_matrix_elements.nuclear_repulsion_energy(
-            self.wfc_up_obj.atoms, self.wfc_up_obj.cell_volume
-        )
+        # nucl_repulsion = calc_matrix_elements.nuclear_repulsion_energy(     # effective nuclear repulsion energy
+        #     self.wfc_up_obj.atoms, self.wfc_up_obj.cell_volume      # volume of supercell 
+        # )
 
         num_particles = (
-            int(np.sum(self.occupations_up)),
-            int(np.sum(self.occupations_dw)),
-        )
-
+            1,
+            1
+         )   # number of electron 
+        h_ij_up = h1[:n_spatial_orbitals,:n_spatial_orbitals]
+        h_ij_dw = h1[n_spatial_orbitals:, n_spatial_orbitals:]
+        eri_up = h2[:n_spatial_orbitals,:n_spatial_orbitals,:n_spatial_orbitals,:n_spatial_orbitals]
+        eri_dw = h2[n_spatial_orbitals:, n_spatial_orbitals:, n_spatial_orbitals:, n_spatial_orbitals:]
+        eri_up_dw = h2[:n_spatial_orbitals, :n_spatial_orbitals, n_spatial_orbitals:, n_spatial_orbitals:]
+        eri_up = eri_up.swapaxes(1, 2).swapaxes(1, 3)
+        eri_dw = eri_dw.swapaxes(1, 2).swapaxes(1, 3)
+        eri_up_dw = eri_up_dw.swapaxes(1, 2).swapaxes(1, 3)
+        eri_aa = S1Integrals(eri_up)
+        eri_ab = S1Integrals(eri_up_dw)
+        eri_bb = S1Integrals(eri_dw)
+        
+        
+        
         # Qiskit calculation
         integrals = ElectronicIntegrals.from_raw_integrals(
             h_ij_up,
-            eri_up,
+            eri_aa,
             h_ij_dw,
-            eri_dw,
-            eri_up_dw,
+            eri_bb,
+            eri_ab,
             auto_index_order=True,
             validate=True,
         )
@@ -341,11 +374,14 @@ class NWchem_Driver(ElectronicStructureDriver):
         qiskit_energy.nuclear_repulsion_energy = nucl_repulsion
         qiskit_problem = ElectronicStructureProblem(qiskit_energy)
 
+        #basis
+        qiskit_problem.basis = ElectronicBasis.MO
+        
         # number of particles for spin-up, spin-down
         qiskit_problem.num_particles = num_particles
-        qiskit_problem.num_spatial_orbitals = self.wfc_up_obj.nbnd
+        qiskit_problem.num_spatial_orbitals = n_spatial_orbitals
 
-        qiskit_problem.reference_energy = self.reference_energy
+        qiskit_problem.reference_energy = reference_energy
 
         return qiskit_problem
 
