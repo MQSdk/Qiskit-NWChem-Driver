@@ -25,7 +25,7 @@ nwpw
   tolerances 1.0e-9 1.0e-9
 
   virtual 1
-
+ 
 end
 set nwpw:cif_filename LiH
 
@@ -38,6 +38,7 @@ set nwpw:2qintegrals .true.
 set nwpw:3x3_virtual .true.
 
 task pspw energy
+
 
 ### Generating HOMO and LUMO Gaussian cube files ###
 nwpw
