@@ -116,21 +116,22 @@ class NWchem_Driver(ElectronicStructureDriver):
         data = yaml.load(open(file_name,"r"),SafeLoader)
         n_electrons = data['integral_sets'][0]['n_electrons']
         n_spatial_orbitals = data['integral_sets'][0]['n_orbitals']
-        nuclear_repulsion_energy = data['integral_sets'][0]['coulomb_repulsion']['value']
+        # nuclear_repulsion_energy = data['integral_sets'][0]['coulomb_repulsion']['value']
+        nuclear_repulsion_energy = 0
 
         one_electron_import = data['integral_sets'][0]['hamiltonian']['one_electron_integrals']['values']
         two_electron_import = data['integral_sets'][0]['hamiltonian']['two_electron_integrals']['values']
 
         one_electron_spatial_integrals, two_electron_spatial_integrals = self.get_spatial_integrals(one_electron_import,two_electron_import,n_spatial_orbitals)
         h1, h2 = self.convert_to_spin_index(one_electron_spatial_integrals,two_electron_spatial_integrals,n_spatial_orbitals)
-        reference_energy = data['integral_sets'][0]['initial_state_suggestions'][0]['state']['energy']['value']
+        # reference_energy = data['integral_sets'][0]['initial_state_suggestions'][0]['state']['energy']['value']
         symbols = [i['name'] for i in data['integral_sets'][0]['geometry']['atoms']]
         coords = []
         for i in data['integral_sets'][0]['geometry']['atoms']:
             coords = coords + i['coords']
         coords = np.array(coords)
         # return n_electrons, n_spatial_orbitals, nuclear_repulsion_energy, h1, h2, reference_energy, symbols, coords
-        return n_electrons, n_spatial_orbitals, nuclear_repulsion_energy, h1, h2, reference_energy
+        return n_electrons, n_spatial_orbitals, nuclear_repulsion_energy, h1, h2
     def to_qcschema(self, *, include_dipole: bool = True) -> QCSchema:
         include_dipole: bool = False
         num_particles, n_spatial_orbitals, nucl_repulsion, h1, h2, reference_energy, symbols, coords = self.load_from_yaml(self.nwchem_output)
@@ -333,7 +334,7 @@ class NWchem_Driver(ElectronicStructureDriver):
     
     
     def to_qiskit_problem_old(self):
-        num_particles, n_spatial_orbitals, nucl_repulsion, h1, h2, reference_energy = self.load_from_yaml(self.nwchem_output)
+        num_particles, n_spatial_orbitals, nucl_repulsion, h1, h2 = self.load_from_yaml(self.nwchem_output)
         # # Calculate matrix elements
         # h_ij_up, h_ij_dw = self.calc_h_ij()     # one electron integrals
         # eri_up, eri_dw, eri_dw_up, eri_up_dw = self.calc_eri()      # two electron integrals
@@ -381,7 +382,7 @@ class NWchem_Driver(ElectronicStructureDriver):
         qiskit_problem.num_particles = num_particles
         qiskit_problem.num_spatial_orbitals = n_spatial_orbitals
 
-        qiskit_problem.reference_energy = reference_energy
+        # qiskit_problem.reference_energy = reference_energy
 
         return qiskit_problem
 
