@@ -1,0 +1,26 @@
+start h2o_fci
+
+memory heap 1200 mb stack 1200 mb global 10 mb
+
+charge 0
+
+geometry
+Li    0.00000    0.00000   -0.65000
+H     0.00000    0.00000    0.65000
+end
+
+basis
+  * library sto-3g
+end
+
+dft
+   xc hfexch
+end
+
+task dft
+
+fcidump
+ orbitals molecular
+end
+
+task dft fcidump

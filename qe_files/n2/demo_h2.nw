@@ -1,0 +1,58 @@
+title "H2 d=1.0"
+
+echo 
+
+memory 1900 mb
+
+start h2-scf
+
+#permanent_dir ./perm1.0
+#scratch_dir   ./perm1.0
+
+geometry
+H       0.00000000     0.00000000   -0.50
+H       0.00000000     0.00000000    0.50
+end
+
+nwpw
+   simulation_cell
+      boundary_conditions periodic
+      SC 26.0
+   end 
+   cutoff 20.0
+   xc hf
+   #xc lda
+   virtual 1
+end
+
+
+##set nwpw:bound_virtual .true.
+#task pspw energy
+
+set nwpw:2x2ne_virtual .true.
+set nwpw:2qintegrals .true.
+
+task pspw energy
+
+
+
+
+### Generating HOMO and LUMO Gaussian cube files ###
+nwpw
+   dplot
+      orbital 1 homo-restricted.cube
+      density total density.cube
+   end
+end
+task pspw pspw_dplot
+
+nwpw
+   dplot
+      vectors h2-scf.emovecs
+      orbital 1 lumo1-restricted.cube
+#      orbital 2 lumo2-restricted.cube
+#      orbital 3 lumo3-restricted.cube
+#      orbital 4 lumo4-restricted.cube
+   end
+end
+task pspw pspw_dplot

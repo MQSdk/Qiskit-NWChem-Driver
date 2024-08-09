@@ -10,7 +10,7 @@ from qiskit.exceptions import QiskitError
 from qiskit_algorithms import VQE
 from qiskit_algorithms.optimizers import SLSQP
 from qiskit.primitives import Estimator
-from qiskit_nature.second_q.circuit.library import HartreeFock, UCCSD
+from qiskit_nature.second_q.circuit.library import HartreeFock, UCCSD, UCC
 
 
 preamble="""
@@ -110,6 +110,12 @@ def extract_fields(file):
                 n_electrons_beta = int(ln_segments[-1])
             elif ln.find("Number of active orbitals") != -1:
                 n_orbitals = int(ln_segments[-1])
+            elif ln.find("Effective nuclear repulsion energy") != -1:
+                # coulomb_repulsion = float(ln_segments[5])
+                coulomb_repulsion = {
+                    'units' : 'hartree',
+                    'value' : float(ln_segments[5])
+                }
             elif ln.find("Total MCSCF energy") != -1:
                 fci_val = float(ln.split("=")[1].strip())
                 fci_energy = {"units" : "hartree", "value" : fci_val, "upper": fci_val+0.1, "lower":fci_val-0.1}
@@ -266,7 +272,7 @@ def extract_fields(file):
     integral_sets =  [{"metadata": { 'molecule_name' : 'unknown'},
                        "geometry":geometry,
                     #    "basis_set":basis_set,
-                    #    "coulomb_repulsion" : coulomb_repulsion,
+                       "coulomb_repulsion" : coulomb_repulsion,
                     #    "scf_energy" : scf_energy,
                     #    "scf_energy_offset" : scf_energy_offset,
                     #    "energy_offset" : energy_offset,
@@ -281,12 +287,18 @@ def extract_fields(file):
     return data
 
 def main():
-    # # data = extract_fields('qe_files/n2/output/demo.out')
-    # # with open('qe_files/n2/output/demo.yaml', 'a') as f:
-    # #     f.write(yaml.dump(data, default_flow_style=False)) 
+    # data = extract_fields('qe_files/n2/output/demo.out')
+    # with open('qe_files/n2/output/demo.yaml', 'a') as f:
+    #     f.write(yaml.dump(data, default_flow_style=False)) 
+    
+    
+    
+    
+    
     driver = nwchem_driver.NWchem_Driver('qe_files/n2/output/demo.yaml')
     es_problem = driver.run()
-    
+    hamiltonian  = es_problem.hamiltonian
+    print(hamiltonian.second_q_op())
     # # ------------------ Solve with NumPyMinimumEigensolver ------------------
     mapper = JordanWignerMapper()
     # algo = NumPyMinimumEigensolver()
