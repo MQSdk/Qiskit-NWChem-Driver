@@ -27,6 +27,7 @@ class NWchem_Driver(ElectronicStructureDriver):
         """
         super().__init__()
         self.nwchem_output = nwchem_output
+        self.total_energy = None
 
     def run(self=True) -> ElectronicStructureProblem:
         return self.to_problem()
@@ -108,7 +109,7 @@ class NWchem_Driver(ElectronicStructureDriver):
         n_spatial_orbitals = data['integral_sets'][0]['n_orbitals']
         nuclear_repulsion_energy = data['integral_sets'][0]['coulomb_repulsion']['value']
         # nuclear_repulsion_energy = 0
-
+        self.total_energy = data['integral_sets'][0]['total_energy']
         one_electron_import = data['integral_sets'][0]['hamiltonian']['one_electron_integrals']['values']
         two_electron_import = data['integral_sets'][0]['hamiltonian']['two_electron_integrals']['values']
 
@@ -162,16 +163,6 @@ class NWchem_Driver(ElectronicStructureDriver):
         eri_dw_up = eri_dw_up.swapaxes(1, 2).swapaxes(1, 3)
         eri_up_dw = eri_up_dw.swapaxes(1, 2).swapaxes(1, 3)
         
-        # eri_up = eri_up.swapaxes(1, 2).swapaxes(1, 3)
-        # eri_dw = eri_dw.swapaxes(1, 2).swapaxes(1, 3)
-        # eri_up_dw = eri_up_dw.swapaxes(1, 2).swapaxes(1, 3)
-        # h_ij_up = h1
-        # h_ij_dw = h1
-        # eri_up = h2
-        # eri_dw = h2
-        # eri_up_dw = h2
-        
-       
         
         eri_aa = S1Integrals(eri_up)
         eri_ab = S1Integrals(eri_up_dw)

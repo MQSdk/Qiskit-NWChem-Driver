@@ -76,3 +76,4 @@ integral_sets:
     molecule_name: unknown
   n_electrons: 2
   n_orbitals: 2
+  total_energy: -0.7267359408

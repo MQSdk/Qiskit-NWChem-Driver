@@ -77,6 +77,8 @@ def extract_fields(file):
                     continue
             elif ln.find("number of orbitals") != -1 and ln.find("Fourier space") != -1:
                 n_orbitals = int(ln_segments[6]) + int(ln_segments[12])
+            elif ln.find("total     energy") != -1:
+                total_energy = float(ln_segments[3])
             elif ln.find("Number of active orbitals") != -1:
                 n_orbitals = int(ln_segments[-1])
             elif ln.find("ion-ion   energy") != -1:
@@ -190,6 +192,7 @@ def extract_fields(file):
                    'two_electron_integrals' : two_electron_integrals}
     integral_sets =  [{"metadata": { 'molecule_name' : 'unknown'},
                        "geometry":geometry,
+                       "total_energy":total_energy,
                        "coulomb_repulsion" : coulomb_repulsion,
                        "hamiltonian" : hamiltonian,
                        "n_orbitals" : n_orbitals,

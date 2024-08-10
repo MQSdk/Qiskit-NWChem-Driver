@@ -104,6 +104,8 @@ def extract_fields(file):
                     continue
             elif ln.find("number of orbitals") != -1 and ln.find("Fourier space") != -1:
                 n_orbitals = int(ln_segments[6]) + int(ln_segments[12])
+            elif ln.find("total     energy") != -1:
+                total_energy = float(ln_segments[3])
             elif ln.find("Number of active alpha electrons") != -1:
                 n_electrons_alpha = int(ln_segments[-1])
             elif ln.find("Number of active beta electrons") != -1:
@@ -271,6 +273,7 @@ def extract_fields(file):
     integral_sets =  [{"metadata": { 'molecule_name' : 'unknown'},
                        "geometry":geometry,
                     #    "basis_set":basis_set,
+                        "total_energy":total_energy,
                        "coulomb_repulsion" : coulomb_repulsion,
                     #    "scf_energy" : scf_energy,
                     #    "scf_energy_offset" : scf_energy_offset,
@@ -286,9 +289,9 @@ def extract_fields(file):
     return data
 
 def main():
-    # data = extract_fields('qe_files/n2/output/demo.out')
-    # with open('qe_files/n2/output/demo.yaml', 'a') as f:
-    #     f.write(yaml.dump(data, default_flow_style=False)) 
+    data = extract_fields('qe_files/n2/output/demo.out')
+    with open('qe_files/n2/output/demo.yaml', 'w') as f:
+        f.write(yaml.dump(data, default_flow_style=False)) 
     
     driver = nwchem_driver.NWchem_Driver('qe_files/n2/output/demo.yaml')
     es_problem = driver.run()
