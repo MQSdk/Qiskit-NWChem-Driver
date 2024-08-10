@@ -5,5 +5,7 @@ Based on work from https://github.com/dlr-wf/Qiskit-Quantum-Espresso-Driver
 ```
 pip install -r requirements.txt
 ```
-### 2. running nwchem_qiskit_driver.ipynb file to see results 
+### 2. The file nwchem_qiskit_driver.ipynb explain single sample step by step.
+### 3. The file nwchem_qiskit_driver_batch.ipynb change the bond distance of two atoms and make a figure to show it
+
 
