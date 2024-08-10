@@ -1,7 +1,11 @@
-# Python 3.11
-
 h5py==3.10.0
-xmltodict==0.13.0
-qiskit-nature==0.7.2
+numpy==2.0.1
 pyscf==2.5.0
-matplotlib==3.8.3
+PyYAML==6.0.1
+PyYAML==6.0.2
+qiskit==1.1.1
+qiskit_algorithms==0.3.0
+qiskit_nature==0.7.2
+ruamel.base==1.0.0
+ruamel_yaml==0.18.6
+xmltodict==0.13.0
