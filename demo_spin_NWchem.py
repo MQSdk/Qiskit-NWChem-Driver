@@ -11,7 +11,7 @@ from qiskit_algorithms import VQE
 from qiskit_algorithms.optimizers import SLSQP
 from qiskit.primitives import Estimator
 from qiskit_nature.second_q.circuit.library import HartreeFock, UCCSD, UCC
-
+import numpy as np
 
 preamble="""
 "$schema": https://raw.githubusercontent.com/Microsoft/Quantum/master/Chemistry/Schema/broombridge-0.1.schema.json
@@ -110,11 +110,10 @@ def extract_fields(file):
                 n_electrons_beta = int(ln_segments[-1])
             elif ln.find("Number of active orbitals") != -1:
                 n_orbitals = int(ln_segments[-1])
-            elif ln.find("Effective nuclear repulsion energy") != -1:
-                # coulomb_repulsion = float(ln_segments[5])
+            elif ln.find("ion-ion   energy") != -1:
                 coulomb_repulsion = {
                     'units' : 'hartree',
-                    'value' : float(ln_segments[5])
+                    'value' : float(ln_segments[3])
                 }
             elif ln.find("Total MCSCF energy") != -1:
                 fci_val = float(ln.split("=")[1].strip())
@@ -291,10 +290,6 @@ def main():
     # with open('qe_files/n2/output/demo.yaml', 'a') as f:
     #     f.write(yaml.dump(data, default_flow_style=False)) 
     
-    
-    
-    
-    
     driver = nwchem_driver.NWchem_Driver('qe_files/n2/output/demo.yaml')
     es_problem = driver.run()
     hamiltonian  = es_problem.hamiltonian
@@ -325,7 +320,9 @@ def main():
     )
 
     vqe_solver = VQE(Estimator(), ansatz, SLSQP())
-    vqe_solver.initial_point = [0.0] * ansatz.num_parameters
+    
+    # vqe_solver.initial_point = [0.0] * ansatz.num_parameters
+    vqe_solver.initial_point = np.random.rand(ansatz.num_parameters)
     calc = GroundStateEigensolver(mapper, vqe_solver)
     res = calc.solve(es_problem)
     print(res)

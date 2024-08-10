@@ -149,6 +149,13 @@ class NWchem_Driver(ElectronicStructureDriver):
         print(f"eri up-(down-up) equal: {np.allclose(eri_dw_up, eri_up)}")
         print(f"eri (up-down)-(down-up) equal: {np.allclose(eri_up_dw, eri_dw_up)}")
         
+        
+        # Align with Quantum Espresso
+        eri_up = eri_up.swapaxes(1, 3).swapaxes(2,3)
+        eri_dw = eri_dw.swapaxes(1, 3).swapaxes(2,3)
+        eri_dw_up = eri_dw_up.swapaxes(1, 3).swapaxes(2,3)
+        eri_up_dw = eri_up_dw.swapaxes(1, 3).swapaxes(2,3)
+        
         # Transform ERIs to chemist's index order
         eri_up = eri_up.swapaxes(1, 2).swapaxes(1, 3)
         eri_dw = eri_dw.swapaxes(1, 2).swapaxes(1, 3)
