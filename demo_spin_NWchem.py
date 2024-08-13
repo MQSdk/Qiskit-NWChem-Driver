@@ -97,21 +97,24 @@ def extract_fields(file):
                     'index_convention' : 'mulliken',
                     'values' : []
                 }
-            elif ln.find("number of electrons") != -1 and ln.find("Fourier space") != -1:
+            elif ln.find("number of electrons") != -1:
                 try:
-                    n_electrons = int(ln_segments[5]) + int(ln_segments[11])
+                    n_electrons = int(ln_segments[5]) + int(ln_segments[8])
+                    n_electrons_up = int(ln_segments[5])
+                    n_electrons_down = int(ln_segments[8])
+                    
                 except:
                     continue
             elif ln.find("number of orbitals") != -1 and ln.find("Fourier space") != -1:
                 n_orbitals = int(ln_segments[6]) + int(ln_segments[12])
             elif ln.find("total     energy") != -1:
                 total_energy = float(ln_segments[3])
-            elif ln.find("Number of active alpha electrons") != -1:
-                n_electrons_alpha = int(ln_segments[-1])
-            elif ln.find("Number of active beta electrons") != -1:
-                n_electrons_beta = int(ln_segments[-1])
-            elif ln.find("Number of active orbitals") != -1:
-                n_orbitals = int(ln_segments[-1])
+            # elif ln.find("Number of active alpha electrons") != -1:
+            #     n_electrons_alpha = int(ln_segments[-1])
+            # elif ln.find("Number of active beta electrons") != -1:
+            #     n_electrons_beta = int(ln_segments[-1])
+            # elif ln.find("Number of active orbitals") != -1:
+            #     n_orbitals = int(ln_segments[-1])
             elif ln.find("ion-ion   energy") != -1:
                 coulomb_repulsion = {
                     'units' : 'hartree',
@@ -281,7 +284,10 @@ def extract_fields(file):
                     #    "fci_energy" : fci_energy,
                        "hamiltonian" : hamiltonian,
                        "n_orbitals" : n_orbitals,
-                       "n_electrons" : n_electrons }]
+                       "n_electrons" : n_electrons,
+                       "n_electrons_up": n_electrons_up,
+                       "n_electrons_down": n_electrons_down
+                       }]
     if initial_state is not None:
         integral_sets[-1]["initial_state_suggestions"] = initial_state
     data['integral_sets'] = integral_sets
@@ -299,18 +305,6 @@ def main():
     print(hamiltonian.second_q_op())
     # # ------------------ Solve with NumPyMinimumEigensolver ------------------
     mapper = JordanWignerMapper()
-    # algo = NumPyMinimumEigensolver()
-    # algo.filter_criterion = problem.get_default_filter_criterion()
-
-    # solver = GroundStateEigensolver(mapper, algo)
-    # # FIXME: Get numpy ground state solver running
-    # try:
-        
-    #     result = solver.solve(problem)
-    #     print(result)
-    # except QiskitError as e:
-    #     print("Could not find ground-state!")
-    
     ansatz = UCCSD(
         es_problem.num_spatial_orbitals,
         es_problem.num_particles,
@@ -321,11 +315,11 @@ def main():
             mapper,
         ),
     )
-
+    print('here')
     vqe_solver = VQE(Estimator(), ansatz, SLSQP())
     
-    # vqe_solver.initial_point = [0.0] * ansatz.num_parameters
-    vqe_solver.initial_point = np.random.rand(ansatz.num_parameters)
+    vqe_solver.initial_point = [0.0] * ansatz.num_parameters
+    # vqe_solver.initial_point = np.random.rand(ansatz.num_parameters)
     calc = GroundStateEigensolver(mapper, vqe_solver)
     res = calc.solve(es_problem)
     print(res)

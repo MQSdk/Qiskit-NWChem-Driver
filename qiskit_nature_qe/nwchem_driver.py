@@ -73,12 +73,6 @@ class NWchem_Driver(ElectronicStructureDriver):
                 two_electron_spatial_integrals[j, i, l, k] = val[4]
             if two_electron_spatial_integrals[l, k, j, i] == 0:     #lkji
                 two_electron_spatial_integrals[l, k, j, i] = val[4]
-            # if two_electron_spatial_integrals[j, i, l, k] == 0:     #jilk
-            #     two_electron_spatial_integrals[j, i, l, k] = val[4]
-            # if two_electron_spatial_integrals[i, k, j, l] == 0:     #ikjl
-            #     two_electron_spatial_integrals[i, k, j, l] = val[4]
-            # if two_electron_spatial_integrals[l, k, j, i] == 0:     #lkji
-            #     two_electron_spatial_integrals[l, k, j, i] = val[4]
 
         return one_electron_spatial_integrals, two_electron_spatial_integrals
 
@@ -105,8 +99,9 @@ class NWchem_Driver(ElectronicStructureDriver):
     def load_from_yaml(self,file_name):
         
         data = yaml.load(open(file_name,"r"),SafeLoader)
-        n_electrons = data['integral_sets'][0]['n_electrons']
-        n_spatial_orbitals = data['integral_sets'][0]['n_orbitals']
+        # n_electrons = data['integral_sets'][0]['n_electrons']
+        n_electrons = (data['integral_sets'][0]['n_electrons_up'], data['integral_sets'][0]['n_electrons_down'])
+        n_spatial_orbitals = sum(n_electrons)
         nuclear_repulsion_energy = data['integral_sets'][0]['coulomb_repulsion']['value']
         # nuclear_repulsion_energy = 0
         self.total_energy = data['integral_sets'][0]['total_energy']
@@ -134,11 +129,11 @@ class NWchem_Driver(ElectronicStructureDriver):
     
     def to_qiskit_problem_old(self):
         num_particles, n_spatial_orbitals, nucl_repulsion, h1, h2 = self.load_from_yaml(self.nwchem_output)
-
-        num_particles = (
-            1,
-            1
-         )   # number of electron 
+        # num_particles = (
+        #     1,
+        #     1
+        #  )   # number of electron 
+        
         h_ij_up = h1[:n_spatial_orbitals,:n_spatial_orbitals]
         h_ij_dw = h1[n_spatial_orbitals:, n_spatial_orbitals:]
         eri_up = h2[:n_spatial_orbitals,:n_spatial_orbitals,:n_spatial_orbitals,:n_spatial_orbitals]
@@ -150,19 +145,11 @@ class NWchem_Driver(ElectronicStructureDriver):
         print(f"eri up-(down-up) equal: {np.allclose(eri_dw_up, eri_up)}")
         print(f"eri (up-down)-(down-up) equal: {np.allclose(eri_up_dw, eri_dw_up)}")
         
-        
-        # Align with Quantum Espresso
-        eri_up = eri_up.swapaxes(1, 3).swapaxes(2,3)
-        eri_dw = eri_dw.swapaxes(1, 3).swapaxes(2,3)
-        eri_dw_up = eri_dw_up.swapaxes(1, 3).swapaxes(2,3)
-        eri_up_dw = eri_up_dw.swapaxes(1, 3).swapaxes(2,3)
-        
-        # Transform ERIs to chemist's index order
-        eri_up = eri_up.swapaxes(1, 2).swapaxes(1, 3)
-        eri_dw = eri_dw.swapaxes(1, 2).swapaxes(1, 3)
-        eri_dw_up = eri_dw_up.swapaxes(1, 2).swapaxes(1, 3)
-        eri_up_dw = eri_up_dw.swapaxes(1, 2).swapaxes(1, 3)
-        
+        # Transform ERIs to chemist's index order #ijkl ->ikjl -> iklj
+        eri_up = eri_up.swapaxes(1, 2).swapaxes(2, 3)
+        eri_dw = eri_dw.swapaxes(1, 2).swapaxes(2, 3)
+        eri_dw_up = eri_dw_up.swapaxes(1, 2).swapaxes(2, 3)
+        eri_up_dw = eri_up_dw.swapaxes(1, 2).swapaxes(2, 3)
         
         eri_aa = S1Integrals(eri_up)
         eri_ab = S1Integrals(eri_up_dw)

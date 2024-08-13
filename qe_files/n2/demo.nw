@@ -24,7 +24,7 @@ nwpw
   lmbfgs
   tolerances 1.0e-9 1.0e-9
 
-  virtual 1
+  virtual 2
 
 end
 
@@ -53,6 +53,7 @@ nwpw
    dplot
       vectors  pspw_hf_LiH.emovecs
       orbital 1 lumo1-restricted.cube
+      orbital 2 lumo2-restricted.cube
    end
 end
 
