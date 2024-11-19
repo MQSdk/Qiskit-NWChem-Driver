@@ -1,0 +1,12 @@
+name: qiskit_nwchem_driver
+dependencies:
+    h5py
+    numpy
+    pyscf
+    PyYAML
+    qiskit
+    qiskit_algorithms
+    qiskit_nature
+    ruamel.base
+    ruamel_yaml
+    xmltodict
