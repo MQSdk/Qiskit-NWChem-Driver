@@ -30,7 +30,7 @@ def pair_density_gamma(c_ip_array: np.ndarray) -> np.ndarray:
     \psi_i(r) * \psi_j(r) (* is standard multiplication) and return the result.
 
     Args:
-        c_ip_array (np.ndarray): Array of coefficients describing the Kohn-Sham orbitals in the plane wave basis, shape (#bands, #grid_size, #grid_size, #grid_size)
+        c_ip_array (np.ndarray): Array of coefficients describing the Kohn-Sham orbitals in the plane wave basis, shape (#bands, #grid_size (x), #grid_size (y), #grid_size (z)
 
     Returns:
         np.ndarray: Pair density in reciprocal space
@@ -80,7 +80,7 @@ def eri_gamma(
     by e.g. using a resolution-of-identity.
 
     Args:
-        p (np.ndarray): Array of momentum vectors, shape (#waves, 3)
+        p (np.ndarray): Array of momentum vectors, shape (#waves, p_x, p_y, p_z)
         c_ip (np.ndarray): Array of coefficients describing the Kohn-Sham orbitals in the plane wave basis, shape (#bands, #waves)
 
     Returns:
