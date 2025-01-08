@@ -102,25 +102,23 @@ class NWchem_Driver(ElectronicStructureDriver):
         data = yaml.load(open(file_name,"r"),SafeLoader)
         n_electrons = data['integral_sets'][0]['n_electrons']
         #n_electrons = (data['integral_sets'][0]['n_electrons_up'], data['integral_sets'][0]['n_electrons_down'])
-        n_spatial_orbitals = n_electrons
+        #n_spatial_orbitals = n_electrons
+        n_spatial_orbitals = data['integral_sets'][0]['n_orbitals']
         nuclear_repulsion_energy = data['integral_sets'][0]['coulomb_repulsion']['value']
         # nuclear_repulsion_energy = 0
         self.total_energy = data['integral_sets'][0]['total_energy']
         one_electron_import = data['integral_sets'][0]['hamiltonian']['one_electron_integrals']['values']
         two_electron_import = data['integral_sets'][0]['hamiltonian']['two_electron_integrals']['values']
-
+        #n_spatial_orbitals = max(val for sublist in one_electron_import for val in sublist)    
+        
         one_electron_spatial_integrals, two_electron_spatial_integrals = self.get_spatial_integrals(one_electron_import,two_electron_import,n_spatial_orbitals)
         h1, h2 = self.convert_to_spin_index(one_electron_spatial_integrals,two_electron_spatial_integrals,n_spatial_orbitals)
-        print(h1)
-        print(h2)
         # reference_energy = data['integral_sets'][0]['initial_state_suggestions'][0]['state']['energy']['value']
         symbols = [i['name'] for i in data['integral_sets'][0]['geometry']['atoms']]
-        print(symbols)
         coords = []
         for i in data['integral_sets'][0]['geometry']['atoms']:
             coords = coords + i['coords']
         coords = np.array(coords)
-        print(coords)
         # return n_electrons, n_spatial_orbitals, nuclear_repulsion_energy, h1, h2, reference_energy, symbols, coords
         return n_electrons, n_spatial_orbitals, nuclear_repulsion_energy, h1, h2
         # return n_electrons, n_spatial_orbitals, nuclear_repulsion_energy, one_electron_spatial_integrals, two_electron_spatial_integrals
