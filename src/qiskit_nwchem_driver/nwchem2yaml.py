@@ -1,5 +1,6 @@
 import sys
 import math
+import yaml
 preamble="""
 "$schema": https://raw.githubusercontent.com/Microsoft/Quantum/master/Chemistry/Schema/broombridge-0.1.schema.json
 """
@@ -210,3 +211,13 @@ def extract_fields(file):
     data['integral_sets'] = integral_sets
     f.close()
     return data
+
+
+if __name__ == "__main__":
+
+    out_file_path = sys.argv[1]
+    yaml_file_path = sys.argv[2]
+    
+    data = extract_fields(out_file_path)
+    with open(yaml_file_path, 'w') as f:
+        f.write(yaml.dump(data, default_flow_style=False))
