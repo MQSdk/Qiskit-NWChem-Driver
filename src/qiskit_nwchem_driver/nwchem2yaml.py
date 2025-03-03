@@ -1,5 +1,5 @@
 import sys
-
+import math
 preamble="""
 "$schema": https://raw.githubusercontent.com/Microsoft/Quantum/master/Chemistry/Schema/broombridge-0.1.schema.json
 """
@@ -26,6 +26,7 @@ def extract_fields(file):
     skip_input_geometry = False
     geometry = None
     coulomb_repulsion = None
+    virtual_orb = None
     # scf_energy = None
     # scf_energy_offset = None
     # energy_offset = None
@@ -45,11 +46,13 @@ def extract_fields(file):
     for line in f.readlines():
         ln = line.strip()
         ln_segments = ln.split()
+
         if len(ln) == 0 or ln[0]=="#": #blank or comment line
             continue
         if reader_mode=="":
             if ln == "============================== echo of input deck ==============================":
                 reader_mode = "input_deck"
+
             elif ln_segments[:2] == ["enrep_tce", "="]:
                 coulomb_repulsion = {
                     'units' : 'hartree',
@@ -73,14 +76,16 @@ def extract_fields(file):
             elif ln.find("number of electrons") != -1 and ln.find("Fourier space") != -1:
                 try:
                     n_electrons = int(ln_segments[5]) + int(ln_segments[11])
+                    n_orbitals = math.ceil(int(virtual_orb) + n_electrons*0.5)
                 except:
                     continue
-            elif ln.find("number of orbitals") != -1 and ln.find("Fourier space") != -1:
-                n_orbitals = int(ln_segments[6]) + int(ln_segments[12])
+            #elif ln.find("number of orbitals") != -1 and ln.find("Fourier space") != -1:
+                #n_orbitals = int(ln_segments[6]) + int(ln_segments[12])
             elif ln.find("total     energy") != -1:
                 total_energy = float(ln_segments[3])
             elif ln.find("Number of active orbitals") != -1:
                 n_orbitals = int(ln_segments[-1])
+            
             elif ln.find("ion-ion   energy") != -1:
                 coulomb_repulsion = {
                     'units' : 'hartree',
@@ -130,7 +135,9 @@ def extract_fields(file):
                         ['|vacuum>']
                     ]'''
         elif reader_mode == "input_deck":
-            if ln == "================================================================================":
+            if ln_segments[0] == 'virtual' and ln_segments[1] != 'orbital':
+                virtual_orb = int(ln_segments[1])
+            elif ln == "================================================================================":
                 reader_mode = ""
             elif ln_segments[0:2]== ["geometry", "units"]:
                 reader_mode = "input_geometry"
@@ -195,6 +202,7 @@ def extract_fields(file):
                        "total_energy":total_energy,
                        "coulomb_repulsion" : coulomb_repulsion,
                        "hamiltonian" : hamiltonian,
+                       "virtual_orbitals" : virtual_orb,
                        "n_orbitals" : n_orbitals,
                        "n_electrons" : n_electrons }]
     if initial_state is not None:

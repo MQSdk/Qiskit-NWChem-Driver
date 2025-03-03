@@ -40,7 +40,7 @@ class NWchem_Driver(ElectronicStructureDriver):
         problem = self.to_qiskit_problem_old()
         return problem
 
-
+    # this function creates the matrix (tensor) with the values of the hamiltonian we import, which are the one-electron and two-electron integrals
     def get_spatial_integrals(self, one_electron,two_electron,n_orb):
         one_electron_spatial_integrals = np.zeros((n_orb, n_orb))
         two_electron_spatial_integrals = np.zeros((n_orb, n_orb, n_orb, n_orb))
@@ -75,7 +75,8 @@ class NWchem_Driver(ElectronicStructureDriver):
                 two_electron_spatial_integrals[l, k, j, i] = val[4]
 
         return one_electron_spatial_integrals, two_electron_spatial_integrals
-
+    
+    # this function expands (double dimension) the previous integrals by considering spin up/down possibilities
     def convert_to_spin_index(self, one_electron, two_electron,n_orb):
         h1 = np.block([[one_electron, np.zeros((int(n_orb), int(n_orb)))],
                     [np.zeros((int(n_orb), int(n_orb))), one_electron]])
@@ -99,15 +100,17 @@ class NWchem_Driver(ElectronicStructureDriver):
     def load_from_yaml(self,file_name):
         
         data = yaml.load(open(file_name,"r"),SafeLoader)
-        # n_electrons = data['integral_sets'][0]['n_electrons']
-        n_electrons = (data['integral_sets'][0]['n_electrons_up'], data['integral_sets'][0]['n_electrons_down'])
-        n_spatial_orbitals = sum(n_electrons)
+        n_electrons = data['integral_sets'][0]['n_electrons']
+        #n_electrons = (data['integral_sets'][0]['n_electrons_up'], data['integral_sets'][0]['n_electrons_down'])
+        #n_spatial_orbitals = n_electrons
+        n_spatial_orbitals = data['integral_sets'][0]['n_orbitals']
         nuclear_repulsion_energy = data['integral_sets'][0]['coulomb_repulsion']['value']
         # nuclear_repulsion_energy = 0
         self.total_energy = data['integral_sets'][0]['total_energy']
         one_electron_import = data['integral_sets'][0]['hamiltonian']['one_electron_integrals']['values']
         two_electron_import = data['integral_sets'][0]['hamiltonian']['two_electron_integrals']['values']
-
+        #n_spatial_orbitals = max(val for sublist in one_electron_import for val in sublist)    
+        
         one_electron_spatial_integrals, two_electron_spatial_integrals = self.get_spatial_integrals(one_electron_import,two_electron_import,n_spatial_orbitals)
         h1, h2 = self.convert_to_spin_index(one_electron_spatial_integrals,two_electron_spatial_integrals,n_spatial_orbitals)
         # reference_energy = data['integral_sets'][0]['initial_state_suggestions'][0]['state']['energy']['value']
@@ -133,7 +136,8 @@ class NWchem_Driver(ElectronicStructureDriver):
         #     1,
         #     1
         #  )   # number of electron 
-        
+
+        # split matrices and tensors by spin up or down
         h_ij_up = h1[:n_spatial_orbitals,:n_spatial_orbitals]
         h_ij_dw = h1[n_spatial_orbitals:, n_spatial_orbitals:]
         eri_up = h2[:n_spatial_orbitals,:n_spatial_orbitals,:n_spatial_orbitals,:n_spatial_orbitals]
@@ -160,6 +164,7 @@ class NWchem_Driver(ElectronicStructureDriver):
         
         
         # Qiskit calculation
+        # Convert matrices and tensors to a valid object for Qiskit
         integrals = ElectronicIntegrals.from_raw_integrals(
             h_ij_up,
             eri_aa,
@@ -167,14 +172,14 @@ class NWchem_Driver(ElectronicStructureDriver):
             eri_bb,
             eri_ba,
             # auto_index_order=True,
-            validate=True,
+            validate=True, 
         )
-        qiskit_energy = ElectronicEnergy(integrals)
+        qiskit_energy = ElectronicEnergy(integrals) # electronic energy, including nuclear repulsion
         qiskit_energy.nuclear_repulsion_energy = nucl_repulsion
-        qiskit_problem = ElectronicStructureProblem(qiskit_energy)
+        qiskit_problem = ElectronicStructureProblem(qiskit_energy) # create a problem for Qiskit
 
         #basis
-        qiskit_problem.basis = ElectronicBasis.MO
+        qiskit_problem.basis = ElectronicBasis.MO # molecular orbital basis
         
         # number of particles for spin-up, spin-down
         qiskit_problem.num_particles = num_particles
@@ -186,8 +191,8 @@ class NWchem_Driver(ElectronicStructureDriver):
 
     def solve_fci(self, n_energies=1):
         # Calculate matrix elements
-        h_ij_up, h_ij_dw = self.calc_h_ij()
-        eri_up, eri_dw, eri_dw_up, eri_up_dw = self.calc_eri()
+        h_ij_up, h_ij_dw = self.calc_h_ij() # calculate one-electron integrals
+        eri_up, eri_dw, eri_dw_up, eri_up_dw = self.calc_eri() # calculate two-electron integrals
 
         # Transform ERIs to chemist's index order
         eri_up = eri_up.swapaxes(1, 2).swapaxes(1, 3)
@@ -195,18 +200,22 @@ class NWchem_Driver(ElectronicStructureDriver):
         eri_dw_up = eri_dw_up.swapaxes(1, 2).swapaxes(1, 3)
         eri_up_dw = eri_up_dw.swapaxes(1, 2).swapaxes(1, 3)
 
+        # calculate repulsion between nucleus
         nucl_repulsion = calc_matrix_elements.nuclear_repulsion_energy(
             self.wfc_up_obj.atoms, self.wfc_up_obj.cell_volume
         )
 
-        nelec = (int(np.sum(self.occupations_up)), int(np.sum(self.occupations_dw)))
+        nelec = (int(np.sum(self.occupations_up)), int(np.sum(self.occupations_dw))) # number of spins up and down
+        
         # FCI calculation
-        nroots = n_energies  # number of states to calculate
+        nroots = n_energies  # number of excited states to calculate
 
-        norb = self.wfc_up_obj.nbnd
+        norb = self.wfc_up_obj.nbnd # number of molecular orbitals
 
-        self.fcisolver = pyscf.fci.direct_uhf.FCISolver()
+        self.fcisolver = pyscf.fci.direct_uhf.FCISolver() #initialize FCI solver
+        
         # Ordering of parameters from direct_uhf.make_hdiag
+        # Calculate eigenvalues (energies) and eigenvectors (CI coefficients) with FCI
         self.fci_evs, self.fci_evcs = self.fcisolver.kernel(
             h1e=(h_ij_up.real, h_ij_dw.real),  # a, b (a=up, b=down)
             eri=(
@@ -224,7 +233,7 @@ class NWchem_Driver(ElectronicStructureDriver):
             self.fci_evs = np.array([self.fci_evs])
             self.fci_evcs = [self.fci_evcs]
 
-        fci_energy = self.fci_evs + nucl_repulsion
+        fci_energy = self.fci_evs + nucl_repulsion # total energy for FCI
 
         self.fci_energy = fci_energy
         return fci_energy

@@ -54,8 +54,8 @@ def check_symmetry_two_body_matrix(matrix: np.ndarray):
     matrix_hermitian = matrix.T.conj()
     matrix_hemitian_swap = matrix.T.conj().swapaxes(0, 1).swapaxes(2, 3)
 
-    allclose_hermitian = np.allclose(matrix, matrix_swap)  # , rtol=1e-5, atol=1e-5)
-    allclose_swap = np.allclose(matrix, matrix_hermitian)  # , rtol=1e-5, atol=1e-5)
+    allclose_swap = np.allclose(matrix, matrix_swap)  # , rtol=1e-5, atol=1e-5)
+    allclose_hermitian = np.allclose(matrix, matrix_hermitian)  # , rtol=1e-5, atol=1e-5)
     allclose_hermitian_swap = np.allclose(
         matrix, matrix_hemitian_swap
     )  # , rtol=1e-5, atol=1e-5)
@@ -73,8 +73,8 @@ def iTj(p: np.ndarray, c_ip: np.ndarray) -> np.ndarray:  # Calculates <i|T|j>
         np.ndarray: Kinetic energy matrix
     """
     # Kinetic energy matrix in Hartree units
-    p_norm = np.linalg.norm(p, ord=2, axis=1)
-    return 0.5 * c_ip.conjugate() @ np.diag(p_norm) @ c_ip.T
+    p_norm = np.linalg.norm(p, ord=2, axis=1) # norm of all momentum vectors
+    return 0.5 * c_ip.conjugate() @ np.diag(p_norm) @ c_ip.T 
 
 
 def iUj(p: np.ndarray, c_ip: np.ndarray, atoms: list, cell_volume: float) -> np.ndarray:
@@ -99,7 +99,7 @@ def iUj(p: np.ndarray, c_ip: np.ndarray, atoms: list, cell_volume: float) -> np.
     for atom in atoms:
         Z_I.append(atom["atomic_number"])
         R_I.append(atom["position_hartree"])
-    Z_I = np.array(Z_I)  # shape (#atoms, 3)
+    Z_I = np.array(Z_I)  # shape (#atoms, 1)
     R_I = np.array(R_I)  # shape (#atoms, 3)
 
     q_minus_p = q[None] - p[:, None]  # shape (#waves, #waves, 3)

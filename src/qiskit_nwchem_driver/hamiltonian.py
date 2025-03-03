@@ -32,11 +32,11 @@ class second_quant_hamiltonian:
         h_pqrs: np.ndarray,
         nuclear_repulsion_energy: float,
         occupations: np.ndarray,
-        frozen_core_energy: float = 0.0,
+        frozen_core_energy: float = 0.0, # energy associated with core electrons
         reference_energy: float = 0.0,
     ):
-        assert h_pq.ndim == 2
-        assert h_pqrs.ndim == 4
+        assert h_pq.ndim == 2 # check dimension of one-electron integrals
+        assert h_pqrs.ndim == 4 # check dimension of two-electron integrals
 
         assert (
             h_pq.shape[0]
@@ -95,13 +95,13 @@ class second_quant_hamiltonian:
         # Qiskit calculation
         integrals = ElectronicIntegrals.from_raw_integrals(
             self.h_pq, self.h_pqrs, auto_index_order=True
-        )
-        qiskit_energy = ElectronicEnergy(integrals)
+        ) # create an object and use chemist's order
+        qiskit_energy = ElectronicEnergy(integrals) # create an object for energies
         qiskit_energy.nuclear_repulsion_energy = (
             self.nuclear_repulsion_energy
         )  # *num_particles_sum
         qiskit_energy.constants["frozen_core_energy"] = self.frozen_core_energy
-        qiskit_problem = ElectronicStructureProblem(qiskit_energy)
+        qiskit_problem = ElectronicStructureProblem(qiskit_energy) # object for electronic structure problem for qiskit
 
         # number of particles for spin-up, spin-down
         qiskit_problem.num_particles = num_particles
@@ -116,22 +116,23 @@ class second_quant_hamiltonian:
     def solve_vqe(
         self,
         mapper: FermionicMapper | None = JordanWignerMapper(),
-    ):
-        problem = self.to_qiskit_problem()
-        problem.reference_energy = self.fci_energy
+    ): # define Jordan-Wigner mapper
+        problem = self.to_qiskit_problem() # convert second quantization hamiltonian to qiskit format
+        problem.reference_energy = self.fci_energy # set fci energy calculated previuosly as reference energy for comparison
 
         if mapper is None:
-            mapper = JordanWignerMapper()
+            mapper = JordanWignerMapper() # force Jordan-Wigner mapper
         energy = problem.hamiltonian
-        fermionic_op = energy.second_q_op()
-        pauli_sum_op = mapper.map(fermionic_op)
+        fermionic_op = energy.second_q_op() # get 2nd quant hamiltonian
+        pauli_sum_op = mapper.map(fermionic_op) # map hamiltonian
 
-        # Qubit mapping
+        # Qubit mapping. Define Hartree-Fock as base state to start optimization. Map it to Jordan-Wigner as well
         initial_state = HartreeFock(
             num_spatial_orbitals=problem.num_spatial_orbitals,
             num_particles=problem.num_particles,
             qubit_mapper=mapper,
         )
+        # Define ansatz Unitary Coupled-Cluster Singles and Doubles
         ansatz = UCCSD(
             problem.num_spatial_orbitals,
             problem.num_particles,
@@ -146,7 +147,7 @@ class second_quant_hamiltonian:
         # ansatz.draw("mpl", filename=os.path.join("results", "vqe_ansatz"))
 
         optimizer = optim.COBYLA()  # Classical optimizer
-        estimator = Estimator()
+        estimator = Estimator() # calculate expected value of hamiltonian for given parameters
 
         counts = []
         values = []
@@ -160,8 +161,9 @@ class second_quant_hamiltonian:
         print("Solving VQE...")
         vqe_result = solver.compute_minimum_eigenvalue(pauli_sum_op)
         print("Solved")
-        elec_struc_result = problem.interpret(vqe_result)
+        elec_struc_result = problem.interpret(vqe_result) # convert results of minimum energy to electronic structure context 
 
+        # Store the results
         self.vqe_solver = solver
         self.vqe_results = vqe_result
 
@@ -187,11 +189,12 @@ class second_quant_hamiltonian:
 
         # FCI calculation
         nroots = n_energies  # number of states to calculate
-        self.fci_solver = pyscf.fci.direct_spin1.FCISolver()
-        h_pq_real = self.h_pq.real
+        self.fci_solver = pyscf.fci.direct_spin1.FCISolver() # create object fcisolver
+        h_pq_real = self.h_pq.real # take real part of one and two electrons integrals
         h_pq = h_pq_real
         h_pqrs_real = self.h_pqrs.real
 
+        # Calculate and solve with FCI
         self.fci_evs, self.fci_evcs = self.fci_solver.kernel(
             h1e=h_pq,
             eri=h_pqrs_real,
