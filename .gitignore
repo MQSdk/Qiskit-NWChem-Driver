@@ -218,8 +218,15 @@ cython_debug/
 
 # Executables
 *.exe
-*.out
+#*.out
 *.app
 
 #Images
 *.png
+
+#nwchem
+*.cube
+*.vpp
+*.emovecs
+*.movecs
+nwchem/
