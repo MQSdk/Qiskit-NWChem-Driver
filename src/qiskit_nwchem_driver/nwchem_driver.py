@@ -97,7 +97,7 @@ class NWchem_Driver(ElectronicStructureDriver):
                             h2[i + n_orb, j + n_orb, k + n_orb, l + n_orb] = two_electron[i, j, k, l]
         return h1, 0.5*h2
 
-    def load_from_yaml(self,file_name):
+    def load_from_yaml(self, file_name, include_spin=True):
         
         data = yaml.load(open(file_name,"r"),SafeLoader)
         n_electrons = data['integral_sets'][0]['n_electrons']
@@ -112,7 +112,11 @@ class NWchem_Driver(ElectronicStructureDriver):
         #n_spatial_orbitals = max(val for sublist in one_electron_import for val in sublist)    
         
         one_electron_spatial_integrals, two_electron_spatial_integrals = self.get_spatial_integrals(one_electron_import,two_electron_import,n_spatial_orbitals)
-        h1, h2 = self.convert_to_spin_index(one_electron_spatial_integrals,two_electron_spatial_integrals,n_spatial_orbitals)
+        if include_spin:
+            h1, h2 = self.convert_to_spin_index(one_electron_spatial_integrals,two_electron_spatial_integrals,n_spatial_orbitals)
+        else:
+            h1 = one_electron_spatial_integrals
+            h2 = two_electron_spatial_integrals
         # reference_energy = data['integral_sets'][0]['initial_state_suggestions'][0]['state']['energy']['value']
         symbols = [i['name'] for i in data['integral_sets'][0]['geometry']['atoms']]
         coords = []
