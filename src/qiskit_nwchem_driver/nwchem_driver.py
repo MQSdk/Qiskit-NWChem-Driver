@@ -105,7 +105,7 @@ class NWchem_Driver(ElectronicStructureDriver):
         #n_spatial_orbitals = n_electrons
         n_spatial_orbitals = data['integral_sets'][0]['n_orbitals']
         nuclear_repulsion_energy = data['integral_sets'][0]['coulomb_repulsion']['value']
-        # nuclear_repulsion_energy = 0
+        #nuclear_repulsion_energy = 0
         self.total_energy = data['integral_sets'][0]['total_energy']
         one_electron_import = data['integral_sets'][0]['hamiltonian']['one_electron_integrals']['values']
         two_electron_import = data['integral_sets'][0]['hamiltonian']['two_electron_integrals']['values']
@@ -126,13 +126,11 @@ class NWchem_Driver(ElectronicStructureDriver):
         # return n_electrons, n_spatial_orbitals, nuclear_repulsion_energy, h1, h2, reference_energy, symbols, coords
         return n_electrons, n_spatial_orbitals, nuclear_repulsion_energy, h1, h2
         # return n_electrons, n_spatial_orbitals, nuclear_repulsion_energy, one_electron_spatial_integrals, two_electron_spatial_integrals
+  
+    
     def to_qcschema(self, *, include_dipole: bool = True) -> QCSchema:
         return super().to_qcschema(include_dipole=include_dipole)
 
-
-
-    
-    
     
     def to_qiskit_problem_old(self):
         num_particles, n_spatial_orbitals, nucl_repulsion, h1, h2 = self.load_from_yaml(self.nwchem_output)

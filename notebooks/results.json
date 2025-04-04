@@ -1,0 +1,122 @@
+[
+    {
+        "geometry": "H 0.0 0.0 -0.3; H 0.0 0.0 0.3;",
+        "energy": -1.1391732930173684,
+        "nuclear_repulsion": 0.8819620182000001,
+        "electronic_energy": -2.0211353112173684
+    },
+    {
+        "geometry": "H 0.0 0.0 -0.35; H 0.0 0.0 0.35;",
+        "energy": -1.1609046793447528,
+        "nuclear_repulsion": 0.7559674441714287,
+        "electronic_energy": -1.9168721235161814
+    },
+    {
+        "geometry": "H 0.0 0.0 -0.4; H 0.0 0.0 0.4;",
+        "energy": -1.16275076035457,
+        "nuclear_repulsion": 0.66147151365,
+        "electronic_energy": -1.82422227400457
+    },
+    {
+        "geometry": "H 0.0 0.0 -0.45; H 0.0 0.0 0.45;",
+        "energy": -1.1540817046240248,
+        "nuclear_repulsion": 0.5879746788,
+        "electronic_energy": -1.7420563834240248
+    },
+    {
+        "geometry": "H 0.0 0.0 -0.5; H 0.0 0.0 0.5;",
+        "energy": -1.1400734792411802,
+        "nuclear_repulsion": 0.52917721092,
+        "electronic_energy": -1.66925069016118
+    },
+    {
+        "geometry": "H 0.0 0.0 -0.75; H 0.0 0.0 0.75;",
+        "energy": -1.061534949183764,
+        "nuclear_repulsion": 0.35278480728,
+        "electronic_energy": -1.414319756463764
+    },
+    {
+        "geometry": "H 0.0 0.0 -1.0; H 0.0 0.0 1.0;",
+        "energy": -1.0175941132800979,
+        "nuclear_repulsion": 0.26458860546,
+        "electronic_energy": -1.2821827187400978
+    },
+    {
+        "geometry": "H 0.0 0.0 -1.25; H 0.0 0.0 1.25;",
+        "energy": -1.003129250175952,
+        "nuclear_repulsion": 0.21167088436800002,
+        "electronic_energy": -1.2148001345439519
+    },
+    {
+        "geometry": "H 0.0 0.0 -1.5; H 0.0 0.0 1.5;",
+        "energy": -0.9995506138737875,
+        "nuclear_repulsion": 0.17639240364,
+        "electronic_energy": -1.1759430175137875
+    },
+    {
+        "geometry": "H 0.0 0.0 -1.75; H 0.0 0.0 1.75;",
+        "energy": -0.9987710546414797,
+        "nuclear_repulsion": 0.15119348883428574,
+        "electronic_energy": -1.1499645434757655
+    },
+    {
+        "geometry": "H 0.0 0.0 -2.0; H 0.0 0.0 2.0;",
+        "energy": -0.9986061854324185,
+        "nuclear_repulsion": 0.13229430273,
+        "electronic_energy": -1.1309004881624185
+    },
+    {
+        "geometry": "H 0.0 0.0 -2.25; H 0.0 0.0 2.25;",
+        "energy": -0.9985690927067824,
+        "nuclear_repulsion": 0.11759493576,
+        "electronic_energy": -1.1161640284667824
+    },
+    {
+        "geometry": "H 0.0 0.0 -2.5; H 0.0 0.0 2.5;",
+        "energy": -0.9985598758733154,
+        "nuclear_repulsion": 0.10583544218400001,
+        "electronic_energy": -1.1043953180573154
+    },
+    {
+        "geometry": "H 0.0 0.0 -3.0; H 0.0 0.0 3.0;",
+        "energy": -0.9985570658143128,
+        "nuclear_repulsion": 0.08819620182,
+        "electronic_energy": -1.0867532676343128
+    },
+    {
+        "geometry": "H 0.0 0.0 -3.0; H 0.0 0.0 3.0;",
+        "energy": -1.40926031220613,
+        "nuclear_repulsion": 0.08819620182,
+        "electronic_energy": -1.0867532676343128
+    },
+    {
+        "geometry": "H 0.0 0.0 -3.0; H 0.0 0.0 3.0;",
+        "energy": -1.40926031220613,
+        "nuclear_repulsion": 0.08819620182,
+        "electronic_energy": -1.0867532676343128
+    },
+    {
+        "geometry": "H 0.0 0.0 -3.0; H 0.0 0.0 3.0;",
+        "energy": -1.40926031220613,
+        "nuclear_repulsion": 0.08819620182,
+        "electronic_energy": -1.0867532676343128
+    },
+    {
+        "geometry": "H 0.0 0.0 -3.0; H 0.0 0.0 3.0;",
+        "energy": -1.40926031220613,
+        "nuclear_repulsion": 0.08819620182,
+        "electronic_energy": -1.0867532676343128
+    },
+    {
+        "geometry": "H 0.0 0.0 -3.0; H 0.0 0.0 3.0;",
+        "energy": -1.40926031220613,
+        "nuclear_repulsion": 0.08819620182,
+        "electronic_energy": -1.0867532676343128
+    },
+    {
+        "geometry": "H 0.0 0.0 -3.0; H 0.0 0.0 3.0;",
+        "energy": -1.40926031220613,
+        "nuclear_repulsion": 0.08819620182,
+        "electronic_energy": -1.0867532676343128
+    }
+]

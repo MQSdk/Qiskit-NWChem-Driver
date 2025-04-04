@@ -1,0 +1,652 @@
+ argument  1 = H2-3.0.nw
+
+
+
+============================== echo of input deck ==============================
+title "swnc: e theory=pspw4 xc=hf formula=H2 charge=0 mult=1"
+#machinejob:expert
+
+echo
+
+start pspw_hf_H2
+
+memory heap 1200 mb stack 1200 mb global 10 mb
+
+charge 0
+
+geometry
+H    0.00000    0.00000   -1.50000
+H    0.00000    0.00000    1.50000
+end
+
+nwpw
+  ### pseudopotential block begin ###
+  ### pseudopotential block end   ###
+  simulation_cell
+     SC 15.0000
+     boundary_conditions aperiodic
+  end
+
+  cutoff 50.0
+  mult 1
+  xc hf
+  lmbfgs
+  tolerances 1.0e-9 1.0e-9
+
+  virtual 1
+end
+set nwpw:cif_filename H2
+
+#set nwpw:CI_maxit_orb 15
+#set nwpw:CI_maxit_linesearch 15
+set pspw:HFX_screening_radius 14.0
+
+
+set nwpw:2qintegrals .true.
+set nwpw:3x3_virtual .true.
+
+task pspw energy
+================================================================================
+
+
+                                         
+                                         
+
+
+             Northwest Computational Chemistry Package (NWChem) 7.2.2
+             --------------------------------------------------------
+
+
+                    Environmental Molecular Sciences Laboratory
+                       Pacific Northwest National Laboratory
+                                Richland, WA 99352
+
+                              Copyright (c) 1994-2022
+                       Pacific Northwest National Laboratory
+                            Battelle Memorial Institute
+
+             NWChem is an open-source computational chemistry package
+                        distributed under the terms of the
+                      Educational Community License (ECL) 2.0
+             A copy of the license is included with this distribution
+                              in the LICENSE.TXT file
+
+                                  ACKNOWLEDGMENT
+                                  --------------
+
+            This software and its documentation were developed at the
+            EMSL at Pacific Northwest National Laboratory, a multiprogram
+            national laboratory, operated for the U.S. Department of Energy
+            by Battelle under Contract Number DE-AC05-76RL01830. Support
+            for this work was provided by the Department of Energy Office
+            of Biological and Environmental Research, Office of Basic
+            Energy Sciences, and the Office of Advanced Scientific Computing.
+
+
+           Job information
+           ---------------
+
+    hostname        = LAPTOP-JJQSTSEL
+    program         = nwchem
+    date            = Tue Apr  1 20:00:51 2025
+
+    compiled        = Fri_Jun_07_07:50:04_2024
+    source          = /home/conda/feedstock_root/build_artifacts/nwchem_1717738148552/work
+    nwchem branch   = 7.2.2
+    nwchem revision = 64ba0f0
+    ga revision     = 5.8.0
+    use scalapack   = T
+    input           = H2-3.0.nw
+    prefix          = pspw_hf_H2.
+    data base       = ./pspw_hf_H2.db
+    status          = startup
+    nproc           =        1
+    time left       =     -1s
+
+
+
+           Memory information
+           ------------------
+
+    heap     =  157286396 doubles =   1200.0 Mbytes
+    stack    =  157286401 doubles =   1200.0 Mbytes
+    global   =    1310720 doubles =     10.0 Mbytes (distinct from heap & stack)
+    total    =  315883517 doubles =   2410.0 Mbytes
+    verify   = yes
+    hardfail = no 
+
+
+           Directory information
+           ---------------------
+
+  0 permanent = .
+  0 scratch   = .
+
+
+
+
+                                NWChem Input Module
+                                -------------------
+
+
+               swnc: e theory=pspw4 xc=hf formula=H2 charge=0 mult=1
+               -----------------------------------------------------
+
+ Scaling coordinates for geometry "geometry" by  1.889725989
+ (inverse scale =  0.529177249)
+
+ ORDER OF PRIMARY AXIS IS BEING SET TO 4
+ D4H symmetry detected
+
+          ------
+          auto-z
+          ------
+     1 autoz failed with cvr_scaling = 1.2 changing to 1.3
+     2 autoz failed with cvr_scaling = 1.3 changing to 1.4
+     3 autoz failed with cvr_scaling = 1.4 changing to 1.5
+     4 autoz failed with cvr_scaling = 1.5 changing to 1.6
+     5 autoz failed with cvr_scaling = 1.6 changing to 1.7
+
+ AUTOZ failed to generate good internal coordinates.
+ Cartesian coordinates will be used in optimizations.
+
+
+
+                             Geometry "geometry" -> ""
+                             -------------------------
+
+ Output coordinates in angstroms (scale by  1.889725989 to convert to a.u.)
+
+  No.       Tag          Charge          X              Y              Z
+ ---- ---------------- ---------- -------------- -------------- --------------
+    1 H                    1.0000     0.00000000     0.00000000    -1.50000000
+    2 H                    1.0000     0.00000000     0.00000000     1.50000000
+
+      Atomic Mass 
+      ----------- 
+
+      H                  1.007825
+
+
+ Effective nuclear repulsion energy (a.u.)       0.1763924163
+
+            Nuclear Dipole moment (a.u.) 
+            ----------------------------
+        X                 Y               Z
+ ---------------- ---------------- ----------------
+     0.0000000000     0.0000000000     0.0000000000
+
+      Symmetry information
+      --------------------
+
+ Group name             D4h       
+ Group number             28
+ Group order              16
+ No. of unique centers     1
+
+      Symmetry unique atoms
+
+     1
+
+
+            XYZ format geometry
+            -------------------
+     2
+ geometry
+ H                     0.00000000     0.00000000    -1.50000000
+ H                     0.00000000     0.00000000     1.50000000
+
+          ****************************************************
+          *                                                  *
+          *               NWPW PSPW Calculation              *
+          *                                                  *
+          * [ (Grassmann/Stiefel manifold implementation)  ] *
+          *                                                  *
+          *      [ NorthWest Chemistry implementation ]      *
+          *                                                  *
+          *            version #5.10   06/12/02              *
+          *                                                  *
+          *    This code was developed by Eric J. Bylaska,   *
+          *    and was based upon algorithms and code        *
+          *    developed by the group of Prof. John H. Weare *
+          *                                                  *
+          ****************************************************
+     >>>  JOB STARTED       AT Tue Apr  1 20:00:51 2025  <<<
+          ================ input data ========================
+
+ input psi filename:./pspw_hf_H2.movecs
+
+ number of processors used:         1
+ processor grid           :   1 x   1
+ parallel mapping         :2d-hilbert
+ parallel mapping         :  balanced
+ number of threads        :         1
+ parallel io              :       off
+
+ options:
+      boundary conditions  = aperiodic   (version4)
+      electron spin        = restricted
+      exchange-correlation = Hartree-Fock
+      - HFX relaxed
+      - HFX restricted orbitals :    1
+      - HFX free-space coulomb solver
+
+
+ elements involved in the cluster:
+      1: H   valence charge:  1.0000  lmax=  1
+             comment    : Parameterized (Chem.Phys.Lett., vol 322, page 447) Hamman psp
+             pseudpotential type            :   0
+             highest angular component      :   1
+             local potential used           :   1
+             number of non-local projections:   1
+             aperiodic cutoff radius        :  1.000
+             cutoff =   0.800   0.800
+
+
+ total charge:   0.000
+
+ atomic composition:
+     H   :    2
+
+ number of electrons: spin up=     1 (   1 per task)  down=     1 (   1 per task) (Fourier space)
+ number of orbitals : spin up=     1 (   1 per task)  down=     1 (   1 per task) (Fourier space)
+
+ supercell:
+      cell_name:  cell_default                                      
+      lattice:    a1=<  15.000   0.000   0.000 >
+                  a2=<   0.000  15.000   0.000 >
+                  a3=<   0.000   0.000  15.000 >
+      reciprocal: b1=<   0.419   0.000   0.000 >
+                  b2=<   0.000   0.419   0.000 >
+                  b3=<   0.000   0.000   0.419 >
+      lattice:    a=      15.000 b=     15.000 c=      15.000
+                  alpha=  90.000 beta=  90.000 gamma=  90.000
+                  omega=      3375.0
+
+      density cutoff=100.000  fft= 70x 70x 70(    80618 waves    80618 per task)
+      wavefnc cutoff= 50.000  fft= 70x 70x 70(    28526 waves    28526 per task)
+
+ technical parameters:
+      time step=      5.80     fictitious mass=  400000.0
+      tolerance=0.100E-08 (energy)   0.100E-08 (density)
+      maximum iterations =      1000 (   10 inner    100 outer )
+
+
+
+
+
+== Energy Calculation ==
+
+
+          ============ Grassmann lmbfgs iteration ============
+     >>>  ITERATION STARTED AT Tue Apr  1 20:00:57 2025  <<<
+    iter.           Energy         DeltaE       DeltaRho 
+    ------------------------------------------------------
+      10   -0.8311717995E+00   -0.18885E-02    0.75317E-02
+     -  10 steepest descent iterations performed
+      20   -0.8357164938E+00   -0.11423E-03    0.59089E-04
+      30   -0.8359235253E+00   -0.50834E-05    0.40521E-05
+      40   -0.8359367753E+00   -0.19430E-06    0.17253E-06
+      50   -0.8359373663E+00   -0.13281E-07    0.18212E-08
+      60   -0.8359374052E+00   -0.81545E-09    0.97858E-10
+  *** tolerance ok. iteration terminated
+     >>>  ITERATION ENDED   AT Tue Apr  1 20:01:39 2025  <<<
+
+
+==  Summary Of Results  ==
+
+ number of electrons: spin up=    1.00000  down=    1.00000 (real space)
+
+ total     energy    :  -0.8359374052E+00 (   -0.41797E+00/ion)
+ total orbital energy:  -0.6691989361E+00 (   -0.66920E+00/electron)
+ hartree   energy    :   0.6862617708E+00 (    0.68626E+00/electron)
+ exc-corr  energy    :   0.0000000000E+00 (    0.00000E+00/electron)
+ HF exchange energy  :  -0.3431308854E+00 (   -0.34313E+00/electron)
+ ion-ion   energy    :   0.1763924163E+00 (    0.88196E-01/ion)
+
+ kinetic (planewave) :   0.6122870582E+00 (    0.61229E+00/electron)
+ V_local (planewave) :  -0.1821522174E+01 (   -0.18215E+01/electron)
+ V_nl    (planewave) :  -0.1462255908E+00 (   -0.14623E+00/electron)
+ V_Coul  (planewave) :   0.1372523542E+01 (    0.13725E+01/electron)
+ V_xc.   (planewave) :   0.0000000000E+00 (    0.00000E+00/electron)
+ K.S. HFX energy     :  -0.6862617708E+00 (   -0.68626E+00/electron)
+ Virial Coefficient  :  -0.9721326223E+00
+
+ orbital energies:
+    -0.3345995E+00 (  -9.105eV)
+
+
+== Virtual Orbital Calculation ==
+
+
+ input epsi filename:./pspw_hf_H2.emovecs
+
+ COVOs Mimimization
+ ------------------
+CI gradient algorithm =         3
+maxit_sweeps          =         3
+maxit_orb             =       120
+maxit_linesearch      =        15
+maxerror              = 0.100E-08
+
+     orb,it,eci,eold,eci-eold=                    1                    1 -0.93159284407560095      -0.92665038532239585       -4.9424587532050923E-003 F
+     orb,it,eci,eold,eci-eold=                    1                    2 -0.93227655302669699      -0.93159284407560095       -6.8370895109604035E-004 F
+     orb,it,eci,eold,eci-eold=                    1                    3 -0.94276312301908949      -0.93227655302669699       -1.0486569992392503E-002 F
+     orb,it,eci,eold,eci-eold=                    1                    4 -0.94414386593331301      -0.94276312301908949       -1.3807429142235206E-003 F
+     orb,it,eci,eold,eci-eold=                    1                    5 -0.94723680688837519      -0.94414386593331301       -3.0929409550621845E-003 F
+     orb,it,eci,eold,eci-eold=                    1                    6 -0.95073715013963911      -0.94723680688837519       -3.5003432512639154E-003 F
+     orb,it,eci,eold,eci-eold=                    1                    7 -0.95356600483266019      -0.95073715013963911       -2.8288546930210767E-003 F
+     orb,it,eci,eold,eci-eold=                    1                    8 -0.95480884262677179      -0.95356600483266019       -1.2428377941116064E-003 F
+     orb,it,eci,eold,eci-eold=                    1                    9 -0.95570823783593051      -0.95480884262677179       -8.9939520915871540E-004 F
+     orb,it,eci,eold,eci-eold=                    1                   10 -0.96072264601064350      -0.95570823783593051       -5.0144081747129921E-003 F
+     orb,it,eci,eold,eci-eold=                    1                   11 -0.96148385223562804      -0.96072264601064350       -7.6120622498454527E-004 F
+     orb,it,eci,eold,eci-eold=                    1                   12 -0.96164880147595344      -0.96148385223562804       -1.6494924032539604E-004 F
+     orb,it,eci,eold,eci-eold=                    1                   13 -0.96422083005769021      -0.96164880147595344       -2.5720285817367738E-003 F
+     orb,it,eci,eold,eci-eold=                    1                   14 -0.96581035493612089      -0.96422083005769021       -1.5895248784306704E-003 F
+     orb,it,eci,eold,eci-eold=                    1                   15 -0.96831239641545386      -0.96581035493612089       -2.5020414793329726E-003 F
+     orb,it,eci,eold,eci-eold=                    1                   16 -0.96850902639655012      -0.96831239641545386       -1.9662998109626351E-004 F
+     orb,it,eci,eold,eci-eold=                    1                   17 -0.96868155076163465      -0.96850902639655012       -1.7252436508452540E-004 F
+     orb,it,eci,eold,eci-eold=                    1                   18 -0.97025136366285403      -0.96868155076163465       -1.5698129012193807E-003 F
+     orb,it,eci,eold,eci-eold=                    1                   19 -0.97087332661726544      -0.97025136366285403       -6.2196295441141469E-004 F
+     orb,it,eci,eold,eci-eold=                    1                   20 -0.97116919684881098      -0.97087332661726544       -2.9587023154553638E-004 F
+     orb,it,eci,eold,eci-eold=                    1                   21 -0.97275006049795809      -0.97116919684881098       -1.5808636491471129E-003 F
+     orb,it,eci,eold,eci-eold=                    1                   22 -0.97317239008545664      -0.97275006049795809       -4.2232958749854888E-004 F
+     orb,it,eci,eold,eci-eold=                    1                   23 -0.97332215086577656      -0.97317239008545664       -1.4976078031991857E-004 F
+     orb,it,eci,eold,eci-eold=                    1                   24 -0.97451694055026938      -0.97332215086577656       -1.1947896844928252E-003 F
+     orb,it,eci,eold,eci-eold=                    1                   25 -0.97512911652952872      -0.97451694055026938       -6.1217597925933287E-004 F
+     orb,it,eci,eold,eci-eold=                    1                   26 -0.97600916408880423      -0.97512911652952872       -8.8004755927550971E-004 F
+     orb,it,eci,eold,eci-eold=                    1                   27 -0.97605232953681020      -0.97600916408880423       -4.3165448005977325E-005 F
+     orb,it,eci,eold,eci-eold=                    1                   28 -0.97611641855037479      -0.97605232953681020       -6.4089013564583297E-005 F
+     orb,it,eci,eold,eci-eold=                    1                   29 -0.97663888984454628      -0.97611641855037479       -5.2247129417148930E-004 F
+     orb,it,eci,eold,eci-eold=                    1                   30 -0.97684962404709108      -0.97663888984454628       -2.1073420254480446E-004 F
+     orb,it,eci,eold,eci-eold=                    1                   31 -0.97698042102671678      -0.97684962404709108       -1.3079697962570247E-004 F
+     orb,it,eci,eold,eci-eold=                    1                   32 -0.97756532597327661      -0.97698042102671678       -5.8490494655982772E-004 F
+     orb,it,eci,eold,eci-eold=                    1                   33 -0.97780902409840320      -0.97756532597327661       -2.4369812512659017E-004 F
+     orb,it,eci,eold,eci-eold=                    1                   34 -0.97787021873648772      -0.97780902409840320       -6.1194638084516306E-005 F
+     orb,it,eci,eold,eci-eold=                    1                   35 -0.97820421115732614      -0.97787021873648772       -3.3399242083842484E-004 F
+     orb,it,eci,eold,eci-eold=                    1                   36 -0.97832032670861480      -0.97820421115732614       -1.1611555128865358E-004 F
+     orb,it,eci,eold,eci-eold=                    1                   37 -0.97840496265844457      -0.97832032670861480       -8.4635949829769963E-005 F
+     orb,it,eci,eold,eci-eold=                    1                   38 -0.97882860616151501      -0.97840496265844457       -4.2364350307044774E-004 F
+     orb,it,eci,eold,eci-eold=                    1                   39 -0.97898502512984720      -0.97882860616151501       -1.5641896833218372E-004 F
+     orb,it,eci,eold,eci-eold=                    1                   40 -0.97899534764802443      -0.97898502512984720       -1.0322518177230400E-005 F
+     orb,it,eci,eold,eci-eold=                    1                   41 -0.97921381219856107      -0.97899534764802443       -2.1846455053664560E-004 F
+     orb,it,eci,eold,eci-eold=                    1                   42 -0.97935003402382215      -0.97921381219856107       -1.3622182526107363E-004 F
+     orb,it,eci,eold,eci-eold=                    1                   43 -0.97943191206845803      -0.97935003402382215       -8.1878044635885772E-005 F
+     orb,it,eci,eold,eci-eold=                    1                   44 -0.97968129433810924      -0.97943191206845803       -2.4938226965121046E-004 F
+     orb,it,eci,eold,eci-eold=                    1                   45 -0.97971411327122737      -0.97968129433810924       -3.2818933118128335E-005 F
+     orb,it,eci,eold,eci-eold=                    1                   46 -0.97973677243975144      -0.97971411327122737       -2.2659168524064022E-005 F
+     orb,it,eci,eold,eci-eold=                    1                   47 -0.97995039498757386      -0.97973677243975144       -2.1362254782242296E-004 F
+     orb,it,eci,eold,eci-eold=                    1                   48 -0.98006988776070825      -0.97995039498757386       -1.1949277313438866E-004 F
+     orb,it,eci,eold,eci-eold=                    1                   49 -0.98020583243250903      -0.98006988776070825       -1.3594467180078063E-004 F
+     orb,it,eci,eold,eci-eold=                    1                   50 -0.98027912091769465      -0.98020583243250903       -7.3288485185618590E-005 F
+     orb,it,eci,eold,eci-eold=                    1                   51 -0.98039933846765903      -0.98027912091769465       -1.2021754996438538E-004 F
+     orb,it,eci,eold,eci-eold=                    1                   52 -0.98046515086562491      -0.98039933846765903       -6.5812397965880898E-005 F
+     orb,it,eci,eold,eci-eold=                    1                   53 -0.98053796329221854      -0.98046515086562491       -7.2812426593626967E-005 F
+     orb,it,eci,eold,eci-eold=                    1                   54 -0.98057817005463654      -0.98053796329221854       -4.0206762418004693E-005 F
+     orb,it,eci,eold,eci-eold=                    1                   55 -0.98066282823775242      -0.98057817005463654       -8.4658183115871033E-005 F
+     orb,it,eci,eold,eci-eold=                    1                   56 -0.98066858828776926      -0.98066282823775242       -5.7600500168453195E-006 F
+     orb,it,eci,eold,eci-eold=                    1                   57 -0.98067575631625348      -0.98066858828776926       -7.1680284842168263E-006 F
+     orb,it,eci,eold,eci-eold=                    1                   58 -0.98075037469185022      -0.98067575631625348       -7.4618375596746667E-005 F
+     orb,it,eci,eold,eci-eold=                    1                   59 -0.98078933002144209      -0.98075037469185022       -3.8955329591860988E-005 F
+     orb,it,eci,eold,eci-eold=                    1                   60 -0.98082393668055534      -0.98078933002144209       -3.4606659113256555E-005 F
+     orb,it,eci,eold,eci-eold=                    1                   61 -0.98084292031475684      -0.98082393668055534       -1.8983634201497068E-005 F
+     orb,it,eci,eold,eci-eold=                    1                   62 -0.98088254897501415      -0.98084292031475684       -3.9628660257307047E-005 F
+     orb,it,eci,eold,eci-eold=                    1                   63 -0.98088294112480001      -0.98088254897501415       -3.9214978586610272E-007 F
+     orb,it,eci,eold,eci-eold=                    1                   64 -0.98088615724686856      -0.98088294112480001       -3.2161220685500425E-006 F
+     orb,it,eci,eold,eci-eold=                    1                   65 -0.98092037930518128      -0.98088615724686856       -3.4222058312716186E-005 F
+     orb,it,eci,eold,eci-eold=                    1                   66 -0.98094005843471610      -0.98092037930518128       -1.9679129534821982E-005 F
+     orb,it,eci,eold,eci-eold=                    1                   67 -0.98096415673508996      -0.98094005843471610       -2.4098300373864845E-005 F
+     orb,it,eci,eold,eci-eold=                    1                   68 -0.98097799659408258      -0.98096415673508996       -1.3839858992614751E-005 F
+     orb,it,eci,eold,eci-eold=                    1                   69 -0.98099739065356695      -0.98097799659408258       -1.9394059484367787E-005 F
+     orb,it,eci,eold,eci-eold=                    1                   70 -0.98100613646848889      -0.98099739065356695       -8.7458149219399317E-006 F
+     orb,it,eci,eold,eci-eold=                    1                   71 -0.98101777241592847      -0.98100613646848889       -1.1635947439581074E-005 F
+     orb,it,eci,eold,eci-eold=                    1                   72 -0.98102505383531358      -0.98101777241592847       -7.2814193851078457E-006 F
+     orb,it,eci,eold,eci-eold=                    1                   73 -0.98103740774126014      -0.98102505383531358       -1.2353905946560495E-005 F
+     orb,it,eci,eold,eci-eold=                    1                   74 -0.98103812442111182      -0.98103740774126014       -7.1667985168666348E-007 F
+     orb,it,eci,eold,eci-eold=                    1                   75 -0.98103878469103067      -0.98103812442111182       -6.6026991885070885E-007 F
+     orb,it,eci,eold,eci-eold=                    1                   76 -0.98104606618771839      -0.98103878469103067       -7.2814966877166043E-006 F
+     orb,it,eci,eold,eci-eold=                    1                   77 -0.98104854879358938      -0.98104606618771839       -2.4826058709903620E-006 F
+     orb,it,eci,eold,eci-eold=                    1                   78 -0.98104918177430078      -0.98104854879358938       -6.3298071140138745E-007 F
+     orb,it,eci,eold,eci-eold=                    1                   79 -0.98105532151476227      -0.98104918177430078       -6.1397404614860207E-006 F
+     orb,it,eci,eold,eci-eold=                    1                   80 -0.98106072981096248      -0.98105532151476227       -5.4082962002155455E-006 F
+     orb,it,eci,eold,eci-eold=                    1                   81 -0.98106349763064316      -0.98106072981096248       -2.7678196806713018E-006 F
+     orb,it,eci,eold,eci-eold=                    1                   82 -0.98106910040147066      -0.98106349763064316       -5.6027708275063759E-006 F
+     orb,it,eci,eold,eci-eold=                    1                   83 -0.98107272214841457      -0.98106910040147066       -3.6217469439048244E-006 F
+     orb,it,eci,eold,eci-eold=                    1                   84 -0.98107718242523867      -0.98107272214841457       -4.4602768241031043E-006 F
+     orb,it,eci,eold,eci-eold=                    1                   85 -0.98107951140225147      -0.98107718242523867       -2.3289770127998821E-006 F
+     orb,it,eci,eold,eci-eold=                    1                   86 -0.98108384129152781      -0.98107951140225147       -4.3298892763443675E-006 F
+     orb,it,eci,eold,eci-eold=                    1                   87 -0.98108480293585743      -0.98108384129152781       -9.6164432961121094E-007 F
+     orb,it,eci,eold,eci-eold=                    1                   88 -0.98108528337552181      -0.98108480293585743       -4.8043966438537922E-007 F
+     orb,it,eci,eold,eci-eold=                    1                   89 -0.98108765273167353      -0.98108528337552181       -2.3693561517212913E-006 F
+     orb,it,eci,eold,eci-eold=                    1                   90 -0.98108829742033632      -0.98108765273167353       -6.4468866278755144E-007 F
+     orb,it,eci,eold,eci-eold=                    1                   91 -0.98108875854933886      -0.98108829742033632       -4.6112900253802991E-007 F
+     orb,it,eci,eold,eci-eold=                    1                   92 -0.98109157934619473      -0.98108875854933886       -2.8207968558735530E-006 F
+     orb,it,eci,eold,eci-eold=                    1                   93 -0.98109315114595186      -0.98109157934619473       -1.5717997571274012E-006 F
+     orb,it,eci,eold,eci-eold=                    1                   94 -0.98109358660586921      -0.98109315114595186       -4.3545991734728062E-007 F
+     orb,it,eci,eold,eci-eold=                    1                   95 -0.98109566913255697      -0.98109358660586921       -2.0825266877633197E-006 F
+     orb,it,eci,eold,eci-eold=                    1                   96 -0.98109635035865650      -0.98109566913255697       -6.8122609953036317E-007 F
+     orb,it,eci,eold,eci-eold=                    1                   97 -0.98109646080711188      -0.98109635035865650       -1.1044845538155101E-007 F
+     orb,it,eci,eold,eci-eold=                    1                   98 -0.98109808580164393      -0.98109646080711188       -1.6249945320456760E-006 F
+     orb,it,eci,eold,eci-eold=                    1                   99 -0.98109963296200575      -0.98109808580164393       -1.5471603618255614E-006 F
+     orb,it,eci,eold,eci-eold=                    1                  100 -0.98110037457641763      -0.98109963296200575       -7.4161441188103083E-007 F
+     orb,it,eci,eold,eci-eold=                    1                  101 -0.98110185505202496      -0.98110037457641763       -1.4804756073294456E-006 F
+     orb,it,eci,eold,eci-eold=                    1                  102 -0.98110283821141264      -0.98110185505202496       -9.8315938767967737E-007 F
+     orb,it,eci,eold,eci-eold=                    1                  103 -0.98110386750083334      -0.98110283821141264       -1.0292894206953562E-006 F
+     orb,it,eci,eold,eci-eold=                    1                  104 -0.98110432139184711      -0.98110386750083334       -4.5389101377413255E-007 F
+     orb,it,eci,eold,eci-eold=                    1                  105 -0.98110535108142194      -0.98110432139184711       -1.0296895748274082E-006 F
+     orb,it,eci,eold,eci-eold=                    1                  106 -0.98110558088492739      -0.98110535108142194       -2.2980350544710149E-007 F
+     orb,it,eci,eold,eci-eold=                    1                  107 -0.98110565064669686      -0.98110558088492739       -6.9761769472265200E-008 F
+     orb,it,eci,eold,eci-eold=                    1                  108 -0.98110631864111209      -0.98110565064669686       -6.6799441522658043E-007 F
+     orb,it,eci,eold,eci-eold=                    1                  109 -0.98110668535063850      -0.98110631864111209       -3.6670952641149057E-007 F
+     orb,it,eci,eold,eci-eold=                    1                  110 -0.98110683124705478      -0.98110668535063850       -1.4589641628148797E-007 F
+     orb,it,eci,eold,eci-eold=                    1                  111 -0.98110746675188110      -0.98110683124705478       -6.3550482631846705E-007 F
+     orb,it,eci,eold,eci-eold=                    1                  112 -0.98110792272141456      -0.98110746675188110       -4.5596953346382918E-007 F
+     orb,it,eci,eold,eci-eold=                    1                  113 -0.98110815803377183      -0.98110792272141456       -2.3531235726625965E-007 F
+     orb,it,eci,eold,eci-eold=                    1                  114 -0.98110871393132482      -0.98110815803377183       -5.5589755298957044E-007 F
+     orb,it,eci,eold,eci-eold=                    1                  115 -0.98110876072422981      -0.98110871393132482       -4.6792904995207607E-008 F
+     orb,it,eci,eold,eci-eold=                    1                  116 -0.98110877862810875      -0.98110876072422981       -1.7903878934966144E-008 F
+     orb,it,eci,eold,eci-eold=                    1                  117 -0.98110919654751894      -0.98110877862810875       -4.1791941018942680E-007 F
+     orb,it,eci,eold,eci-eold=                    1                  118 -0.98110955160596580      -0.98110919654751894       -3.5505844686589683E-007 F
+     orb,it,eci,eold,eci-eold=                    1                  119 -0.98110971528460533      -0.98110955160596580       -1.6367863953092865E-007 F
+     orb,it,eci,eold,eci-eold=                    1                  120 -0.98111009242837599      -0.98110971528460533       -3.7714377065789506E-007 F
+     orb,it,eci,eold,eci-eold=                    1                  121 -0.98111034652100471      -0.98111009242837599       -2.5409262871534111E-007 F
+     orbital   1 current e= -0.114219E+00 error=0.945E-01 (eci= -0.981110347E+00 error=0.254E-06) iterations 121(   0 preconditioned, Ep,Sp= 20.0  200.0)
+     orb,it,eci,eold,eci-eold=                    1                    1 -0.98111143352548291      -0.98111034652100471       -1.0870044782063104E-006 F
+     orb,it,eci,eold,eci-eold=                    1                    2 -0.98111173128697415      -0.98111143352548291       -2.9776149124138840E-007 F
+     orb,it,eci,eold,eci-eold=                    1                    3 -0.98111210392818071      -0.98111173128697415       -3.7264120655855493E-007 F
+     orb,it,eci,eold,eci-eold=                    1                    4 -0.98111216879292573      -0.98111210392818071       -6.4864745019654890E-008 F
+     orb,it,eci,eold,eci-eold=                    1                    5 -0.98111218143600820      -0.98111216879292573       -1.2643082469843137E-008 F
+     orb,it,eci,eold,eci-eold=                    1                    6 -0.98111246637969118      -0.98111218143600820       -2.8494368298215278E-007 F
+     orb,it,eci,eold,eci-eold=                    1                    7 -0.98111260296972702      -0.98111246637969118       -1.3659003583743612E-007 F
+     orb,it,eci,eold,eci-eold=                    1                    8 -0.98111269099550302      -0.98111260296972702       -8.8025776001643408E-008 F
+     orb,it,eci,eold,eci-eold=                    1                    9 -0.98111273405407673      -0.98111269099550302       -4.3058573706566960E-008 F
+     orb,it,eci,eold,eci-eold=                    1                   10 -0.98111279817527119      -0.98111273405407673       -6.4121194465194264E-008 F
+     orb,it,eci,eold,eci-eold=                    1                   11 -0.98111283715691711      -0.98111279817527119       -3.8981645911206897E-008 F
+     orb,it,eci,eold,eci-eold=                    1                   12 -0.98111286908123474      -0.98111283715691711       -3.1924317633880150E-008 F
+     orb,it,eci,eold,eci-eold=                    1                   13 -0.98111288228990834      -0.98111286908123474       -1.3208673599329757E-008 F
+     orb,it,eci,eold,eci-eold=                    1                   14 -0.98111291620539975      -0.98111288228990834       -3.3915491415292820E-008 F
+     orb,it,eci,eold,eci-eold=                    1                   15 -0.98111293397143684      -0.98111291620539975       -1.7766037085920061E-008 F
+     orb,it,eci,eold,eci-eold=                    1                   16 -0.98111294155505413      -0.98111293397143684       -7.5836172896970311E-009 F
+     orb,it,eci,eold,eci-eold=                    1                   17 -0.98111294478567435      -0.98111294155505413       -3.2306202157883490E-009 F
+     orb,it,eci,eold,eci-eold=                    1                   18 -0.98111295472504412      -0.98111294478567435       -9.9393697716720908E-009 F
+     orb,it,eci,eold,eci-eold=                    1                   19 -0.98111295525048581      -0.98111295472504412       -5.2544169015789066E-010 F
+     orbital   1 current e= -0.114247E+00 error=0.274E-04 (eci= -0.981112955E+00 error=0.525E-09) iterations  19(   0 preconditioned, Ep,Sp= 20.0  200.0)
+     orb,it,eci,eold,eci-eold=                    1                    1 -0.98111296551974192      -0.98111295525048581       -1.0269256112138692E-008 F
+     orb,it,eci,eold,eci-eold=                    1                    2 -0.98111296551974192      -0.98111296551974192        0.0000000000000000      F
+     orbital   1 current e= -0.114247E+00 error=0.172E-06 (eci= -0.981112966E+00 error=0.000E+00) iterations   2(   0 preconditioned, Ep,Sp= 20.0  200.0)
+
+ virtual orbital energies:
+    -0.1142470E+00 (  -3.109eV)
+
+
+ == Generating One-Electron and Two-Electron Integrals ==
+
+ begin_one_electron_integrals
+    1    1        -0.6777303535
+    2    1         0.0000168189
+    2    2        -0.6609748101
+ end_one_electron_integrals
+
+ begin_two_electron_integrals
+    1    1    1    1        0.3431308854
+    1    1    2    1       -0.0000168426
+    1    1    2    2        0.3653883181
+    2    1    2    1        0.1840487948
+    2    1    2    2       -0.0000284926
+    2    2    2    2        0.3977752407
+ end_two_electron_integrals
+
+
+ output epsi filename:./pspw_hf_H2.emovecs
+
+ Total PSPW energy     :  -0.8359374052E+00
+
+
+=== Spin Contamination ===
+
+ <Sexact^2> =    0.0000000000000000     
+ <S^2>      =    0.0000000000000000     
+
+
+
+== Center of Charge ==
+
+spin up     (    0.0000,    0.0000,    0.0004 )
+spin down   (    0.0000,    0.0000,    0.0004 )
+     total  (    0.0000,    0.0000,    0.0004 )
+ionic       (    0.0000,    0.0000,    0.0000 )
+
+
+== Molecular Dipole wrt Center of Mass ==
+
+mu   =  (   -0.0000,   -0.0000,   -0.0008 ) au
+|mu| =     0.0008 au,       0.0021 Debye
+
+ output psi filename:./pspw_hf_H2.movecs
+
+ Writing Crystallographic Information File:./H2.cif
+   - cell not shifted (nwpw:cif_shift_cell .false.)
+
+
+== Timing ==
+
+cputime in seconds
+  prologue    :   0.644711E+01
+  main loop   :   0.350767E+03
+  epilogue    :   0.505734E-02
+  total       :   0.357219E+03
+  cputime/step:   0.243588E+01       (     144 evalulations,      60 linesearches)
+
+
+Time spent doing                        total          step       percent
+  total time                 :   0.357220E+03  0.248069E+01       100.0 %
+  i/o time                   :   0.239919E-01  0.166611E-03         0.0 %
+  FFTs                       :   0.293411E+03  0.203758E+01        82.1 %
+  dot products               :   0.293554E+00  0.203857E-02         0.1 %
+  geodesic                   :   0.638987E-01  0.443741E-03         0.0 %
+  ffm_dgemm                  :   0.745256E-02  0.517539E-04         0.0 %
+  fmf_dgemm                  :   0.300944E-01  0.208989E-03         0.0 %
+  mmm_dgemm                  :   0.144658E-02  0.100457E-04         0.0 %
+  m_diagonalize              :   0.708382E-03  0.491932E-05         0.0 %
+  local pseudopotentials     :   0.136509E+02  0.947982E-01         3.8 %
+  non-local pseudopotentials :   0.732979E+00  0.509013E-02         0.2 %
+  structure factors          :   0.874952E+00  0.607605E-02         0.2 %
+  phase factors              :   0.562800E-05  0.390833E-07         0.0 %
+  masking and packing        :   0.221258E+01  0.153651E-01         0.6 %
+  queue fft                  :   0.779542E+01  0.541348E-01         2.2 %
+  queue fft (serial)         :   0.468317E+01  0.325220E-01         1.3 %
+  queue fft (message passing):   0.300834E+01  0.208912E-01         0.8 %
+  HFX potential              :   0.191706E+02  0.133129E+00         5.4 %
+  non-local psp FFM          :   0.365467E+00  0.253797E-02         0.1 %
+  non-local psp FMF          :   0.840199E-01  0.583472E-03         0.0 %
+  non-local psp FFM A        :   0.102038E+00  0.708599E-03         0.0 %
+  non-local psp FFM B        :   0.687233E-01  0.477245E-03         0.0 %
+
+== HFX Counters ==
+  HFX Evalulations         =   144
+  Lin ACE HFX Evalulations =     0
+
+
+     >>>  JOB COMPLETED     AT Tue Apr  1 20:06:56 2025  <<<
+
+ Task  times  cpu:      365.3s     wall:      357.2s
+ Summary of allocated global arrays
+-----------------------------------
+  No active global arrays
+
+
+MA_summarize_allocated_blocks: starting scan ...
+MA_summarize_allocated_blocks: scan completed: 0 heap blocks, 0 stack blocks
+MA usage statistics:
+
+	allocation statistics:
+					      heap	     stack
+					      ----	     -----
+	current number of blocks	         0	         0
+	maximum number of blocks	       313	        34
+	current total bytes		         0	         0
+	maximum total bytes		 359584352	 127356648
+	maximum total K-bytes		    359585	    127357
+	maximum total M-bytes		       360	       128
+
+
+                                NWChem Input Module
+                                -------------------
+
+
+
+
+                                     CITATION
+                                     --------
+                Please cite the following reference when publishing
+                           results obtained with NWChem:
+
+          E. Apra, E. J. Bylaska, W. A. de Jong, N. Govind, K. Kowalski,
+       T. P. Straatsma, M. Valiev, H. J. J. van Dam, Y. Alexeev, J. Anchell,
+       V. Anisimov, F. W. Aquino, R. Atta-Fynn, J. Autschbach, N. P. Bauman,
+     J. C. Becca, D. E. Bernholdt, K. Bhaskaran-Nair, S. Bogatko, P. Borowski,
+         J. Boschen, J. Brabec, A. Bruner, E. Cauet, Y. Chen, G. N. Chuev,
+      C. J. Cramer, J. Daily, M. J. O. Deegan, T. H. Dunning Jr., M. Dupuis,
+   K. G. Dyall, G. I. Fann, S. A. Fischer, A. Fonari, H. Fruchtl, L. Gagliardi,
+      J. Garza, N. Gawande, S. Ghosh, K. Glaesemann, A. W. Gotz, J. Hammond,
+       V. Helms, E. D. Hermes, K. Hirao, S. Hirata, M. Jacquelin, L. Jensen,
+   B. G. Johnson, H. Jonsson, R. A. Kendall, M. Klemm, R. Kobayashi, V. Konkov,
+      S. Krishnamoorthy, M. Krishnan, Z. Lin, R. D. Lins, R. J. Littlefield,
+      A. J. Logsdail, K. Lopata, W. Ma, A. V. Marenich, J. Martin del Campo,
+   D. Mejia-Rodriguez, J. E. Moore, J. M. Mullin, T. Nakajima, D. R. Nascimento,
+    J. A. Nichols, P. J. Nichols, J. Nieplocha, A. Otero-de-la-Roza, B. Palmer,
+    A. Panyala, T. Pirojsirikul, B. Peng, R. Peverati, J. Pittner, L. Pollack,
+   R. M. Richard, P. Sadayappan, G. C. Schatz, W. A. Shelton, D. W. Silverstein,
+   D. M. A. Smith, T. A. Soares, D. Song, M. Swart, H. L. Taylor, G. S. Thomas,
+            V. Tipparaju, D. G. Truhlar, K. Tsemekhman, T. Van Voorhis,
+      A. Vazquez-Mayagoitia, P. Verma, O. Villa, A. Vishnu, K. D. Vogiatzis,
+        D. Wang, J. H. Weare, M. J. Williamson, T. L. Windus, K. Wolinski,
+        A. T. Wong, Q. Wu, C. Yang, Q. Yu, M. Zacharias, Z. Zhang, Y. Zhao,
+                                and R. J. Harrison
+                        "NWChem: Past, present, and future
+                         J. Chem. Phys. 152, 184102 (2020)
+                               doi:10.1063/5.0004997
+
+                                      AUTHORS
+                                      -------
+  E. Apra, E. J. Bylaska, N. Govind, K. Kowalski, M. Valiev, D. Mejia-Rodriguez,
+       A. Kunitsa, N. P. Bauman, A. Panyala, W. A. de Jong, T. P. Straatsma,
+   H. J. J. van Dam, D. Wang, T. L. Windus, J. Hammond, J. Autschbach, A. Woods,
+    K. Bhaskaran-Nair, J. Brabec, K. Lopata, S. A. Fischer, S. Krishnamoorthy,
+     M. Jacquelin, W. Ma, M. Klemm, O. Villa, Y. Chen, V. Anisimov, F. Aquino,
+     S. Hirata, M. T. Hackler, E. Hermes, L. Jensen, J. E. Moore, J. C. Becca,
+      V. Konjkov, T. Risthaus, M. Malagoli, A. Marenich, A. Otero-de-la-Roza,
+        J. Mullin, P. Nichols, R. Peverati, J. Pittner, Y. Zhao, P.-D. Fan,
+        A. Fonari, M. J. Williamson, R. J. Harrison, J. R. Rehr, M. Dupuis,
+     D. Silverstein, D. M. A. Smith, J. Nieplocha, V. Tipparaju, M. Krishnan,
+     B. E. Van Kuiken, A. Vazquez-Mayagoitia, M. Swart, Q. Wu, T. Van Voorhis,
+     A. A. Auer, M. Nooijen, L. D. Crosby, E. Brown, G. Cisneros, G. I. Fann,
+   H. Fruchtl, J. Garza, K. Hirao, R. A. Kendall, J. A. Nichols, K. Tsemekhman,
+    K. Wolinski, J. Anchell, D. E. Bernholdt, P. Borowski, T. Clark, D. Clerc,
+   H. Dachsel, M. J. O. Deegan, K. Dyall, D. Elwood, E. Glendening, M. Gutowski,
+   A. C. Hess, J. Jaffe, B. G. Johnson, J. Ju, R. Kobayashi, R. Kutteh, Z. Lin,
+   R. Littlefield, X. Long, B. Meng, T. Nakajima, S. Niu, L. Pollack, M. Rosing,
+   K. Glaesemann, G. Sandrone, M. Stave, H. Taylor, G. Thomas, J. H. van Lenthe,
+                               A. T. Wong, Z. Zhang.
+
+ Total times  cpu:      365.5s     wall:      357.2s

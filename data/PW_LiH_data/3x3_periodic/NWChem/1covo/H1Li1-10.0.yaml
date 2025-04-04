@@ -77,3 +77,4 @@ integral_sets:
   n_electrons: 2
   n_orbitals: 2
   total_energy: -0.613477788
+  virtual_orbitals: 1
