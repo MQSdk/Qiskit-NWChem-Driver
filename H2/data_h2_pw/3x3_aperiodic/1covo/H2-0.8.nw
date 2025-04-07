@@ -10,8 +10,8 @@ memory heap 1200 mb stack 1200 mb global 10 mb
 charge 0
 
 geometry
-H    0.00000    0.00000   -0.4000
-H    0.00000    0.00000    0.4000
+H    0.00000    0.00000   -0.40000
+H    0.00000    0.00000    0.40000
 end
 
 nwpw

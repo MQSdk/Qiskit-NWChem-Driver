@@ -8,18 +8,18 @@ generator:
 integral_sets:
 - coulomb_repulsion:
     units: hartree
-    value: 0.8819620817
+    value: 0.6614715612
   geometry:
     atoms:
     - coords:
       - 0.0
       - 0.0
-      - -0.3
+      - -0.4
       name: H
     - coords:
       - 0.0
       - 0.0
-      - 0.3
+      - 0.4
       name: H
     coordinate_system: cartesian
     units: angstrom
@@ -30,13 +30,13 @@ integral_sets:
       values:
       - - 1
         - 1
-        - -1.3590451581
+        - -1.2155120662
       - - 2
         - 1
-        - 7.5683e-06
+        - -1.27e-07
       - - 2
         - 2
-        - -0.3943623762
+        - -0.543931613
     two_electron_integrals:
       format: sparse
       index_convention: mulliken
@@ -46,35 +46,35 @@ integral_sets:
         - 1
         - 1
         - 1
-        - 0.7123924817
+        - 0.6370363946
       - - 1
         - 1
         - 2
         - 1
-        - -7.5684e-06
+        - 1.211e-07
       - - 1
         - 1
         - 2
         - 2
-        - 0.6858164455
+        - 0.6234786188
       - - 2
         - 1
         - 2
         - 1
-        - 0.1638389013
+        - 0.1612480856
       - - 2
         - 1
         - 2
         - 2
-        - -8.0771e-06
+        - 1.831e-07
       - - 2
         - 2
         - 2
         - 2
-        - 0.7210590284
+        - 0.6604920176
   metadata:
     molecule_name: unknown
   n_electrons: 2
   n_orbitals: 2
-  total_energy: -1.123735753
+  total_energy: -1.132516176
   virtual_orbitals: 1
