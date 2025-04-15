@@ -1,0 +1,98 @@
+[
+    {
+        "geometry": "Li 0.0 0.0 -0.65; H 0.0 0.0 0.65;",
+        "energy": -7.9966960016359305,
+        "nuclear_repulsion": 1.221178179046154,
+        "electronic_energy": -9.217874180682085
+    },
+    {
+        "geometry": "Li 0.0 0.0 -0.70; H 0.0 0.0 0.70;",
+        "energy": -8.00648675364148,
+        "nuclear_repulsion": 1.133951166257143,
+        "electronic_energy": -9.140437919898623
+    },
+    {
+        "geometry": "Li 0.0 0.0 -0.75; H 0.0 0.0 0.75;",
+        "energy": -8.01156247313749,
+        "nuclear_repulsion": 1.05835442184,
+        "electronic_energy": -9.06991689497749
+    },
+    {
+        "geometry": "Li 0.0 0.0 -0.80; H 0.0 0.0 0.80;",
+        "energy": -8.013287033473329,
+        "nuclear_repulsion": 0.992207270475,
+        "electronic_energy": -9.005494303948328
+    },
+    {
+        "geometry": "Li 0.0 0.0 -0.85; H 0.0 0.0 0.85;",
+        "energy": -8.0126267189904,
+        "nuclear_repulsion": 0.9338421369176472,
+        "electronic_energy": -8.946468855908048
+    },
+    {
+        "geometry": "Li 0.0 0.0 -0.90; H 0.0 0.0 0.90;",
+        "energy": -8.010276035193062,
+        "nuclear_repulsion": 0.8819620182,
+        "electronic_energy": -8.892238053393061
+    },
+    {
+        "geometry": "Li 0.0 0.0 -0.95; H 0.0 0.0 0.95;",
+        "energy": -8.006757489170628,
+        "nuclear_repulsion": 0.8355429646105264,
+        "electronic_energy": -8.842300453781155
+    },
+    {
+        "geometry": "Li 0.0 0.0 -1.00; H 0.0 0.0 1.00;",
+        "energy": -8.002442898367722,
+        "nuclear_repulsion": 0.7937658163800001,
+        "electronic_energy": -8.796208714747722
+    },
+    {
+        "geometry": "Li 0.0 0.0 -1.25; H 0.0 0.0 1.25;",
+        "energy": -7.977030167756269,
+        "nuclear_repulsion": 0.6350126531040001,
+        "electronic_energy": -8.61204282086027
+    },
+    {
+        "geometry": "Li 0.0 0.0 -1.50; H 0.0 0.0 1.50;",
+        "energy": -7.952067456536049,
+        "nuclear_repulsion": 0.52917721092,
+        "electronic_energy": -8.48124466745605
+    },
+    {
+        "geometry": "Li 0.0 0.0 -1.75; H 0.0 0.0 1.75;",
+        "energy": -7.940386075456421,
+        "nuclear_repulsion": 0.4535804665028572,
+        "electronic_energy": -8.393966541959278
+    },
+    {
+        "geometry": "Li 0.0 0.0 -2.00; H 0.0 0.0 2.00;",
+        "energy": -7.935000700040493,
+        "nuclear_repulsion": 0.39688290819000005,
+        "electronic_energy": -8.331883608230493
+    },
+    {
+        "geometry": "Li 0.0 0.0 -2.25; H 0.0 0.0 2.25;",
+        "energy": -7.932910149013378,
+        "nuclear_repulsion": 0.35278480728,
+        "electronic_energy": -8.285694956293378
+    },
+    {
+        "geometry": "Li 0.0 0.0 -2.50; H 0.0 0.0 2.50;",
+        "energy": -7.93214359844274,
+        "nuclear_repulsion": 0.31750632655200006,
+        "electronic_energy": -8.24964992499474
+    },
+    {
+        "geometry": "Li 0.0 0.0 -3.00; H 0.0 0.0 3.00;",
+        "energy": -7.931762930548306,
+        "nuclear_repulsion": 0.26458860546,
+        "electronic_energy": -8.196351536008306
+    },
+    {
+        "geometry": "Li 0.0 0.0 -3.50; H 0.0 0.0 3.50;",
+        "energy": -7.931709663564831,
+        "nuclear_repulsion": 0.2267902332514286,
+        "electronic_energy": -8.15849989681626
+    }
+]

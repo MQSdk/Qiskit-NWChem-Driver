@@ -1,0 +1,20 @@
+[
+    {
+        "geometry": "Li 0.0 0.0 -0.65; H 0.0 0.0 0.65;",
+        "energy": -7.969819138601199,
+        "nuclear_repulsion": 1.221178179046154,
+        "electronic_energy": -9.190997317647353
+    },
+    {
+        "geometry": "Li 0.0 0.0 -0.70; H 0.0 0.0 0.70;",
+        "energy": -7.980354257942672,
+        "nuclear_repulsion": 1.133951166257143,
+        "electronic_energy": -9.114305424199815
+    },
+    {
+        "geometry": "Li 0.0 0.0 -0.75; H 0.0 0.0 0.75;",
+        "energy": -7.9860417270878985,
+        "nuclear_repulsion": 1.05835442184,
+        "electronic_energy": -9.044396148927898
+    }
+]
