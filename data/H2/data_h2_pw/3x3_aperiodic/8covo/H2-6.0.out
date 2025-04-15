@@ -19,7 +19,7 @@ H    0.00000    0.00000   -3.00000
 H    0.00000    0.00000    3.00000
 end
 
-nwpw
+nwpw  
   ### pseudopotential block begin ###
   ### pseudopotential block end   ###
   simulation_cell

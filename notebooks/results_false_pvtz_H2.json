@@ -1,0 +1,86 @@
+[
+    {
+        "geometry": "H 0.0 0.0 -0.3; H 0.0 0.0 0.3;",
+        "energy": -1.1518561397185942,
+        "nuclear_repulsion": 0.8819620182000001,
+        "electronic_energy": -2.0338181579185943
+    },
+    {
+        "geometry": "H 0.0 0.0 -0.35; H 0.0 0.0 0.35;",
+        "energy": -1.169448817594577,
+        "nuclear_repulsion": 0.7559674441714287,
+        "electronic_energy": -1.9254162617660056
+    },
+    {
+        "geometry": "H 0.0 0.0 -0.4; H 0.0 0.0 0.4;",
+        "energy": -1.168973159014975,
+        "nuclear_repulsion": 0.66147151365,
+        "electronic_energy": -1.830444672664975
+    },
+    {
+        "geometry": "H 0.0 0.0 -0.45; H 0.0 0.0 0.45;",
+        "energy": -1.1591258653114773,
+        "nuclear_repulsion": 0.5879746788,
+        "electronic_energy": -1.7471005441114773
+    },
+    {
+        "geometry": "H 0.0 0.0 -0.5; H 0.0 0.0 0.5;",
+        "energy": -1.1446285037919317,
+        "nuclear_repulsion": 0.52917721092,
+        "electronic_energy": -1.6738057147119318
+    },
+    {
+        "geometry": "H 0.0 0.0 -0.75; H 0.0 0.0 0.75;",
+        "energy": -1.0657169557084665,
+        "nuclear_repulsion": 0.35278480728,
+        "electronic_energy": -1.4185017629884664
+    },
+    {
+        "geometry": "H 0.0 0.0 -1.0; H 0.0 0.0 1.0;",
+        "energy": -1.020312642123858,
+        "nuclear_repulsion": 0.26458860546,
+        "electronic_energy": -1.284901247583858
+    },
+    {
+        "geometry": "H 0.0 0.0 -1.25; H 0.0 0.0 1.25;",
+        "energy": -1.0046306997679522,
+        "nuclear_repulsion": 0.21167088436800002,
+        "electronic_energy": -1.2163015841359521
+    },
+    {
+        "geometry": "H 0.0 0.0 -1.5; H 0.0 0.0 1.5;",
+        "energy": -1.000712257244858,
+        "nuclear_repulsion": 0.17639240364,
+        "electronic_energy": -1.1771046608848579
+    },
+    {
+        "geometry": "H 0.0 0.0 -1.75; H 0.0 0.0 1.75;",
+        "energy": -0.9998554680426878,
+        "nuclear_repulsion": 0.15119348883428574,
+        "electronic_energy": -1.1510489568769735
+    },
+    {
+        "geometry": "H 0.0 0.0 -2.0; H 0.0 0.0 2.0;",
+        "energy": -0.999674569488371,
+        "nuclear_repulsion": 0.13229430273,
+        "electronic_energy": -1.131968872218371
+    },
+    {
+        "geometry": "H 0.0 0.0 -2.25; H 0.0 0.0 2.25;",
+        "energy": -0.999635264717258,
+        "nuclear_repulsion": 0.11759493576,
+        "electronic_energy": -1.117230200477258
+    },
+    {
+        "geometry": "H 0.0 0.0 -2.5; H 0.0 0.0 2.5;",
+        "energy": -0.999625231164327,
+        "nuclear_repulsion": 0.10583544218400001,
+        "electronic_energy": -1.105460673348327
+    },
+    {
+        "geometry": "H 0.0 0.0 -3.0; H 0.0 0.0 3.0;",
+        "energy": -0.9996207838453308,
+        "nuclear_repulsion": 0.08819620182,
+        "electronic_energy": -1.0878169856653308
+    }
+]
