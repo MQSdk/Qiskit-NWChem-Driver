@@ -1,0 +1,100 @@
+[
+    {
+        "geometry": "H 0.0 0.0 -0.3; H 0.0 0.0 0.3;",
+        "energy uccsd": -1.1391732928095377,
+        "energy fci": -1.1391732932880745,
+        "nuclear_repulsion": 0.8819620182000001,
+        "electronic_energy": -2.021135311009538
+    },
+    {
+        "geometry": "H 0.0 0.0 -0.35; H 0.0 0.0 0.35;",
+        "energy uccsd": -1.160904681632466,
+        "energy fci": -1.160904682478467,
+        "nuclear_repulsion": 0.7559674441714287,
+        "electronic_energy": -1.9168721258038948
+    },
+    {
+        "geometry": "H 0.0 0.0 -0.4; H 0.0 0.0 0.4;",
+        "energy uccsd": -1.1627507619452209,
+        "energy fci": -1.1627507630227372,
+        "nuclear_repulsion": 0.66147151365,
+        "electronic_energy": -1.8242222755952209
+    },
+    {
+        "geometry": "H 0.0 0.0 -0.45; H 0.0 0.0 0.45;",
+        "energy uccsd": -1.1540817034080642,
+        "energy fci": -1.154081706119978,
+        "nuclear_repulsion": 0.5879746788,
+        "electronic_energy": -1.7420563822080641
+    },
+    {
+        "geometry": "H 0.0 0.0 -0.5; H 0.0 0.0 0.5;",
+        "energy uccsd": -1.1400734802918735,
+        "energy fci": -1.1400734808760387,
+        "nuclear_repulsion": 0.52917721092,
+        "electronic_energy": -1.6692506912118734
+    },
+    {
+        "geometry": "H 0.0 0.0 -0.75; H 0.0 0.0 0.75;",
+        "energy uccsd": -1.0615349490110573,
+        "energy fci": -1.0615349496316124,
+        "nuclear_repulsion": 0.35278480728,
+        "electronic_energy": -1.4143197562910572
+    },
+    {
+        "geometry": "H 0.0 0.0 -1.0; H 0.0 0.0 1.0;",
+        "energy uccsd": -1.0175941125731087,
+        "energy fci": -1.0175941140471523,
+        "nuclear_repulsion": 0.26458860546,
+        "electronic_energy": -1.2821827180331087
+    },
+    {
+        "geometry": "H 0.0 0.0 -1.25; H 0.0 0.0 1.25;",
+        "energy uccsd": -1.003129249870787,
+        "energy fci": -1.0031292512281587,
+        "nuclear_repulsion": 0.21167088436800002,
+        "electronic_energy": -1.214800134238787
+    },
+    {
+        "geometry": "H 0.0 0.0 -1.5; H 0.0 0.0 1.5;",
+        "energy uccsd": -0.9995506182385354,
+        "energy fci": -0.9995506185972309,
+        "nuclear_repulsion": 0.17639240364,
+        "electronic_energy": -1.1759430218785354
+    },
+    {
+        "geometry": "H 0.0 0.0 -1.75; H 0.0 0.0 1.75;",
+        "energy uccsd": -0.9987710537987512,
+        "energy fci": -0.9987710557416724,
+        "nuclear_repulsion": 0.15119348883428574,
+        "electronic_energy": -1.149964542633037
+    },
+    {
+        "geometry": "H 0.0 0.0 -2.0; H 0.0 0.0 2.0;",
+        "energy uccsd": -0.9986061855575868,
+        "energy fci": -0.9986061861413685,
+        "nuclear_repulsion": 0.13229430273,
+        "electronic_energy": -1.1309004882875868
+    },
+    {
+        "geometry": "H 0.0 0.0 -2.25; H 0.0 0.0 2.25;",
+        "energy uccsd": -0.998569093345752,
+        "energy fci": -0.9985690947312186,
+        "nuclear_repulsion": 0.11759493576,
+        "electronic_energy": -1.116164029105752
+    },
+    {
+        "geometry": "H 0.0 0.0 -2.5; H 0.0 0.0 2.5;",
+        "energy uccsd": -0.9985598761202712,
+        "energy fci": -0.998559877201435,
+        "nuclear_repulsion": 0.10583544218400001,
+        "electronic_energy": -1.1043953183042712
+    },
+    {
+        "geometry": "H 0.0 0.0 -3.0; H 0.0 0.0 3.0;",
+        "energy uccsd": -0.9985570665956398,
+        "energy fci": -0.9985570676311735,
+        "nuclear_repulsion": 0.08819620182,
+        "electronic_energy": -1.0867532684156398
+    }
+]
