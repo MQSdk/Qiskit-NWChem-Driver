@@ -18,7 +18,7 @@ nwpw
   ### pseudopotential block begin ###
   ### pseudopotential block end   ###
   simulation_cell
-     SC 15.0000
+     SC 20.0000
      boundary_conditions aperiodic
   end
 
