@@ -30,13 +30,13 @@ integral_sets:
       values:
       - - 1
         - 1
-        - -0.6084479249
+        - -0.6042426902
       - - 2
         - 1
-        - 0.000118
+        - -4.9852e-06
       - - 2
         - 2
-        - -0.6098647267
+        - -0.6142797715
     two_electron_integrals:
       format: sparse
       index_convention: mulliken
@@ -46,35 +46,35 @@ integral_sets:
         - 1
         - 1
         - 1
-        - 0.3042895301
+        - 0.310421232
       - - 1
         - 1
         - 2
         - 1
-        - -0.0001179311
+        - 4.9654e-06
       - - 1
         - 1
         - 2
         - 2
-        - 0.3308194391
+        - 0.3312421899
       - - 2
         - 1
         - 2
         - 1
-        - 0.2079223821
+        - 0.210042313
       - - 2
         - 1
         - 2
         - 2
-        - -0.0001498703
+        - 8.1508e-06
       - - 2
         - 2
         - 2
         - 2
-        - 0.3640991443
+        - 0.3565178219
   metadata:
     molecule_name: unknown
   n_electrons: 2
   n_orbitals: 2
-  total_energy: -0.7950113755
+  total_energy: -0.7804692043
   virtual_orbitals: 1

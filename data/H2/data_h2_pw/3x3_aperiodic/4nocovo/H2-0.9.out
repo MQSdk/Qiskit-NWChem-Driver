@@ -1,0 +1,634 @@
+ argument  1 = H2-0.9.nw
+
+
+
+============================== echo of input deck ==============================
+title "swnc: e theory=pspw4 xc=hf formula=H2 charge=0 mult=1"
+#machinejob:expert
+
+echo
+
+start pspw_hf_H2
+
+memory heap 1200 mb stack 1200 mb global 10 mb
+
+charge 0
+
+geometry
+H    0.00000    0.00000   -0.45000
+H    0.00000    0.00000    0.45000
+end
+
+nwpw
+  ### pseudopotential block begin ###
+  ### pseudopotential block end   ###
+  simulation_cell
+     SC 15.0000
+     boundary_conditions aperiodic
+  end
+
+  cutoff 50.0
+  mult 1
+  xc hf
+  lmbfgs
+  tolerances 1.0e-9 1.0e-9
+
+  virtual 4
+end
+set nwpw:cif_filename H2
+
+#set nwpw:CI_maxit_orb 15
+#set nwpw:CI_maxit_linesearch 15
+set pspw:HFX_screening_radius 14.0
+
+
+set nwpw:2qintegrals .true.
+#set nwpw:3x3_virtual .true.
+
+task pspw energy
+
+================================================================================
+
+
+                                         
+                                         
+
+
+             Northwest Computational Chemistry Package (NWChem) 7.2.2
+             --------------------------------------------------------
+
+
+                    Environmental Molecular Sciences Laboratory
+                       Pacific Northwest National Laboratory
+                                Richland, WA 99352
+
+                              Copyright (c) 1994-2022
+                       Pacific Northwest National Laboratory
+                            Battelle Memorial Institute
+
+             NWChem is an open-source computational chemistry package
+                        distributed under the terms of the
+                      Educational Community License (ECL) 2.0
+             A copy of the license is included with this distribution
+                              in the LICENSE.TXT file
+
+                                  ACKNOWLEDGMENT
+                                  --------------
+
+            This software and its documentation were developed at the
+            EMSL at Pacific Northwest National Laboratory, a multiprogram
+            national laboratory, operated for the U.S. Department of Energy
+            by Battelle under Contract Number DE-AC05-76RL01830. Support
+            for this work was provided by the Department of Energy Office
+            of Biological and Environmental Research, Office of Basic
+            Energy Sciences, and the Office of Advanced Scientific Computing.
+
+
+           Job information
+           ---------------
+
+    hostname        = LAPTOP-JJQSTSEL
+    program         = nwchem
+    date            = Thu May  1 12:32:11 2025
+
+    compiled        = Fri_Jun_07_07:50:04_2024
+    source          = /home/conda/feedstock_root/build_artifacts/nwchem_1717738148552/work
+    nwchem branch   = 7.2.2
+    nwchem revision = 64ba0f0
+    ga revision     = 5.8.0
+    use scalapack   = T
+    input           = H2-0.9.nw
+    prefix          = pspw_hf_H2.
+    data base       = ./pspw_hf_H2.db
+    status          = startup
+    nproc           =        1
+    time left       =     -1s
+
+
+
+           Memory information
+           ------------------
+
+    heap     =  157286400 doubles =   1200.0 Mbytes
+    stack    =  157286397 doubles =   1200.0 Mbytes
+    global   =    1310720 doubles =     10.0 Mbytes (distinct from heap & stack)
+    total    =  315883517 doubles =   2410.0 Mbytes
+    verify   = yes
+    hardfail = no 
+
+
+           Directory information
+           ---------------------
+
+  0 permanent = .
+  0 scratch   = .
+
+
+
+
+                                NWChem Input Module
+                                -------------------
+
+
+               swnc: e theory=pspw4 xc=hf formula=H2 charge=0 mult=1
+               -----------------------------------------------------
+
+ Scaling coordinates for geometry "geometry" by  1.889725989
+ (inverse scale =  0.529177249)
+
+ ORDER OF PRIMARY AXIS IS BEING SET TO 4
+ D4H symmetry detected
+
+          ------
+          auto-z
+          ------
+  no constraints, skipping    0.0000000000000000     
+  no constraints, skipping    0.0000000000000000     
+
+
+                             Geometry "geometry" -> ""
+                             -------------------------
+
+ Output coordinates in angstroms (scale by  1.889725989 to convert to a.u.)
+
+  No.       Tag          Charge          X              Y              Z
+ ---- ---------------- ---------- -------------- -------------- --------------
+    1 H                    1.0000     0.00000000     0.00000000    -0.45000000
+    2 H                    1.0000     0.00000000     0.00000000     0.45000000
+
+      Atomic Mass 
+      ----------- 
+
+      H                  1.007825
+
+
+ Effective nuclear repulsion energy (a.u.)       0.5879747211
+
+            Nuclear Dipole moment (a.u.) 
+            ----------------------------
+        X                 Y               Z
+ ---------------- ---------------- ----------------
+     0.0000000000     0.0000000000     0.0000000000
+
+      Symmetry information
+      --------------------
+
+ Group name             D4h       
+ Group number             28
+ Group order              16
+ No. of unique centers     1
+
+      Symmetry unique atoms
+
+     1
+
+
+
+                                Z-matrix (autoz)
+                                -------- 
+
+ Units are Angstrom for bonds and degrees for angles
+
+      Type          Name      I     J     K     L     M      Value
+      ----------- --------  ----- ----- ----- ----- ----- ----------
+    1 Stretch                  1     2                       0.90000
+
+
+            XYZ format geometry
+            -------------------
+     2
+ geometry
+ H                     0.00000000     0.00000000    -0.45000000
+ H                     0.00000000     0.00000000     0.45000000
+
+          ****************************************************
+          *                                                  *
+          *               NWPW PSPW Calculation              *
+          *                                                  *
+          * [ (Grassmann/Stiefel manifold implementation)  ] *
+          *                                                  *
+          *      [ NorthWest Chemistry implementation ]      *
+          *                                                  *
+          *            version #5.10   06/12/02              *
+          *                                                  *
+          *    This code was developed by Eric J. Bylaska,   *
+          *    and was based upon algorithms and code        *
+          *    developed by the group of Prof. John H. Weare *
+          *                                                  *
+          ****************************************************
+     >>>  JOB STARTED       AT Thu May  1 12:32:11 2025  <<<
+          ================ input data ========================
+
+ input psi filename:./pspw_hf_H2.movecs
+
+ number of processors used:         1
+ processor grid           :   1 x   1
+ parallel mapping         :2d-hilbert
+ parallel mapping         :  balanced
+ number of threads        :         1
+ parallel io              :       off
+
+ options:
+      boundary conditions  = aperiodic   (version4)
+      electron spin        = restricted
+      exchange-correlation = Hartree-Fock
+      - HFX relaxed
+      - HFX restricted orbitals :    1
+      - HFX free-space coulomb solver
+
+
+ elements involved in the cluster:
+      1: H   valence charge:  1.0000  lmax=  1
+             comment    : Parameterized (Chem.Phys.Lett., vol 322, page 447) Hamman psp
+             pseudpotential type            :   0
+             highest angular component      :   1
+             local potential used           :   1
+             number of non-local projections:   1
+             aperiodic cutoff radius        :  1.000
+             cutoff =   0.800   0.800
+
+
+ total charge:   0.000
+
+ atomic composition:
+     H   :    2
+
+ number of electrons: spin up=     1 (   1 per task)  down=     1 (   1 per task) (Fourier space)
+ number of orbitals : spin up=     1 (   1 per task)  down=     1 (   1 per task) (Fourier space)
+
+ supercell:
+      cell_name:  cell_default                                      
+      lattice:    a1=<  15.000   0.000   0.000 >
+                  a2=<   0.000  15.000   0.000 >
+                  a3=<   0.000   0.000  15.000 >
+      reciprocal: b1=<   0.419   0.000   0.000 >
+                  b2=<   0.000   0.419   0.000 >
+                  b3=<   0.000   0.000   0.419 >
+      lattice:    a=      15.000 b=     15.000 c=      15.000
+                  alpha=  90.000 beta=  90.000 gamma=  90.000
+                  omega=      3375.0
+
+      density cutoff=100.000  fft= 70x 70x 70(    80618 waves    80618 per task)
+      wavefnc cutoff= 50.000  fft= 70x 70x 70(    28526 waves    28526 per task)
+
+ technical parameters:
+      time step=      5.80     fictitious mass=  400000.0
+      tolerance=0.100E-08 (energy)   0.100E-08 (density)
+      maximum iterations =      1000 (   10 inner    100 outer )
+
+
+
+
+
+== Energy Calculation ==
+
+
+          ============ Grassmann lmbfgs iteration ============
+     >>>  ITERATION STARTED AT Thu May  1 12:32:18 2025  <<<
+    iter.           Energy         DeltaE       DeltaRho 
+    ------------------------------------------------------
+      10   -0.1119279131E+01   -0.64611E-04    0.15110E-02
+      20   -0.1119417166E+01   -0.16906E-05    0.26001E-05
+      30   -0.1119421496E+01   -0.67556E-07    0.58079E-08
+      40   -0.1119421638E+01   -0.14595E-08    0.10972E-10
+      50   -0.1119421640E+01   -0.72690E-09    0.48266E-12
+  *** tolerance ok. iteration terminated
+     >>>  ITERATION ENDED   AT Thu May  1 12:32:46 2025  <<<
+
+
+==  Summary Of Results  ==
+
+ number of electrons: spin up=    1.00000  down=    1.00000 (real space)
+
+ total     energy    :  -0.1119421640E+01 (   -0.55971E+00/ion)
+ total orbital energy:  -0.1101846248E+01 (   -0.11018E+01/electron)
+ hartree   energy    :   0.1211100226E+01 (    0.12111E+01/electron)
+ exc-corr  energy    :   0.0000000000E+00 (    0.00000E+00/electron)
+ HF exchange energy  :  -0.6055501132E+00 (   -0.60555E+00/electron)
+ ion-ion   energy    :   0.5879747211E+00 (    0.29399E+00/ion)
+
+ kinetic (planewave) :   0.9357424983E+00 (    0.93574E+00/electron)
+ V_local (planewave) :  -0.2987520017E+01 (   -0.29875E+01/electron)
+ V_nl    (planewave) :  -0.2611689554E+00 (   -0.26117E+00/electron)
+ V_Coul  (planewave) :   0.2422200453E+01 (    0.24222E+01/electron)
+ V_xc.   (planewave) :   0.0000000000E+00 (    0.00000E+00/electron)
+ K.S. HFX energy     :  -0.1211100226E+01 (   -0.12111E+01/electron)
+ Virial Coefficient  :  -0.8832435433E+00
+
+ orbital energies:
+    -0.5509231E+00 ( -14.991eV)
+
+
+== Virtual Orbital Calculation ==
+
+
+ input epsi filename:./pspw_hf_H2.emovecs
+     orbital   1 current e= 0.695E-02 (error=0.917E-09) iterations  53(  22 preconditioned, Ep,Sp= 20.0  200.0)
+     orbital   2 current e= 0.774E-01 (error=0.966E-09) iterations  71(  49 preconditioned, Ep,Sp= 20.0  200.0)
+     orbital   3 current e= 0.854E-01 (error=0.976E-09) iterations  43(   7 preconditioned, Ep,Sp= 20.0  200.0)
+     orbital   4 current e= 0.871E-01 (error=0.886E-09) iterations  41(   3 preconditioned, Ep,Sp= 20.0  200.0)
+
+ virtual orbital energies:
+     0.8705721E-01 (   2.369eV)
+     0.8539955E-01 (   2.324eV)
+     0.7739592E-01 (   2.106eV)
+     0.6946652E-02 (   0.189eV)
+
+
+ == Generating One-Electron and Two-Electron Integrals ==
+
+ begin_one_electron_integrals
+    1    1        -1.1564732372
+    2    1        -0.0328127431
+    3    1        -0.0000003781
+    4    1        -0.0000001232
+    5    1        -0.0028778145
+    2    2        -0.2698003617
+    3    2        -0.0000025736
+    4    2         0.0000004557
+    5    2        -0.0024689668
+    3    3        -0.3024968908
+    4    3         0.0000000113
+    5    3         0.0000102950
+    4    4        -0.2340092767
+    5    4         0.0000047898
+    5    5        -0.1923569664
+ end_one_electron_integrals
+
+ begin_two_electron_integrals
+    1    1    1    1        0.6055501132
+    1    1    2    1        0.0328045693
+    1    1    3    1        0.0000003799
+    1    1    4    1        0.0000001233
+    1    1    5    1        0.0028816907
+    1    1    2    2        0.1397687780
+    1    1    3    2        0.0000018476
+    1    1    4    2       -0.0000003661
+    1    1    5    2        0.0013665540
+    1    1    3    3        0.1960679840
+    1    1    4    3       -0.0000000059
+    1    1    5    3       -0.0000049621
+    1    1    4    4        0.1609542274
+    1    1    5    4       -0.0000024148
+    1    1    5    5        0.1398185877
+    2    1    2    1        0.0027905421
+    2    1    3    1        0.0000011295
+    2    1    4    1       -0.0000002760
+    2    1    5    1        0.0002644133
+    2    1    2    2        0.0005090493
+    2    1    3    2       -0.0000030994
+    2    1    4    2        0.0000018159
+    2    1    5    2       -0.0000134446
+    2    1    3    3        0.0024188609
+    2    1    4    3        0.0000000013
+    2    1    5    3       -0.0000021430
+    2    1    4    4        0.0008487690
+    2    1    5    4       -0.0000005547
+    2    1    5    5        0.0002043445
+    3    1    3    1        0.0122431544
+    3    1    4    1       -0.0000000013
+    3    1    5    1        0.0000003654
+    3    1    2    2       -0.0000941171
+    3    1    3    2       -0.0059690774
+    3    1    4    2       -0.0000000091
+    3    1    5    2       -0.0001131894
+    3    1    3    3       -0.0000010671
+    3    1    4    3       -0.0000000787
+    3    1    5    3       -0.0039204644
+    3    1    4    4       -0.0000756891
+    3    1    5    4       -0.0000000058
+    3    1    5    5       -0.0001703729
+    4    1    4    1        0.0024996265
+    4    1    5    1       -0.0000000397
+    4    1    2    2        0.0000381874
+    4    1    3    2        0.0000000025
+    4    1    4    2       -0.0036942691
+    4    1    5    2       -0.0000233089
+    4    1    3    3        0.0000222846
+    4    1    4    3       -0.0000006851
+    4    1    5    3        0.0000000008
+    4    1    4    4       -0.0000069873
+    4    1    5    4        0.0008034584
+    4    1    5    5        0.0000389592
+    5    1    5    1        0.0002229949
+    5    1    2    2        0.0000356294
+    5    1    3    2       -0.0000046113
+    5    1    4    2       -0.0000011382
+    5    1    5    2       -0.0008079836
+    5    1    3    3       -0.0004687080
+    5    1    4    3        0.0000000011
+    5    1    5    3       -0.0000029304
+    5    1    4    4        0.0002294941
+    5    1    5    4        0.0000003907
+    5    1    5    5       -0.0003027332
+    2    2    2    2        0.1187752192
+    2    2    3    2        0.0004375175
+    2    2    4    2       -0.0003174733
+    2    2    5    2        0.0004166535
+    2    2    3    3        0.1269377550
+    2    2    4    3       -0.0000016418
+    2    2    5    3        0.0002114811
+    2    2    4    4        0.1238551567
+    2    2    5    4        0.0000660304
+    2    2    5    5        0.1199681838
+    3    2    3    2        0.0219183337
+    3    2    4    2       -0.0000012928
+    3    2    5    2        0.0004794650
+    3    2    3    3        0.0000025992
+    3    2    4    3       -0.0000789561
+    3    2    5    3        0.0073384441
+    3    2    4    4        0.0003485659
+    3    2    5    4       -0.0000012323
+    3    2    5    5        0.0006782610
+    4    2    4    2        0.0243343864
+    4    2    5    2        0.0001787704
+    4    2    3    3       -0.0001813840
+    4    2    4    3        0.0001394929
+    4    2    5    3        0.0000002721
+    4    2    4    4        0.0001100858
+    4    2    5    4       -0.0027377067
+    4    2    5    5       -0.0003140420
+    5    2    5    2        0.0131097734
+    5    2    3    3        0.0030124916
+    5    2    4    3       -0.0000008380
+    5    2    5    3        0.0002667474
+    5    2    4    4        0.0001671898
+    5    2    5    4       -0.0000830253
+    5    2    5    5        0.0014736435
+    3    3    3    3        0.1494169996
+    3    3    4    3        0.0000000185
+    3    3    5    3        0.0000000308
+    3    3    4    4        0.1366538110
+    3    3    5    4        0.0000363737
+    3    3    5    5        0.1286823546
+    4    3    4    3        0.0125553320
+    4    3    5    3        0.0000279638
+    4    3    4    4        0.0000005526
+    4    3    5    4        0.0001449521
+    4    3    5    5       -0.0000006350
+    5    3    5    3        0.0076361469
+    5    3    4    4        0.0001715993
+    5    3    5    4        0.0000002288
+    5    3    5    5        0.0004067575
+    4    4    4    4        0.1366779999
+    4    4    5    4       -0.0000643349
+    4    4    5    5        0.1251612315
+    5    4    5    4        0.0079962362
+    5    4    5    5        0.0001136548
+    5    5    5    5        0.1286984716
+ end_two_electron_integrals
+
+
+ output epsi filename:./pspw_hf_H2.emovecs
+
+ Total PSPW energy     :  -0.1119421640E+01
+
+
+=== Spin Contamination ===
+
+ <Sexact^2> =    0.0000000000000000     
+ <S^2>      =    0.0000000000000000     
+
+
+
+== Center of Charge ==
+
+spin up     (    0.0000,    0.0000,    0.0000 )
+spin down   (    0.0000,    0.0000,    0.0000 )
+     total  (    0.0000,    0.0000,    0.0000 )
+ionic       (    0.0000,    0.0000,    0.0000 )
+
+
+== Molecular Dipole wrt Center of Mass ==
+
+mu   =  (   -0.0000,   -0.0000,   -0.0000 ) au
+|mu| =     0.0000 au,       0.0000 Debye
+
+ output psi filename:./pspw_hf_H2.movecs
+
+ Writing Crystallographic Information File:./H2.cif
+   - cell not shifted (nwpw:cif_shift_cell .false.)
+
+
+== Timing ==
+
+cputime in seconds
+  prologue    :   0.680854E+01
+  main loop   :   0.950594E+02
+  epilogue    :   0.754454E-02
+  total       :   0.101876E+03
+  cputime/step:   0.101127E+01       (      94 evalulations,      42 linesearches)
+
+
+Time spent doing                        total          step       percent
+  total time                 :   0.101876E+03  0.108378E+01       100.0 %
+  i/o time                   :   0.861196E-01  0.916166E-03         0.1 %
+  FFTs                       :   0.848934E+02  0.903122E+00        83.3 %
+  dot products               :   0.931886E-01  0.991368E-03         0.1 %
+  geodesic                   :   0.464686E-01  0.494347E-03         0.0 %
+  ffm_dgemm                  :   0.521468E-02  0.554753E-04         0.0 %
+  fmf_dgemm                  :   0.221877E-01  0.236040E-03         0.0 %
+  mmm_dgemm                  :   0.988077E-03  0.105115E-04         0.0 %
+  m_diagonalize              :   0.306513E-02  0.326078E-04         0.0 %
+  local pseudopotentials     :   0.917031E-02  0.975565E-04         0.0 %
+  non-local pseudopotentials :   0.262405E+00  0.279155E-02         0.3 %
+  structure factors          :   0.119767E+00  0.127412E-02         0.1 %
+  phase factors              :   0.574500E-05  0.611170E-07         0.0 %
+  masking and packing        :   0.746492E+00  0.794140E-02         0.7 %
+  queue fft                  :   0.933194E+00  0.992760E-02         0.9 %
+  queue fft (serial)         :   0.538881E+00  0.573278E-02         0.5 %
+  queue fft (message passing):   0.357698E+00  0.380530E-02         0.4 %
+  HFX potential              :   0.687510E+02  0.731394E+00        67.5 %
+  non-local psp FFM          :   0.136990E+00  0.145734E-02         0.1 %
+  non-local psp FMF          :   0.332341E-01  0.353554E-03         0.0 %
+  non-local psp FFM A        :   0.368640E-01  0.392170E-03         0.0 %
+  non-local psp FFM B        :   0.261111E-01  0.277778E-03         0.0 %
+
+== HFX Counters ==
+  HFX Evalulations         =    94
+  Lin ACE HFX Evalulations =     0
+
+
+     >>>  JOB COMPLETED     AT Thu May  1 12:33:53 2025  <<<
+
+ Task  times  cpu:      101.6s     wall:      101.9s
+ Summary of allocated global arrays
+-----------------------------------
+  No active global arrays
+
+
+MA_summarize_allocated_blocks: starting scan ...
+MA_summarize_allocated_blocks: scan completed: 0 heap blocks, 0 stack blocks
+MA usage statistics:
+
+	allocation statistics:
+					      heap	     stack
+					      ----	     -----
+	current number of blocks	         0	         0
+	maximum number of blocks	       313	        17
+	current total bytes		         0	         0
+	maximum total bytes		 362324288	  89294088
+	maximum total K-bytes		    362325	     89295
+	maximum total M-bytes		       363	        90
+
+
+                                NWChem Input Module
+                                -------------------
+
+
+
+
+                                     CITATION
+                                     --------
+                Please cite the following reference when publishing
+                           results obtained with NWChem:
+
+          E. Apra, E. J. Bylaska, W. A. de Jong, N. Govind, K. Kowalski,
+       T. P. Straatsma, M. Valiev, H. J. J. van Dam, Y. Alexeev, J. Anchell,
+       V. Anisimov, F. W. Aquino, R. Atta-Fynn, J. Autschbach, N. P. Bauman,
+     J. C. Becca, D. E. Bernholdt, K. Bhaskaran-Nair, S. Bogatko, P. Borowski,
+         J. Boschen, J. Brabec, A. Bruner, E. Cauet, Y. Chen, G. N. Chuev,
+      C. J. Cramer, J. Daily, M. J. O. Deegan, T. H. Dunning Jr., M. Dupuis,
+   K. G. Dyall, G. I. Fann, S. A. Fischer, A. Fonari, H. Fruchtl, L. Gagliardi,
+      J. Garza, N. Gawande, S. Ghosh, K. Glaesemann, A. W. Gotz, J. Hammond,
+       V. Helms, E. D. Hermes, K. Hirao, S. Hirata, M. Jacquelin, L. Jensen,
+   B. G. Johnson, H. Jonsson, R. A. Kendall, M. Klemm, R. Kobayashi, V. Konkov,
+      S. Krishnamoorthy, M. Krishnan, Z. Lin, R. D. Lins, R. J. Littlefield,
+      A. J. Logsdail, K. Lopata, W. Ma, A. V. Marenich, J. Martin del Campo,
+   D. Mejia-Rodriguez, J. E. Moore, J. M. Mullin, T. Nakajima, D. R. Nascimento,
+    J. A. Nichols, P. J. Nichols, J. Nieplocha, A. Otero-de-la-Roza, B. Palmer,
+    A. Panyala, T. Pirojsirikul, B. Peng, R. Peverati, J. Pittner, L. Pollack,
+   R. M. Richard, P. Sadayappan, G. C. Schatz, W. A. Shelton, D. W. Silverstein,
+   D. M. A. Smith, T. A. Soares, D. Song, M. Swart, H. L. Taylor, G. S. Thomas,
+            V. Tipparaju, D. G. Truhlar, K. Tsemekhman, T. Van Voorhis,
+      A. Vazquez-Mayagoitia, P. Verma, O. Villa, A. Vishnu, K. D. Vogiatzis,
+        D. Wang, J. H. Weare, M. J. Williamson, T. L. Windus, K. Wolinski,
+        A. T. Wong, Q. Wu, C. Yang, Q. Yu, M. Zacharias, Z. Zhang, Y. Zhao,
+                                and R. J. Harrison
+                        "NWChem: Past, present, and future
+                         J. Chem. Phys. 152, 184102 (2020)
+                               doi:10.1063/5.0004997
+
+                                      AUTHORS
+                                      -------
+  E. Apra, E. J. Bylaska, N. Govind, K. Kowalski, M. Valiev, D. Mejia-Rodriguez,
+       A. Kunitsa, N. P. Bauman, A. Panyala, W. A. de Jong, T. P. Straatsma,
+   H. J. J. van Dam, D. Wang, T. L. Windus, J. Hammond, J. Autschbach, A. Woods,
+    K. Bhaskaran-Nair, J. Brabec, K. Lopata, S. A. Fischer, S. Krishnamoorthy,
+     M. Jacquelin, W. Ma, M. Klemm, O. Villa, Y. Chen, V. Anisimov, F. Aquino,
+     S. Hirata, M. T. Hackler, E. Hermes, L. Jensen, J. E. Moore, J. C. Becca,
+      V. Konjkov, T. Risthaus, M. Malagoli, A. Marenich, A. Otero-de-la-Roza,
+        J. Mullin, P. Nichols, R. Peverati, J. Pittner, Y. Zhao, P.-D. Fan,
+        A. Fonari, M. J. Williamson, R. J. Harrison, J. R. Rehr, M. Dupuis,
+     D. Silverstein, D. M. A. Smith, J. Nieplocha, V. Tipparaju, M. Krishnan,
+     B. E. Van Kuiken, A. Vazquez-Mayagoitia, M. Swart, Q. Wu, T. Van Voorhis,
+     A. A. Auer, M. Nooijen, L. D. Crosby, E. Brown, G. Cisneros, G. I. Fann,
+   H. Fruchtl, J. Garza, K. Hirao, R. A. Kendall, J. A. Nichols, K. Tsemekhman,
+    K. Wolinski, J. Anchell, D. E. Bernholdt, P. Borowski, T. Clark, D. Clerc,
+   H. Dachsel, M. J. O. Deegan, K. Dyall, D. Elwood, E. Glendening, M. Gutowski,
+   A. C. Hess, J. Jaffe, B. G. Johnson, J. Ju, R. Kobayashi, R. Kutteh, Z. Lin,
+   R. Littlefield, X. Long, B. Meng, T. Nakajima, S. Niu, L. Pollack, M. Rosing,
+   K. Glaesemann, G. Sandrone, M. Stave, H. Taylor, G. Thomas, J. H. van Lenthe,
+                               A. T. Wong, Z. Zhang.
+
+ Total times  cpu:      101.6s     wall:      101.9s

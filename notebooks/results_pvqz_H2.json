@@ -1,0 +1,114 @@
+[
+    {
+        "geometry": "H 0.0 0.0 -0.3; H 0.0 0.0 0.3;",
+        "energy Hartree-Fock": -1.1154862370312724,
+        "energy uccsd": -1.1183814070174931,
+        "energy fci": -1.1537619571547444,
+        "nuclear_repulsion": 0.8819620182000001,
+        "electronic_energy": -2.000343425217493
+    },
+    {
+        "geometry": "H 0.0 0.0 -0.35; H 0.0 0.0 0.35;",
+        "energy Hartree-Fock": -1.1321416055261335,
+        "energy uccsd": -1.1357118766623358,
+        "energy fci": -1.171294651302269,
+        "nuclear_repulsion": 0.7559674441714287,
+        "electronic_energy": -1.8916793208337643
+    },
+    {
+        "geometry": "H 0.0 0.0 -0.4; H 0.0 0.0 0.4;",
+        "energy Hartree-Fock": -1.1303626157501716,
+        "energy uccsd": -1.136654864812324,
+        "energy fci": -1.170736118145507,
+        "nuclear_repulsion": 0.66147151365,
+        "electronic_energy": -1.798126378462324
+    },
+    {
+        "geometry": "H 0.0 0.0 -0.45; H 0.0 0.0 0.45;",
+        "energy Hartree-Fock": -1.1188113257465535,
+        "energy uccsd": -1.1277106892815407,
+        "energy fci": -1.1608213634438178,
+        "nuclear_repulsion": 0.5879746788,
+        "electronic_energy": -1.7156853680815407
+    },
+    {
+        "geometry": "H 0.0 0.0 -0.5; H 0.0 0.0 0.5;",
+        "energy Hartree-Fock": -1.102168760736292,
+        "energy uccsd": -1.1143986203311442,
+        "energy fci": -1.1462664654835768,
+        "nuclear_repulsion": 0.52917721092,
+        "electronic_energy": -1.6435758312511444
+    },
+    {
+        "geometry": "H 0.0 0.0 -0.75; H 0.0 0.0 0.75;",
+        "energy Hartree-Fock": -1.0046513320239845,
+        "energy uccsd": -1.0438281333696917,
+        "energy fci": -1.0671937645761063,
+        "nuclear_repulsion": 0.35278480728,
+        "electronic_energy": -1.3966129406496917
+    },
+    {
+        "geometry": "H 0.0 0.0 -1.0; H 0.0 0.0 1.0;",
+        "energy Hartree-Fock": -0.926107737202849,
+        "energy uccsd": -1.0040077109765442,
+        "energy fci": -1.0214689064473084,
+        "nuclear_repulsion": 0.26458860546,
+        "electronic_energy": -1.2685963164365441
+    },
+    {
+        "geometry": "H 0.0 0.0 -1.25; H 0.0 0.0 1.25;",
+        "energy Hartree-Fock": -0.8714250727949251,
+        "energy uccsd": -0.9895779692614575,
+        "energy fci": -1.0052395511563095,
+        "nuclear_repulsion": 0.21167088436800002,
+        "electronic_energy": -1.2012488536294574
+    },
+    {
+        "geometry": "H 0.0 0.0 -1.5; H 0.0 0.0 1.5;",
+        "energy Hartree-Fock": -0.8343976870584837,
+        "energy uccsd": -0.9851766447684582,
+        "energy fci": -1.0009658591538269,
+        "nuclear_repulsion": 0.17639240364,
+        "electronic_energy": -1.1615690484084582
+    },
+    {
+        "geometry": "H 0.0 0.0 -1.75; H 0.0 0.0 1.75;",
+        "energy Hartree-Fock": -0.8093317220779485,
+        "energy uccsd": -0.983818687377818,
+        "energy fci": -0.9999649356454497,
+        "nuclear_repulsion": 0.15119348883428574,
+        "electronic_energy": -1.1350121762121037
+    },
+    {
+        "geometry": "H 0.0 0.0 -2.0; H 0.0 0.0 2.0;",
+        "energy Hartree-Fock": -0.7921585686041169,
+        "energy uccsd": -0.9832799294243851,
+        "energy fci": -0.9997305404618847,
+        "nuclear_repulsion": 0.13229430273,
+        "electronic_energy": -1.1155742321543851
+    },
+    {
+        "geometry": "H 0.0 0.0 -2.25; H 0.0 0.0 2.25;",
+        "energy Hartree-Fock": -0.7801483342024481,
+        "energy uccsd": -0.9830347567070931,
+        "energy fci": -0.9996718832694679,
+        "nuclear_repulsion": 0.11759493576,
+        "electronic_energy": -1.100629692467093
+    },
+    {
+        "geometry": "H 0.0 0.0 -2.5; H 0.0 0.0 2.5;",
+        "energy Hartree-Fock": -0.7715370361700762,
+        "energy uccsd": -0.9829448179468101,
+        "energy fci": -0.999655033266897,
+        "nuclear_repulsion": 0.10583544218400001,
+        "electronic_energy": -1.08878026013081
+    },
+    {
+        "geometry": "H 0.0 0.0 -3.0; H 0.0 0.0 3.0;",
+        "energy Hartree-Fock": -0.7602932644566159,
+        "energy uccsd": -0.982821642903809,
+        "energy fci": -0.9996458587868224,
+        "nuclear_repulsion": 0.08819620182,
+        "electronic_energy": -1.071017844723809
+    }
+]
