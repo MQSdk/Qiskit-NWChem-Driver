@@ -10,8 +10,8 @@ from multiprocessing import Pool
 from nwchem_utils import load_from_yaml
 
 # Definir el solver FCI globalmente
-fcisolver = fci.direct_spin1.FCI()
-NUM_PROCESSES = 15
+fcisolver = fci.direct_uhf.FCISolver()
+NUM_PROCESSES = 2
 # Función que procesa un solo archivo YAML
 def process_yaml_file(yaml_data):
     covo, bond_distance, n_electrons, n_spatial_orbitals, nuclear_repulsion_energy, h1, h2 = yaml_data
@@ -32,20 +32,26 @@ def process_yaml_file(yaml_data):
     # Optimizar la función de onda
     WF.run_wf_optimization_1step(
         optimizer_name="SLSQP",
-        tol=1e-7,
+        tol=1e-5,
         orbital_optimization=False
     )
 
     # Calcular energía FCI
-    energy_fci, ci_vec = fcisolver.kernel(h1e=h1, eri=h2, norb=n_spatial_orbitals, nelec=n_electrons)      
-    
-    energy_fci = energy_fci + nuclear_repulsion_energy
+    energy_fci, coefficients = fcisolver.kernel(
+        h1e=(h1, h1),
+        eri=(h2, h2, h2),
+        norb=n_spatial_orbitals,
+        nelec=(1, 1),
+        nroots=1
+    )
+
     energy_uccsd = WF.energy_elec + nuclear_repulsion_energy
-    
+    energy_fci = energy_fci + nuclear_repulsion_energy
+
     return covo, bond_distance, energy_uccsd, energy_fci
 
 # Lista de COVOs
-covos = [1,2,4,8,10,12]
+covos = [12]
 
 # Recolectar todos los archivos YAML
 yaml_data = []

@@ -11,7 +11,7 @@ from nwchem_utils import load_from_yaml
 
 # Definir el solver FCI globalmente
 fcisolver = fci.direct_spin1.FCI()
-NUM_PROCESSES = 15
+NUM_PROCESSES = 17
 # Función que procesa un solo archivo YAML
 def process_yaml_file(yaml_data):
     covo, bond_distance, n_electrons, n_spatial_orbitals, nuclear_repulsion_energy, h1, h2 = yaml_data
@@ -38,19 +38,19 @@ def process_yaml_file(yaml_data):
 
     # Calcular energía FCI
     energy_fci, ci_vec = fcisolver.kernel(h1e=h1, eri=h2, norb=n_spatial_orbitals, nelec=n_electrons)      
-    
+
     energy_fci = energy_fci + nuclear_repulsion_energy
     energy_uccsd = WF.energy_elec + nuclear_repulsion_energy
     
     return covo, bond_distance, energy_uccsd, energy_fci
 
 # Lista de COVOs
-covos = [1,2,4,8,10,12]
+covos = [1,4,8,12]
 
 # Recolectar todos los archivos YAML
 yaml_data = []
 for covo in covos:
-    data_dir_yaml = os.path.join("..", "data", "H2", "data_h2_pw", "3x3_aperiodic", f'{covo}covo_yaml')
+    data_dir_yaml = os.path.join("..", "data", "PW_LiH_data", "3x3_aperiodic",'NWChem', f'{covo}covo_yaml')
     if not os.path.exists(data_dir_yaml):
         print(f"Directorio no encontrado: {data_dir_yaml}")
         continue
@@ -96,5 +96,5 @@ if __name__ == '__main__':
         data_covos[covo] = [bond_distances.tolist(), total_energies_uccsd.tolist(), total_energies_fci.tolist()]
 
     # Guardar resultados
-    with open('results_covo_H2.json', 'w') as f:
+    with open('results_covo_LiH.json', 'w') as f:
         json.dump(data_covos, f, indent=4)
