@@ -1,0 +1,65 @@
+# queue_nwchem_JobId: 61c986d81a55f8be0104c1e5
+# queue_nwchem_restart_count: 0
+#
+#nwchem_input  H1Li1.nw
+#nwchem_output H1Li1.out00
+#nwchem_done   H1Li1.done
+#
+#mformula_off
+#
+#transfer_files *.nw *.xyz *.ion_motion *.emotion *.fei *.cif *.hist *.gr *.dat *.meta_gaussians *.cube *.neb_epath *.neb_final_epath
+#bad_files md_xs
+#
+#curdir we31869.emsl.pnl.gov:/media/seagate2/Projects/Duo/COVOs/LiH/3x3_aperiodic_1covo/R-1.6
+#
+#permdir H1Li1.6x3a-1covo-1.6
+#deletescratch no
+#queuesave no
+#
+#machine aerosol8
+#cputime 22:05:00
+#ncpus 32
+#queue regular
+#
+title "swnc: e theory=pspw4 xc=pbe formula=LiH charge=0 mult=1"
+#machinejob:expert
+
+echo
+
+start pspw_hf_LiH
+
+memory heap 1200 mb stack 2400 mb global 400 mb
+
+charge 0
+
+geometry
+Li    0.00000    0.00000   -0.80000
+H     0.00000    0.00000    0.80000
+end
+
+nwpw
+  ### pseudopotential block begin ###
+  ### pseudopotential block end   ###
+  simulation_cell
+     SC 28.345889835
+     boundary_conditions aperiodic
+  end
+
+  cutoff 50.0
+  mult 1
+  xc hf
+  lmbfgs
+  tolerances 1.0e-9 1.0e-9
+
+end
+set nwpw:cif_filename LiH
+
+#set nwpw:CI_maxit_orb 15
+#set nwpw:CI_maxit_linesearch 15
+set pspw:HFX_screening_radius 14.0
+
+
+set nwpw:2qintegrals .true.
+#set nwpw:3x3_virtual .true.
+
+task pspw energy

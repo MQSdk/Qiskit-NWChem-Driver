@@ -1,0 +1,164 @@
+bibliography:
+- url: https://nwchemgit.github.io
+format:
+  version: '0.1'
+generator:
+  source: nwchem
+  version: 7.0.2
+integral_sets:
+- coulomb_repulsion:
+    units: hartree
+    value: 0.1322943122
+  geometry:
+    atoms:
+    - coords:
+      - 0.0
+      - 0.0
+      - -2.0
+      name: H
+    - coords:
+      - 0.0
+      - 0.0
+      - 2.0
+      name: H
+    coordinate_system: cartesian
+    units: angstrom
+  hamiltonian:
+    one_electron_integrals:
+      format: sparse
+      units: hartree
+      values:
+      - - 1
+        - 1
+        - -0.6213362077
+      - - 2
+        - 1
+        - -3.8958e-06
+      - - 3
+        - 1
+        - -0.0203376202
+      - - 2
+        - 2
+        - -0.6133347696
+      - - 3
+        - 2
+        - 3.45855e-05
+      - - 3
+        - 3
+        - -0.1905252536
+    two_electron_integrals:
+      format: sparse
+      index_convention: mulliken
+      units: hartree
+      values:
+      - - 1
+        - 1
+        - 1
+        - 1
+        - 0.3182398751
+      - - 1
+        - 1
+        - 2
+        - 1
+        - 3.8766e-06
+      - - 1
+        - 1
+        - 3
+        - 1
+        - 0.0203419721
+      - - 1
+        - 1
+        - 2
+        - 2
+        - 0.3215228007
+      - - 1
+        - 1
+        - 3
+        - 2
+        - -1.74643e-05
+      - - 1
+        - 1
+        - 3
+        - 3
+        - 0.0997667694
+      - - 2
+        - 1
+        - 2
+        - 1
+        - 0.1883068586
+      - - 2
+        - 1
+        - 3
+        - 1
+        - -7.788e-07
+      - - 2
+        - 1
+        - 2
+        - 2
+        - 6.9085e-06
+      - - 2
+        - 1
+        - 3
+        - 2
+        - 0.0176322321
+      - - 2
+        - 1
+        - 3
+        - 3
+        - -0.0002358936
+      - - 3
+        - 1
+        - 3
+        - 1
+        - 0.0022677056
+      - - 3
+        - 1
+        - 2
+        - 2
+        - 0.0208115295
+      - - 3
+        - 1
+        - 3
+        - 2
+        - -3.4793e-06
+      - - 3
+        - 1
+        - 3
+        - 3
+        - 0.0005393822
+      - - 2
+        - 2
+        - 2
+        - 2
+        - 0.3266620591
+      - - 2
+        - 2
+        - 3
+        - 2
+        - -1.74591e-05
+      - - 2
+        - 2
+        - 3
+        - 3
+        - 0.099604441
+      - - 3
+        - 2
+        - 3
+        - 2
+        - 0.0021689436
+      - - 3
+        - 2
+        - 3
+        - 3
+        - 5.5496e-06
+      - - 3
+        - 3
+        - 3
+        - 3
+        - 0.0874878704
+  metadata:
+    molecule_name: unknown
+  n_electrons: 2
+  n_orbitals: 3
+  total_energy: -0.792138228
+  virtual_orbitals: 2
