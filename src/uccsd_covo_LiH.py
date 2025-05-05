@@ -45,7 +45,7 @@ def process_yaml_file(yaml_data):
     return covo, bond_distance, energy_uccsd, energy_fci
 
 # Lista de COVOs
-covos = [1,4,8,12]
+covos = [18]
 
 # Recolectar todos los archivos YAML
 yaml_data = []

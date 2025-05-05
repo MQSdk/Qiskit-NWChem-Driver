@@ -1,31 +1,8 @@
- argument  1 = ../data/PW_LiH_data/3x3_aperiodic/NWChem/0covo/H1Li1-1.3.nw
+ argument  1 = ../data/PW_LiH_data/3x3_aperiodic/NWChem/4nocovo/H1Li1-2.5.nw
 
 
 
 ============================== echo of input deck ==============================
-# queue_nwchem_JobId: 61c94da5ea88854f1bdd7095
-# queue_nwchem_restart_count: 0
-#
-#nwchem_input  H1Li1.nw
-#nwchem_output H1Li1.out00
-#nwchem_done   H1Li1.done
-#
-#mformula_off
-#
-#transfer_files *.nw *.xyz *.ion_motion *.emotion *.fei *.cif *.hist *.gr *.dat *.meta_gaussians *.cube *.neb_epath *.neb_final_epath
-#bad_files md_xs
-#
-#curdir we31869.emsl.pnl.gov:/media/seagate2/Projects/Duo/COVOs/LiH/3x3_aperiodic_1covo/R-1.3
-#
-#permdir H1Li1-3x3a-1covo-1.3
-#deletescratch no
-#queuesave no
-#
-#machine aerosol8
-#cputime 22:05:00
-#ncpus 32
-#queue regular
-#
 title "swnc: e theory=pspw4 xc=pbe formula=LiH charge=0 mult=1"
 #machinejob:expert
 
@@ -33,13 +10,13 @@ echo
 
 start pspw_hf_LiH
 
-memory heap 2200 mb stack 2200 mb global 10 mb
+memory heap 1200 mb stack 2400 mb global 400 mb
 
 charge 0
 
 geometry
-Li    0.00000    0.00000   -0.65000
-H     0.00000    0.00000    0.65000
+Li    0.00000    0.00000   -1.25000
+H     0.00000    0.00000    1.25000
 end
 
 nwpw
@@ -56,19 +33,14 @@ nwpw
   lmbfgs
   tolerances 1.0e-9 1.0e-9
 
+  virtual 4
 end
 set nwpw:cif_filename LiH
-
-#set nwpw:CI_maxit_orb 15
-#set nwpw:CI_maxit_linesearch 15
-set pspw:HFX_screening_radius 14.0
-
 
 set nwpw:2qintegrals .true.
 #set nwpw:3x3_virtual .true.
 
 task pspw energy
-
 ================================================================================
 
 
@@ -111,7 +83,7 @@ task pspw energy
 
     hostname        = mqs-al
     program         = nwchem
-    date            = Sun May  4 08:00:27 2025
+    date            = Sun May  4 11:05:30 2025
 
     compiled        = Thu_Oct_31_08:55:15_2024
     source          = /home/conda/feedstock_root/build_artifacts/nwchem_1730356057992/work
@@ -119,7 +91,7 @@ task pspw energy
     nwchem revision = c400b04
     ga revision     = 5.8.0
     use scalapack   = T
-    input           = ../data/PW_LiH_data/3x3_aperiodic/NWChem/0covo/H1Li1-1.3.nw
+    input           = ../data/PW_LiH_data/3x3_aperiodic/NWChem/4nocovo/H1Li1-2.5.nw
     prefix          = pspw_hf_LiH.
     data base       = ./pspw_hf_LiH.db
     status          = startup
@@ -131,10 +103,10 @@ task pspw energy
            Memory information
            ------------------
 
-    heap     =  288358394 doubles =   2200.0 Mbytes
-    stack    =  288358399 doubles =   2200.0 Mbytes
-    global   =    1310720 doubles =     10.0 Mbytes (distinct from heap & stack)
-    total    =  578027513 doubles =   4410.0 Mbytes
+    heap     =  157286394 doubles =   1200.0 Mbytes
+    stack    =  314572799 doubles =   2400.0 Mbytes
+    global   =   52428800 doubles =    400.0 Mbytes (distinct from heap & stack)
+    total    =  524287993 doubles =   4000.0 Mbytes
     verify   = yes
     hardfail = no 
 
@@ -212,6 +184,9 @@ task pspw energy
           ------
           auto-z
           ------
+     1 autoz failed with cvr_scaling = 1.2 changing to 1.3
+     2 autoz failed with cvr_scaling = 1.3 changing to 1.4
+     3 autoz failed with cvr_scaling = 1.4 changing to 1.5
   no constraints, skipping    0.0000000000000000     
   no constraints, skipping    0.0000000000000000     
 
@@ -223,8 +198,8 @@ task pspw energy
 
   No.       Tag          Charge          X              Y              Z
  ---- ---------------- ---------- -------------- -------------- --------------
-    1 Li                   3.0000     0.00000000     0.00000000    -0.32500000
-    2 H                    1.0000     0.00000000     0.00000000     0.97500000
+    1 Li                   3.0000     0.00000000     0.00000000    -0.62500000
+    2 H                    1.0000     0.00000000     0.00000000     1.87500000
 
       Atomic Mass 
       ----------- 
@@ -233,7 +208,7 @@ task pspw energy
       H                  1.007825
 
 
- Effective nuclear repulsion energy (a.u.)       1.2211782669
+ Effective nuclear repulsion energy (a.u.)       0.6350126988
 
             Nuclear Dipole moment (a.u.) 
             ----------------------------
@@ -262,27 +237,15 @@ task pspw energy
 
       Type          Name      I     J     K     L     M      Value
       ----------- --------  ----- ----- ----- ----- ----- ----------
-    1 Stretch                  1     2                       1.30000
+    1 Stretch                  1     2                       2.50000
 
 
             XYZ format geometry
             -------------------
      2
  geometry
- Li                    0.00000000     0.00000000    -0.32500000
- H                     0.00000000     0.00000000     0.97500000
-
- ==============================================================================
-                                internuclear distances
- ------------------------------------------------------------------------------
-       center one      |      center two      | atomic units |  angstroms
- ------------------------------------------------------------------------------
-    2 H                |   1 Li               |     2.45664  |     1.30000
- ------------------------------------------------------------------------------
-                         number of included internuclear distances:          1
- ==============================================================================
-
-
+ Li                    0.00000000     0.00000000    -0.62500000
+ H                     0.00000000     0.00000000     1.87500000
 
           ****************************************************
           *                                                  *
@@ -299,7 +262,7 @@ task pspw energy
           *    developed by the group of Prof. John H. Weare *
           *                                                  *
           ****************************************************
-     >>>  JOB STARTED       AT Sun May  4 08:00:27 2025  <<<
+     >>>  JOB STARTED       AT Sun May  4 11:05:30 2025  <<<
           ================ input data ========================
 
  input psi filename:./pspw_hf_LiH.movecs
@@ -377,46 +340,211 @@ task pspw energy
 
 
           ============ Grassmann lmbfgs iteration ============
-     >>>  ITERATION STARTED AT Sun May  4 08:01:57 2025  <<<
+     >>>  ITERATION STARTED AT Sun May  4 11:06:59 2025  <<<
     iter.           Energy         DeltaE       DeltaRho 
     ------------------------------------------------------
-      10   -0.4432325243E+00   -0.60192E-01    0.63260E-01
+      10   -0.7007142446E+00   -0.19020E-02    0.17244E-01
      -  10 steepest descent iterations performed
-      20   -0.7068989599E+00   -0.44057E-02    0.14126E-01
-      30   -0.7247775449E+00   -0.37437E-03    0.33749E-03
-      40   -0.7261117806E+00   -0.39842E-04    0.42009E-05
-      50   -0.7262706777E+00   -0.44093E-05    0.44104E-06
-      60   -0.7262852771E+00   -0.30112E-06    0.75488E-07
-      70   -0.7262864341E+00   -0.29679E-07    0.10599E-07
-      80   -0.7262865585E+00   -0.42718E-08    0.10361E-08
-      90   -0.7262865716E+00   -0.86390E-09    0.43426E-10
+      20   -0.7065612089E+00   -0.14404E-03    0.13507E-03
+      30   -0.7068835919E+00   -0.95159E-05    0.71940E-05
+      40   -0.7069156640E+00   -0.80132E-06    0.36161E-06
+      50   -0.7069186858E+00   -0.71911E-07    0.12175E-07
+      60   -0.7069189685E+00   -0.10747E-07    0.64145E-09
+      70   -0.7069190134E+00   -0.18233E-08    0.12461E-09
+      80   -0.7069190178E+00   -0.78705E-09    0.14336E-10
   *** tolerance ok. iteration terminated
-     >>>  ITERATION ENDED   AT Sun May  4 08:03:45 2025  <<<
+     >>>  ITERATION ENDED   AT Sun May  4 11:08:32 2025  <<<
 
 
 ==  Summary Of Results  ==
 
  number of electrons: spin up=    1.00000  down=    1.00000 (real space)
 
- total     energy    :  -0.7262865716E+00 (   -0.36314E+00/ion)
- total orbital energy:  -0.6211683177E+00 (   -0.62117E+00/electron)
- hartree   energy    :   0.1024355352E+01 (    0.10244E+01/electron)
+ total     energy    :  -0.7069190178E+00 (   -0.35346E+00/ion)
+ total orbital energy:  -0.5052729718E+00 (   -0.50527E+00/electron)
+ hartree   energy    :   0.8266338913E+00 (    0.82663E+00/electron)
  exc-corr  energy    :   0.0000000000E+00 (    0.00000E+00/electron)
- HF exchange energy  :  -0.5121776762E+00 (   -0.51218E+00/electron)
- ion-ion   energy    :   0.4070594223E+00 (    0.20353E+00/ion)
+ HF exchange energy  :  -0.4133169456E+00 (   -0.41332E+00/electron)
+ ion-ion   energy    :   0.2116708996E+00 (    0.10584E+00/ion)
 
- kinetic (planewave) :   0.7037329526E+00 (    0.70373E+00/electron)
- V_local (planewave) :  -0.2271231829E+01 (   -0.22712E+01/electron)
- V_nl    (planewave) :  -0.7802479400E-01 (   -0.78025E-01/electron)
- V_Coul  (planewave) :   0.2048710705E+01 (    0.20487E+01/electron)
+ kinetic (planewave) :   0.4945855510E+00 (    0.49459E+00/electron)
+ V_local (planewave) :  -0.1734605088E+01 (   -0.17346E+01/electron)
+ V_nl    (planewave) :  -0.9188732614E-01 (   -0.91887E-01/electron)
+ V_Coul  (planewave) :   0.1653267783E+01 (    0.16533E+01/electron)
  V_xc.   (planewave) :   0.0000000000E+00 (    0.00000E+00/electron)
- K.S. HFX energy     :  -0.1024355352E+01 (   -0.10244E+01/electron)
- Virial Coefficient  :  -0.4270738166E+00
+ K.S. HFX energy     :  -0.8266338913E+00 (   -0.82663E+00/electron)
+ Virial Coefficient  :  -0.3502419978E+00
 
  orbital energies:
-    -0.3105842E+00 (  -8.451eV)
+    -0.2526365E+00 (  -6.875eV)
 
- Total PSPW energy     :  -0.7262865716E+00
+
+== Virtual Orbital Calculation ==
+
+
+ input epsi filename:./pspw_hf_LiH.emovecs
+     orbital   1 current e=-0.237E-01 (error=0.159E-08) iterations 121(  68 preconditioned, Ep,Sp= 20.0  200.0)
+     orbital   1 current e=-0.237E-01 (error=0.758E-09) iterations   2(   1 preconditioned, Ep,Sp= 20.0  200.0)
+     orbital   2 current e= 0.419E-02 (error=0.829E-08) iterations 121(  68 preconditioned, Ep,Sp= 20.0  200.0)
+     orbital   2 current e= 0.419E-02 (error=0.981E-09) iterations  35(   1 preconditioned, Ep,Sp= 20.0  200.0)
+     orbital   3 current e= 0.141E-01 (error=0.968E-09) iterations 119(  67 preconditioned, Ep,Sp= 20.0  200.0)
+     orbital   4 current e= 0.210E-01 (error=0.379E-07) iterations 121(  83 preconditioned, Ep,Sp= 20.0  200.0)
+     orbital   4 current e= 0.210E-01 (error=0.984E-09) iterations  93(   1 preconditioned, Ep,Sp= 20.0  200.0)
+
+ virtual orbital energies:
+     0.2102082E-01 (   0.572eV)
+     0.1414680E-01 (   0.385eV)
+     0.4185833E-02 (   0.114eV)
+    -0.2370991E-01 (  -0.645eV)
+
+
+ == Generating One-Electron and Two-Electron Integrals ==
+
+ begin_one_electron_integrals
+    1    1        -0.6659534315
+    2    1         0.0436667283
+    3    1         0.0106127405
+    4    1        -0.0000000415
+    5    1         0.0176520245
+    2    2        -0.2738325432
+    3    2        -0.0440742980
+    4    2         0.0000001058
+    5    2        -0.0297933032
+    3    3        -0.1431936359
+    4    3        -0.0000000912
+    5    3        -0.0056443845
+    4    4        -0.1752571927
+    5    4        -0.0000000125
+    5    5        -0.1348303624
+ end_one_electron_integrals
+
+ begin_two_electron_integrals
+    1    1    1    1        0.4133169456
+    1    1    2    1       -0.0436779396
+    1    1    3    1       -0.0106171137
+    1    1    4    1        0.0000000415
+    1    1    5    1       -0.0176562991
+    1    1    2    2        0.1300243934
+    1    1    3    2        0.0236629437
+    1    1    4    2       -0.0000000602
+    1    1    5    2        0.0169436044
+    1    1    3    3        0.0742890032
+    1    1    4    3        0.0000000529
+    1    1    5    3        0.0034849021
+    1    1    4    4        0.0953761926
+    1    1    5    4       -0.0000000027
+    1    1    5    5        0.0788108172
+    2    1    2    1        0.0099261542
+    2    1    3    1        0.0032565119
+    2    1    4    1       -0.0000000145
+    2    1    5    1        0.0040764997
+    2    1    2    2        0.0087359896
+    2    1    3    2        0.0028226331
+    2    1    4    2       -0.0000000253
+    2    1    5    2       -0.0004584902
+    2    1    3    3        0.0020817235
+    2    1    4    3        0.0000000232
+    2    1    5    3        0.0005117712
+    2    1    4    4        0.0042193130
+    2    1    5    4       -0.0000000043
+    2    1    5    5        0.0013042954
+    3    1    3    1        0.0011985379
+    3    1    4    1        0.0000000145
+    3    1    5    1        0.0013397143
+    3    1    2    2        0.0050907185
+    3    1    3    2        0.0017752612
+    3    1    4    2        0.0000000871
+    3    1    5    2        0.0001579946
+    3    1    3    3        0.0011547214
+    3    1    4    3       -0.0000000782
+    3    1    5    3        0.0003629118
+    3    1    4    4        0.0022183897
+    3    1    5    4        0.0000000377
+    3    1    5    5        0.0007346299
+    4    1    4    1        0.0013483900
+    4    1    5    1       -0.0000000186
+    4    1    2    2       -0.0000004762
+    4    1    3    2        0.0000019386
+    4    1    4    2        0.0031798816
+    4    1    5    2       -0.0000009555
+    4    1    3    3       -0.0000097388
+    4    1    4    3       -0.0001380623
+    4    1    5    3        0.0000046216
+    4    1    4    4        0.0000004427
+    4    1    5    4        0.0010176685
+    4    1    5    5       -0.0000073599
+    5    1    5    1        0.0017704567
+    5    1    2    2        0.0022703747
+    5    1    3    2        0.0007212759
+    5    1    4    2       -0.0000000748
+    5    1    5    2        0.0000472530
+    5    1    3    3        0.0006342871
+    5    1    4    3        0.0000000726
+    5    1    5    3       -0.0000073790
+    5    1    4    4        0.0014653630
+    5    1    5    4       -0.0000000381
+    5    1    5    5        0.0003610054
+    2    2    2    2        0.1766934768
+    2    2    3    2        0.0351512225
+    2    2    4    2       -0.0000034242
+    2    2    5    2        0.0035295755
+    2    2    3    3        0.0849198813
+    2    2    4    3        0.0000034001
+    2    2    5    3        0.0073766939
+    2    2    4    4        0.1160110038
+    2    2    5    4       -0.0000006203
+    2    2    5    5        0.0877720757
+    3    2    3    2        0.0132156013
+    3    2    4    2        0.0000138902
+    3    2    5    2        0.0032501356
+    3    2    3    3        0.0066322377
+    3    2    4    3       -0.0000145653
+    3    2    5    3        0.0017593824
+    3    2    4    4        0.0125541023
+    3    2    5    4        0.0000027703
+    3    2    5    5        0.0052486018
+    4    2    4    2        0.0179733022
+    4    2    5    2       -0.0000052081
+    4    2    3    3       -0.0000680695
+    4    2    4    3       -0.0036650099
+    4    2    5    3        0.0000249920
+    4    2    4    4        0.0000042169
+    4    2    5    4        0.0013497576
+    4    2    5    5       -0.0000441810
+    5    2    5    2        0.0065105910
+    5    2    3    3        0.0010751647
+    5    2    4    3        0.0000051968
+    5    2    5    3       -0.0024745957
+    5    2    4    4        0.0011759657
+    5    2    5    4       -0.0000036223
+    5    2    5    5       -0.0021854117
+    3    3    3    3        0.0662308624
+    3    3    4    3        0.0000760848
+    3    3    5    3        0.0013533470
+    3    3    4    4        0.0740343992
+    3    3    5    4       -0.0000151027
+    3    3    5    5        0.0663067838
+    4    3    4    3        0.0067174931
+    4    3    5    3       -0.0000268510
+    4    3    4    4       -0.0000090041
+    4    3    5    4        0.0001929655
+    4    3    5    5        0.0000477315
+    5    3    5    3        0.0052491341
+    5    3    4    4        0.0033862214
+    5    3    5    4        0.0000186306
+    5    3    5    5        0.0016905740
+    4    4    4    4        0.1004916082
+    4    4    5    4        0.0000018240
+    4    4    5    5        0.0784150834
+    5    4    5    4        0.0047472796
+    5    4    5    5       -0.0000206604
+    5    5    5    5        0.0743226749
+ end_two_electron_integrals
+
+
+ output epsi filename:./pspw_hf_LiH.emovecs
+
+ Total PSPW energy     :  -0.7069190178E+00
 
 
 === Spin Contamination ===
@@ -428,16 +556,16 @@ task pspw energy
 
 == Center of Charge ==
 
-spin up     (    0.0000,    0.0000,    1.7151 )
-spin down   (    0.0000,    0.0000,    1.7151 )
-     total  (    0.0000,    0.0000,    1.7151 )
-ionic       (    0.0000,    0.0000,    0.6142 )
+spin up     (    0.0000,    0.0000,    2.8974 )
+spin down   (    0.0000,    0.0000,    2.8974 )
+     total  (    0.0000,    0.0000,    2.8974 )
+ionic       (    0.0000,    0.0000,    1.1811 )
 
 
 == Molecular Dipole wrt Center of Mass ==
 
-mu   =  (   -0.0000,   -0.0000,   -2.2019 ) au
-|mu| =     2.2019 au,       5.5964 Debye
+mu   =  (   -0.0000,   -0.0000,   -3.4327 ) au
+|mu| =     3.4327 au,       8.7245 Debye
 
  output psi filename:./pspw_hf_LiH.movecs
 
@@ -448,45 +576,45 @@ mu   =  (   -0.0000,   -0.0000,   -2.2019 ) au
 == Timing ==
 
 cputime in seconds
-  prologue    :   0.894562E+02
-  main loop   :   0.108930E+03
-  epilogue    :   0.815436E-01
-  total       :   0.198468E+03
-  cputime/step:   0.531368E+00       (     205 evalulations,      87 linesearches)
+  prologue    :   0.891204E+02
+  main loop   :   0.421877E+03
+  epilogue    :   0.770697E-01
+  total       :   0.511075E+03
+  cputime/step:   0.239703E+01       (     176 evalulations,      74 linesearches)
 
 
 Time spent doing                        total          step       percent
-  total time                 :   0.198479E+03  0.968193E+00       100.0 %
-  i/o time                   :   0.378498E+00  0.184633E-02         0.2 %
-  FFTs                       :   0.895268E+02  0.436716E+00        45.1 %
-  dot products               :   0.271569E+01  0.132473E-01         1.4 %
-  geodesic                   :   0.152929E+00  0.745996E-03         0.1 %
-  ffm_dgemm                  :   0.381531E-01  0.186112E-03         0.0 %
-  fmf_dgemm                  :   0.623777E-01  0.304281E-03         0.0 %
-  mmm_dgemm                  :   0.494261E-02  0.241103E-04         0.0 %
-  m_diagonalize              :   0.178641E-02  0.871419E-05         0.0 %
-  local pseudopotentials     :   0.601380E-02  0.293356E-04         0.0 %
-  non-local pseudopotentials :   0.158124E+01  0.771337E-02         0.8 %
-  structure factors          :   0.475852E-01  0.232123E-03         0.0 %
-  phase factors              :   0.164520E-04  0.802537E-07         0.0 %
-  masking and packing        :   0.702764E+00  0.342812E-02         0.4 %
-  queue fft                  :   0.236511E+01  0.115371E-01         1.2 %
-  queue fft (serial)         :   0.869013E+00  0.423909E-02         0.4 %
-  queue fft (message passing):   0.138732E+01  0.676740E-02         0.7 %
-  HFX potential              :   0.508497E+02  0.248047E+00        25.6 %
-  non-local psp FFM          :   0.149018E+01  0.726916E-02         0.8 %
-  non-local psp FMF          :   0.260843E-01  0.127241E-03         0.0 %
-  non-local psp FFM A        :   0.152252E-01  0.742695E-04         0.0 %
-  non-local psp FFM B        :   0.170035E-01  0.829441E-04         0.0 %
+  total time                 :   0.511091E+03  0.290393E+01       100.0 %
+  i/o time                   :   0.812970E+00  0.461915E-02         0.2 %
+  FFTs                       :   0.352867E+03  0.200492E+01        69.0 %
+  dot products               :   0.310703E+01  0.176536E-01         0.6 %
+  geodesic                   :   0.130449E+00  0.741188E-03         0.0 %
+  ffm_dgemm                  :   0.336222E-01  0.191035E-03         0.0 %
+  fmf_dgemm                  :   0.541805E-01  0.307844E-03         0.0 %
+  mmm_dgemm                  :   0.434541E-02  0.246898E-04         0.0 %
+  m_diagonalize              :   0.161134E-02  0.915534E-05         0.0 %
+  local pseudopotentials     :   0.594381E-02  0.337717E-04         0.0 %
+  non-local pseudopotentials :   0.189667E+01  0.107765E-01         0.4 %
+  structure factors          :   0.260481E+00  0.148001E-02         0.1 %
+  phase factors              :   0.176180E-04  0.100102E-06         0.0 %
+  masking and packing        :   0.474741E+01  0.269739E-01         0.9 %
+  queue fft                  :   0.202080E+01  0.114818E-01         0.4 %
+  queue fft (serial)         :   0.745984E+00  0.423855E-02         0.1 %
+  queue fft (message passing):   0.118015E+01  0.670543E-02         0.2 %
+  HFX potential              :   0.341015E+03  0.193759E+01        66.7 %
+  non-local psp FFM          :   0.157173E+01  0.893029E-02         0.3 %
+  non-local psp FMF          :   0.799894E-01  0.454485E-03         0.0 %
+  non-local psp FFM A        :   0.131287E+00  0.745950E-03         0.0 %
+  non-local psp FFM B        :   0.114328E+00  0.649591E-03         0.0 %
 
 == HFX Counters ==
-  HFX Evalulations         =   205
+  HFX Evalulations         =   176
   Lin ACE HFX Evalulations =     0
 
 
-     >>>  JOB COMPLETED     AT Sun May  4 08:03:46 2025  <<<
+     >>>  JOB COMPLETED     AT Sun May  4 11:14:01 2025  <<<
 
- Task  times  cpu:      190.8s     wall:      198.5s
+ Task  times  cpu:      483.4s     wall:      511.1s
 
 
                                 NWChem Input Module
@@ -506,11 +634,11 @@ MA usage statistics:
 					      heap	     stack
 					      ----	     -----
 	current number of blocks	         0	         0
-	maximum number of blocks	       304	        17
+	maximum number of blocks	       315	        19
 	current total bytes		         0	         0
-	maximum total bytes		 118073128	  28885976
-	maximum total K-bytes		    118074	     28886
-	maximum total M-bytes		       119	        29
+	maximum total bytes		 123493200	  29399000
+	maximum total K-bytes		    123494	     29399
+	maximum total M-bytes		       124	        30
 
 
                                      CITATION
@@ -566,4 +694,4 @@ MA usage statistics:
    K. Glaesemann, G. Sandrone, M. Stave, H. Taylor, G. Thomas, J. H. van Lenthe,
                                A. T. Wong, Z. Zhang.
 
- Total times  cpu:      190.8s     wall:      198.6s
+ Total times  cpu:      483.4s     wall:      511.2s

@@ -26,7 +26,7 @@ for FOLDER_NAME in "${FOLDERS[@]}"; do
                 echo "Ejecutando: $INPUT_FILE -> $OUTPUT_FILE"
                 
                 # Ejecutar NWChem con 4 procesadores (ajusta según tu sistema)
-                nwchem "$INPUT_FILE" > "$OUTPUT_FILE" 2>&1
+                mpirun -np 24 nwchem "$INPUT_FILE" > "$OUTPUT_FILE" 2>&1
                 
                 # Verificar si la ejecución fue exitosa
                 if [ $? -eq 0 ]; then
