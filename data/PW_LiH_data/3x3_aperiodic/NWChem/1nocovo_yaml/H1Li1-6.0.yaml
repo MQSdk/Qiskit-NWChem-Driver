@@ -1,0 +1,80 @@
+bibliography:
+- url: https://nwchemgit.github.io
+format:
+  version: '0.1'
+generator:
+  source: nwchem
+  version: 7.0.2
+integral_sets:
+- coulomb_repulsion:
+    units: hartree
+    value: 0.08819620817
+  geometry:
+    atoms:
+    - coords:
+      - 0.0
+      - 0.0
+      - -1.5
+      name: Li
+    - coords:
+      - 0.0
+      - 0.0
+      - 4.5
+      name: H
+    coordinate_system: cartesian
+    units: angstrom
+  hamiltonian:
+    one_electron_integrals:
+      format: sparse
+      units: hartree
+      values:
+      - - 1
+        - 1
+        - -0.5037409891
+      - - 2
+        - 1
+        - 0.0962266182
+      - - 2
+        - 2
+        - -0.3107210938
+    two_electron_integrals:
+      format: sparse
+      index_convention: mulliken
+      units: hartree
+      values:
+      - - 1
+        - 1
+        - 1
+        - 1
+        - 0.3282060221
+      - - 1
+        - 1
+        - 2
+        - 1
+        - -0.0962289648
+      - - 1
+        - 1
+        - 2
+        - 2
+        - 0.1456636495
+      - - 2
+        - 1
+        - 2
+        - 1
+        - 0.0620100227
+      - - 2
+        - 1
+        - 2
+        - 2
+        - 0.0207488429
+      - - 2
+        - 2
+        - 2
+        - 2
+        - 0.1896393055
+  metadata:
+    molecule_name: unknown
+  n_electrons: 2
+  n_orbitals: 2
+  total_energy: -0.5910797479
+  virtual_orbitals: 1

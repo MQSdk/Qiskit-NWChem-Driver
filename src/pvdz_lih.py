@@ -95,7 +95,7 @@ def process_geometry(args):
         'geometry': geometry,
         'energy Hartree-Fock': energy_HF,
         'energy uccsd': energy_uccsd,
-	'energy fci': energy_fci,
+    	'energy fci': energy_fci,
         'energy pseudo fci': energy_pseudo,
         'nuclear_repulsion': mol.energy_nuc(),
         'electronic_energy': WF.energy_elec
