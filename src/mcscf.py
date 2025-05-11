@@ -24,7 +24,7 @@ geometries = [
 ]
 
 distances = [0.6, 0.7, 0.8, 0.9, 1.0, 1.5, 2.0, 2.5, 3.0, 3.5, 4.0, 4.5, 5.0, 6.0]
-basis = ["aug-cc-pv5z"]
+basis = ["cc-pvdz","cc-pvtz","cc-pvqz","cc-pv5z","aug-cc-pvqz","aug-cc-pv5z"]
 active_spaces = [2, 3, 5, 9, 13, 19]
 unit = "angstrom"
 results = {base: {str(d): {} for d in distances} for base in basis}
@@ -32,8 +32,8 @@ results = {base: {str(d): {} for d in distances} for base in basis}
 # Función para procesar una geometría
 def process_geometry(args):
     i, geometry, base, distance = args
-    print(f"Procesando geometría {i+1}/{len(geometries)}: Distance {distance} Å, PID: {os.getpid()}")
-
+    print(f"Procesando geometría {i+1}/{len(geometries)} para base {base}, Distance {distance} Å, PID: {os.getpid()}")
+ 
     # Definir la molécula
     mol = gto.M(atom=geometry, basis=base, unit=unit)
     mol.build()
@@ -59,37 +59,46 @@ def process_geometry(args):
     for ncas in active_spaces:
         if ncas <= norb_fci:
             try:
-                mycas = mcscf.CASSCF(mf, ncas, 2)
+                mycas = mf.CASSCF(ncas, 2)
+		
                 mycas.frozen = [0]
+		
                 mycas.run()
+                
                 energy_casscf = mycas.e_tot
+                
                 result[f"CASSCF_{ncas}"] = energy_casscf
+                
                 print(f"Base: {base}, Distance: {distance} Å, CASSCF(2,{ncas}): {energy_casscf:.8f}")
             except Exception as e:
                 print(f"Error en CASSCF(2,{ncas}) para Distance {distance}: {e}")
                 result[f"CASSCF_{ncas}"] = None
 
-    return (distance, result)
+    return (base, distance, result)
 
 # Paralelizar el procesamiento de geometrías
 if __name__ == '__main__':
     # Preparar argumentos para cada geometría
-    tasks = [(i, geometry, basis[0], str(distances[i])) for i, geometry in enumerate(geometries)]
+    for base in basis:
+        print(f"Procesando base: {base}")
 
-    # Usar Pool para paralelizar
-    with Pool(processes=15) as pool:
-        # Mapear las tareas a los procesadores
-        results_list = pool.map(process_geometry, tasks)
+        tasks = [(i, geometry, base, str(distances[i])) for i, geometry in enumerate(geometries)]
 
-    # Combinar resultados
-    for distance, result in results_list:
-        results[basis[0]][distance] = result
+        # Usar Pool para paralelizar
+        with Pool() as pool:
+            # Mapear las tareas a los procesadores
+            results_list = pool.map(process_geometry, tasks)
+
+        # Combinar resultados
+        for base_result, distance, result in results_list:
+            results[base_result][str(distance)] = result
 
     # Guardar resultados en JSON
-    output_file = "energies_h2_atomic_5.json"
+    output_file = "energies_h2_atomic_frozen.json"
     try:
         with open(output_file, 'w') as f:
             json.dump(results, f, indent=4)
         print(f"Resultados guardados exitosamente en {output_file}")
     except Exception as e:
         print(f"Error al guardar el archivo JSON: {e}")
+
